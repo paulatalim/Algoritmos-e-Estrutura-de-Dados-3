@@ -21,42 +21,51 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
+        registro r;
+        String vet[];
+        byte[] registro_vet_byte;
+
         //Declara o arquivo db
 		FileOutputStream arq;
 	    DataOutputStream dos;
 
         //Declara o arquivo csv
         File arq_csv = new File("src\\planilha_teste.csv");
-        FileReader arq2 = new FileReader(arq_csv);
-        BufferedReader leitor = new BufferedReader(arq2);
-        String linha = leitor.readLine();
-
-        registro r;
-        String vet[] = new String [3];
-        byte[] vet_traduzido;
+        FileReader arq_reader_csv;
+        BufferedReader leitor;
+        String linha;
 
         try {
-            //Abre os objetos do arquivos bd
+            //Abre os objetos do arquivos db
 			arq = new FileOutputStream("src/base.db");
 	        dos = new DataOutputStream(arq);
 
+            //Abre os objetos do arquivos csv
+            arq_reader_csv = new FileReader(arq_csv);
+            leitor = new BufferedReader(arq_reader_csv);
+            
+            //Le o cabecalho da planilha
+            linha = leitor.readLine();
+
+            //Le o arquivo csv e passa as informacoes para o arquivo db
             while (linha != null) {
                 linha = leitor.readLine();
 
+                //Trata a string lida e a coloca em um vetor de string
                 vet = tratar_string(linha).split(",");                
     
                 //Cria o regirtro
                 r = new registro (vet[0], Integer.parseInt(vet[1]), vet[2].charAt(0));
     
                 //traduzur o registro
-                vet_traduzido = r.toByteArray();
+                registro_vet_byte = r.toByteArray();
                 
                 //Escreve o registro
-                dos.writeInt(vet_traduzido.length);
-                dos.write(vet_traduzido);
+                dos.writeInt(registro_vet_byte.length);
+                dos.write(registro_vet_byte);
             }
-    
-            arq2.close();
+
+            arq_reader_csv.close();
             leitor.close();
 
             arq.close();

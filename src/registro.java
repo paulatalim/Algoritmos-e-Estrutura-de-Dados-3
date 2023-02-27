@@ -9,9 +9,9 @@ public class registro {
     private char genre;
 
     registro (String nome, int idade, char genre) {
-      this.nome = nome;
-      this.idade = idade;
-      this. genre = genre;
+        this.nome = nome;
+        this.idade = idade;
+        this.genre = genre;
     }
 
     public byte[] toByteArray () throws IOException {
@@ -25,6 +25,6 @@ public class registro {
 
 		//Retorno do vetor de bytes para escrever no arquivo
         return baos.toByteArray();
-  }
+    }
 
 }
