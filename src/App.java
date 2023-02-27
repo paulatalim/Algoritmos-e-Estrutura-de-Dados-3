@@ -6,6 +6,20 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 public class App {
+
+    public static String tratar_string (String linha) {
+        StringBuilder sb = new StringBuilder(linha);
+                
+        //Deleta as aspas lidas da planilha
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '"') {
+                sb.deleteCharAt(i);
+            }
+        }
+
+        return sb.toString();
+    }
+
     public static void main(String[] args) throws Exception {
         //Declara o arquivo db
 		FileOutputStream arq;
@@ -19,7 +33,6 @@ public class App {
 
         registro r;
         String vet[] = new String [3];
-        String linha2;
         byte[] vet_traduzido;
 
         try {
@@ -29,23 +42,8 @@ public class App {
 
             while (linha != null) {
                 linha = leitor.readLine();
-                StringBuilder sb = new StringBuilder(linha);
-                
-                //Deleta as aspas lidas da planilha
-                for (int i = 0; i < sb.length(); i++) {
-                    if (sb.charAt(i) == '"') {
-                        sb.deleteCharAt(i);
-                    }
-                }
 
-                linha2 = new String (sb);
-
-                vet = linha2.split(",");
-
-                System.out.println(vet[1]);
-
-                //Tratamento dos numeros inteiros nas string
-                
+                vet = tratar_string(linha).split(",");                
     
                 //Cria o regirtro
                 r = new registro (vet[0], Integer.parseInt(vet[1]), vet[2].charAt(0));
@@ -56,8 +54,6 @@ public class App {
                 //Escreve o registro
                 dos.writeInt(vet_traduzido.length);
                 dos.write(vet_traduzido);
-                
-                
             }
     
             arq2.close();
