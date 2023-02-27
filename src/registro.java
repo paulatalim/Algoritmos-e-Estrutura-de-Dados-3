@@ -22,7 +22,6 @@ public class registro {
      * Retorno: vetor de bytes
      */
     public byte[] toByteArray () throws IOException {
-		//classe que fazem operaçõoes para memoria
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         

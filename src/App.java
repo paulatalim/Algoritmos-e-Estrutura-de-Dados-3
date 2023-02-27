@@ -7,6 +7,11 @@ import java.io.BufferedReader;
 
 public class App {
 
+    /*
+     * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
+     * Parametro: uma string (linha lida do arquivo)
+     * Retorno: uma string (linha do arquivo tratada)
+     */
     public static String tratar_string (String linha) {
         StringBuilder sb = new StringBuilder(linha);
                 
@@ -57,14 +62,13 @@ public class App {
                 //Cria o regirtro
                 r = new registro (vet[0], Integer.parseInt(vet[1]), vet[2].charAt(0));
     
-                //traduzur o registro
-                registro_vet_byte = r.toByteArray();
-                
                 //Escreve o registro
+                registro_vet_byte = r.toByteArray();
                 dos.writeInt(registro_vet_byte.length);
                 dos.write(registro_vet_byte);
             }
 
+            //Fecha o arquivo csv
             arq_reader_csv.close();
             leitor.close();
 
