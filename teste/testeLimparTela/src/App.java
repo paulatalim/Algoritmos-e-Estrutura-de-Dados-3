@@ -13,6 +13,6 @@ public class App {
         //trava a tela
         System.in.read();
 
-        System.out.println("foiii");            
+        System.out.println("foiii");
     }
 }
