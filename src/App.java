@@ -19,6 +19,7 @@ public class App {
 
         registro r;
         String vet[] = new String [3];
+        String linha2;
         byte[] vet_traduzido;
 
         try {
@@ -27,9 +28,24 @@ public class App {
 	        dos = new DataOutputStream(arq);
 
             while (linha != null) {
-                vet = linha.split(",");
+                linha = leitor.readLine();
+                StringBuilder sb = new StringBuilder(linha);
+                
+                //Deleta as aspas lidas da planilha
+                for (int i = 0; i < sb.length(); i++) {
+                    if (sb.charAt(i) == '"') {
+                        sb.deleteCharAt(i);
+                    }
+                }
 
-                System.out.println( Integer.parseInt(vet[1]));
+                linha2 = new String (sb);
+
+                vet = linha2.split(",");
+
+                System.out.println(vet[1]);
+
+                //Tratamento dos numeros inteiros nas string
+                
     
                 //Cria o regirtro
                 r = new registro (vet[0], Integer.parseInt(vet[1]), vet[2].charAt(0));
@@ -41,7 +57,7 @@ public class App {
                 dos.writeInt(vet_traduzido.length);
                 dos.write(vet_traduzido);
                 
-                linha = leitor.readLine();
+                
             }
     
             arq2.close();
@@ -50,6 +66,8 @@ public class App {
             arq.close();
             dos.close();
         
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
