@@ -5,12 +5,14 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public class registro {
+    private int id;
     private String nome;
     private int idade;
     private char genre;
 
     // CONSTRUTOR
-    registro (String nome, int idade, char genre) {
+    registro (int id, String nome, int idade, char genre) {
+        this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.genre = genre;
@@ -25,6 +27,7 @@ public class registro {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
         
+        dos.writeInt(id);
         dos.writeUTF(nome);
         dos.writeInt(idade);
         dos.writeChar(genre);
@@ -42,6 +45,7 @@ public class registro {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
 
+        id = dis.readInt();
         nome = dis.readUTF();
         // idLivro = dis.readInt();
         // titulo = dis.readUTF();

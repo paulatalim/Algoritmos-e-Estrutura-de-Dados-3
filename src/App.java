@@ -1,5 +1,8 @@
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+
+import java.io.RandomAccessFile;
 
 import java.io.File;
 import java.util.Scanner;
@@ -26,12 +29,14 @@ public class App {
 
     public static void main(String[] args) {
         registro r;
-        String vet[];
+        int id_metadados = 0;
+        String[] vet;
         byte[] registro_vet_byte;
 
         //Declara o arquivo db
 		FileOutputStream arq;
 	    DataOutputStream dos;
+        RandomAccessFile arq2;
 
         //Declara o arquivo csv
         File arq_csv = new File("src\\planilha_teste.csv");        
@@ -49,6 +54,9 @@ public class App {
             //Le o cabecalho da planilha
             linha = new String(scanner.nextLine());
 
+            //Escreve os metadados no arquivo
+            dos.writeInt(id_metadados);
+
             //Le o arquivo csv e passa as informacoes para o arquivo db
             while (scanner.hasNextLine()) {
                 linha = new String(scanner.nextLine());
@@ -57,23 +65,37 @@ public class App {
                 vet = tratar_string(linha).split(",");                
     
                 //Cria o regirtro
-                r = new registro (vet[0], Integer.parseInt(vet[1]), vet[2].charAt(0));
+                r = new registro (id_metadados, vet[0], Integer.parseInt(vet[1]), vet[2].charAt(0));
     
                 //Escreve o registro
-                dos.writeByte(' ');
                 registro_vet_byte = r.toByteArray();
+                dos.writeByte(' ');
                 dos.writeInt(registro_vet_byte.length);
                 dos.write(registro_vet_byte);
+
+                //Atualiza o id
+                id_metadados++;
             }
 
+            //Atualiza os metadados
             arq.close();
             dos.close();
+            arq2 = new RandomAccessFile("src/base.db", "rw");
+            
+           
+            arq2.writeInt(id_metadados);
+
+            arq2.close();
+
+            
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-
+    
         } finally {
             scanner.close();            
         }

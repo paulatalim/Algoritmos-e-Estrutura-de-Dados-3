@@ -1,4 +1,5 @@
-"Nome","Idade","genero"
-"paula","19","m"
-"yago","18","h"
-"mari","20","m"
+nome,idade,genero
+paula,19,m
+yago,18,h
+mari,20,m
+pedro,25,h
