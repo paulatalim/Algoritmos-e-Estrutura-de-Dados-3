@@ -25,12 +25,12 @@ public class App {
     }
 
     public static void passar_arq_csv_para_db (RandomAccessFile arq_atual)  {
-        String linha;
-        int id_metadados = 0;
+        registro r;
         String[] atributos_csv;
         byte[] vet_byte;
-        registro r;
-
+        String linha;
+        int id_metadados = 0;
+        
         FileOutputStream arq_db;
 	    DataOutputStream dos;
 
