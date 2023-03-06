@@ -80,4 +80,10 @@ public class Pokemon {
         // preco = dis.readFloat();
     }
 
+    /*
+     * Descricao: esse metodo escreve na tela do 
+     * console os atributos do pokemon
+     */
+    public void exibir_pokemon () {}
+
 }
