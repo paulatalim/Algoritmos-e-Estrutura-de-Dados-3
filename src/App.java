@@ -6,6 +6,9 @@ import java.io.RandomAccessFile;
 
 public class App {
 
+    /*
+     * Descricao: essa funcao limpa a tela do console de windows, linux e MacOS
+     */
     public static void limpar_console () throws Exception {
         //Limpa a tela no windows, no linux e no MacOS
         if (System.getProperty("os.name").contains("Windows"))
