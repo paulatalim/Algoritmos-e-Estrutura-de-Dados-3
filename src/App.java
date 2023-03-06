@@ -91,7 +91,7 @@ public class App {
 
         try {
 
-            arq = new RandomAccessFile("src/base.db", "rw");
+            arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
             arq.close();
 
