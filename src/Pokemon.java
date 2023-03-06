@@ -8,8 +8,14 @@ import java.util.Date;
 
 public class Pokemon {
     private int id;
+    private int num_pokedex;
     private String nome;
+    private String tipo1;
+    private String tipo2;
+    private boolean eh_mistico;
+    private boolean eh_lendario;
     private Date data_de_registro;
+
 
 
     private int idade;
