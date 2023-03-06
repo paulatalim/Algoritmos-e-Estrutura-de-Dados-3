@@ -25,7 +25,7 @@ public class App {
     }
 
     public static void passar_arq_csv_para_db (RandomAccessFile arq_atual)  {
-        registro r;
+        Pokemon poke;
         String[] atributos_csv;
         byte[] vet_byte;
         String linha;
@@ -59,7 +59,7 @@ public class App {
                 atributos_csv = tratar_string(linha).split(",");                
 
                 //Cria o regirtro
-                r = new registro (id_metadados, atributos_csv[0], Integer.parseInt(atributos_csv[1]), atributos_csv[2].charAt(0));
+                r = new Pokemon (id_metadados, atributos_csv[0], Integer.parseInt(atributos_csv[1]), atributos_csv[2].charAt(0));
 
                 //Escreve o registro
                 vet_byte = r.toByteArray();

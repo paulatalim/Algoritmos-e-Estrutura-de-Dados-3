@@ -4,14 +4,14 @@ import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-public class registro {
+public class Pokemon {
     private int id;
     private String nome;
     private int idade;
     private char genre;
 
     // CONSTRUTOR
-    registro (int id, String nome, int idade, char genre) {
+    Pokemon (int id, String nome, int idade, char genre) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
