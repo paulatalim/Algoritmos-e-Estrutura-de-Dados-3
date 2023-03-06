@@ -28,7 +28,7 @@ public class Pokemon {
         tipo2 = " ";
         eh_mistico = false;
         eh_lendario = false;
-        data_de_registro = new Date(System.currentTimeMillis());
+        data_de_registro = new Date();
     }
 
     Pokemon (int id, String nome, int idade, char genre) {
@@ -37,7 +37,7 @@ public class Pokemon {
         this.idade = idade;
         this.genre = genre;
 
-        data_de_registro = new Date(System.currentTimeMillis());
+        data_de_registro = new Date();
     }
 
     /*
