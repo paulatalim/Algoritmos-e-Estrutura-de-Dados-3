@@ -16,12 +16,21 @@ public class Pokemon {
     private boolean eh_lendario;
     private Date data_de_registro;
 
-
-
     private int idade;
     private char genre;
 
     // CONSTRUTOR
+    Pokemon () {
+        id = -1;
+        num_pokedex = -1;
+        nome = " ";
+        tipo1 = " ";
+        tipo2 = " ";
+        eh_mistico = false;
+        eh_lendario = false;
+        data_de_registro = new Date(System.currentTimeMillis());
+    }
+
     Pokemon (int id, String nome, int idade, char genre) {
         this.id = id;
         this.nome = nome;
