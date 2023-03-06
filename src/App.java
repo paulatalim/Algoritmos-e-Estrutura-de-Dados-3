@@ -59,10 +59,10 @@ public class App {
                 atributos_csv = tratar_string(linha).split(",");                
 
                 //Cria o regirtro
-                r = new Pokemon (id_metadados, atributos_csv[0], Integer.parseInt(atributos_csv[1]), atributos_csv[2].charAt(0));
+                poke = new Pokemon (id_metadados, atributos_csv[0], Integer.parseInt(atributos_csv[1]), atributos_csv[2].charAt(0));
 
                 //Escreve o registro
-                vet_byte = r.toByteArray();
+                vet_byte = poke.toByteArray();
                 dos.writeByte(' ');
                 dos.writeInt(vet_byte.length);
                 dos.write(vet_byte);

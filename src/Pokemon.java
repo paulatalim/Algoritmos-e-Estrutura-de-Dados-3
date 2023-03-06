@@ -3,10 +3,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Date;
+//import java.text.SimpleDateFormat;
 
 public class Pokemon {
     private int id;
     private String nome;
+    private Date data_de_registro;
+
+
     private int idade;
     private char genre;
 
@@ -16,6 +21,8 @@ public class Pokemon {
         this.nome = nome;
         this.idade = idade;
         this.genre = genre;
+
+        data_de_registro = new Date(System.currentTimeMillis());
     }
 
     /*
@@ -32,6 +39,8 @@ public class Pokemon {
         dos.writeInt(idade);
         dos.writeChar(genre);
 
+        dos.writeLong(data_de_registro.getTime());
+
 		//Retorno do vetor de bytes para escrever no arquivo
         return baos.toByteArray();
     }
@@ -47,6 +56,9 @@ public class Pokemon {
 
         id = dis.readInt();
         nome = dis.readUTF();
+
+        data_de_registro = new Date(dis.readLong());
+
         // idLivro = dis.readInt();
         // titulo = dis.readUTF();
         // autor = dis.readUTF();
