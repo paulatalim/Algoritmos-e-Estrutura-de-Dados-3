@@ -4,7 +4,7 @@ import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
-//import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 
 public class Pokemon {
     private int id;
@@ -84,6 +84,15 @@ public class Pokemon {
      * Descricao: esse metodo escreve na tela do 
      * console os atributos do pokemon
      */
-    public void exibir_pokemon () {}
+    public void exibir_pokemon () {
+
+
+        //Escreve a data
+        SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
+        System.out.println("Criacao do registro do pokemon");
+        System.out.println("Data: " + formatar_data.format(data_de_registro));
+        System.out.println("Horario: " + formatar_horario.format(data_de_registro));
+    }
 
 }
