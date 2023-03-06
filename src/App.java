@@ -34,12 +34,12 @@ public class App {
         FileOutputStream arq_db;
 	    DataOutputStream dos;
 
-        File arq_csv = new File("src\\planilha_teste.csv");
+        File arq_csv = new File("src/planilha_teste.csv");
         Scanner scanner = null;
 
         try {
             //Abre os objetos do arquivos db
-            arq_db = new FileOutputStream("src/base.db");
+            arq_db = new FileOutputStream("src/pokedex.db");
             dos = new DataOutputStream(arq_db);
 
             //Le arquivos csv
