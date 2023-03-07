@@ -56,8 +56,6 @@ public class App {
         File arq_csv = new File("src/pokedex.csv");
         Scanner scanner = null;
 
-        int cont = 0;
-
         try {
             //Abre os objetos do arquivos db
             arq_db = new FileOutputStream("src/pokedex.db");
@@ -74,29 +72,26 @@ public class App {
 
             //Le o arquivo csv e passa as informacoes para o arquivo db
             while (scanner.hasNextLine()) {
-                cont ++;
-
                 linha = new String(scanner.nextLine());
                 
                 //Trata a string lida e a coloca em um vetor de string
-                atributos_csv = tratar_string(linha).split(",");                
-                System.out.println(atributos_csv[9]);
+                atributos_csv = tratar_string(linha).split(",");
                 
                 //Cria o regirtro
-                // pokemon = new Pokemon (id_metadados, Integer.parseInt(atributos_csv[0]), 
-                //                     atributos_csv[1], Integer.parseInt(atributos_csv[2]),
-                //                     atributos_csv[5], Float.parseFloat(atributos_csv[8]), 
-                //                     Float.parseFloat(atributos_csv[9]), atributos_csv[6], 
-                //                     atributos_csv[7], Integer.parseInt(atributos_csv[10]), 
-                //                     Integer.parseInt(atributos_csv[11]), Integer.parseInt(atributos_csv[12]), 
-                //                     Integer.parseInt(atributos_csv[13]), Integer.parseInt(atributos_csv[14]),
-                //                     Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), Boolean.parseBoolean(atributos_csv[4]));
+                pokemon = new Pokemon (id_metadados, Integer.parseInt(atributos_csv[0]), 
+                                    atributos_csv[1], Integer.parseInt(atributos_csv[2]),
+                                    atributos_csv[5], Float.parseFloat(atributos_csv[8]), 
+                                    Float.parseFloat(atributos_csv[9]), atributos_csv[6], 
+                                    atributos_csv[7], Integer.parseInt(atributos_csv[10]), 
+                                    Integer.parseInt(atributos_csv[11]), Integer.parseInt(atributos_csv[12]), 
+                                    Integer.parseInt(atributos_csv[13]), Integer.parseInt(atributos_csv[14]),
+                                    Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), Boolean.parseBoolean(atributos_csv[4]));
 
-                // //Escreve o registro
-                // poke_info_byte = pokemon.toByteArray();
-                // dos.writeByte(' ');
-                // dos.writeInt(poke_info_byte.length);
-                // dos.write(poke_info_byte);
+                //Escreve o registro
+                poke_info_byte = pokemon.toByteArray();
+                dos.writeByte(' ');
+                dos.writeInt(poke_info_byte.length);
+                dos.write(poke_info_byte);
 
                 //Atualiza o id
                 id_metadados++;
