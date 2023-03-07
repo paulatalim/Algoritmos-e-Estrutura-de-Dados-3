@@ -45,7 +45,7 @@ public class App {
         FileOutputStream arq_db;
 	    DataOutputStream dos;
 
-        File arq_csv = new File("src/planilha_teste.csv");
+        File arq_csv = new File("src/pokedex.csv");
         Scanner scanner = null;
 
         try {
@@ -70,7 +70,14 @@ public class App {
                 atributos_csv = tratar_string(linha).split(",");                
 
                 //Cria o regirtro
-                poke = new Pokemon (id_metadados, atributos_csv[0], Integer.parseInt(atributos_csv[1]), atributos_csv[2].charAt(0));
+                poke = new Pokemon (id_metadados, Integer.parseInt(atributos_csv[0]), 
+                                    atributos_csv[1], Integer.parseInt(atributos_csv[2]),
+                                    atributos_csv[5], Float.parseFloat(atributos_csv[8]), 
+                                    Float.parseFloat(atributos_csv[9]), atributos_csv[6], 
+                                    atributos_csv[7], Integer.parseInt(atributos_csv[10]), 
+                                    Integer.parseInt(atributos_csv[11]), Integer.parseInt(atributos_csv[12]), 
+                                    Integer.parseInt(atributos_csv[13]), Integer.parseInt(atributos_csv[14]),
+                                    Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), Boolean.parseBoolean(atributos_csv[4]));
 
                 //Escreve o registro
                 vet_byte = poke.toByteArray();
