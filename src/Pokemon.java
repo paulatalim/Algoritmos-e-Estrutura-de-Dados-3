@@ -30,9 +30,19 @@ public class Pokemon {
     Pokemon () {
         id = -1;
         num_pokedex = -1;
-        nome = " ";
-        tipo1 = " ";
-        tipo2 = " ";
+        nome = "null";
+        geracao = -1;
+        especie = "null";
+        altura = -1;
+        peso = -1;
+        tipo1 = "null";
+        tipo2 = "null";
+        hp = -1;
+        ataque = -1;
+        defesa = -1;
+        ataque_especial = -1;
+        defesa_especial = -1;
+        velocidade = -1;
         eh_mistico = false;
         eh_lendario = false;
         data_de_registro = new Date();
