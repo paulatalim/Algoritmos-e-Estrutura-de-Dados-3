@@ -79,19 +79,15 @@ public class Pokemon {
         dos.writeUTF(especie);
         dos.writeFloat(altura);
         dos.writeFloat(peso);
-
         dos.writeUTF(tipo1 + "-" + tipo2);
-
         dos.writeInt(hp);
         dos.writeInt(ataque);
         dos.writeInt(defesa);
         dos.writeInt(ataque_especial);
         dos.writeInt(defesa_especial);
         dos.writeInt(velocidade);
-        
         dos.writeBoolean(eh_mistico);
         dos.writeBoolean(eh_lendario);
-
         dos.writeLong(data_de_registro.getTime());
 
 		//Retorno do vetor de bytes para escrever no arquivo
@@ -106,16 +102,31 @@ public class Pokemon {
     public void fromByteArray (byte[] ba) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
+        String[] types;
 
         id = dis.readInt();
+        num_pokedex = dis.readInt();
         nome = dis.readUTF();
+        
+        geracao= dis.readInt();
+        especie = dis.readUTF();
+        altura = dis.readFloat();
+        peso = dis.readFloat();
+        types = dis.readUTF().split("-");
+        
+        hp = dis.readInt();
+        ataque = dis.readInt();
+        defesa = dis.readInt();
+        ataque_especial = dis.readInt();
+        defesa_especial = dis.readInt();
+        velocidade = dis.readInt();
+        eh_mistico = dis.readBoolean();
+        eh_lendario = dis.readBoolean();
 
         data_de_registro = new Date(dis.readLong());
 
-        // idLivro = dis.readInt();
-        // titulo = dis.readUTF();
-        // autor = dis.readUTF();
-        // preco = dis.readFloat();
+        tipo1 = types[0];
+        tipo2 = types[1];
     }
 
     /*
