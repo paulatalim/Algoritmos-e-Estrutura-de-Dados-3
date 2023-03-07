@@ -73,8 +73,24 @@ public class Pokemon {
         DataOutputStream dos = new DataOutputStream(baos);
         
         dos.writeInt(id);
+        dos.writeInt(num_pokedex);
         dos.writeUTF(nome);
+        dos.writeInt(geracao);
+        dos.writeUTF(especie);
+        dos.writeFloat(altura);
+        dos.writeFloat(peso);
+
+        dos.writeUTF(tipo1 + "-" + tipo2);
+
+        dos.writeInt(hp);
+        dos.writeInt(ataque);
+        dos.writeInt(defesa);
+        dos.writeInt(ataque_especial);
+        dos.writeInt(defesa_especial);
+        dos.writeInt(velocidade);
         
+        dos.writeBoolean(eh_mistico);
+        dos.writeBoolean(eh_lendario);
 
         dos.writeLong(data_de_registro.getTime());
 
