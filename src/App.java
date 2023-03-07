@@ -99,7 +99,7 @@ public class App {
             arq_db.close();
             dos.close();
             
-            arq_atual.writeInt(--id_metadados);
+            arq_atual.writeInt(id_metadados-1);
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
