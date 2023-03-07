@@ -26,9 +26,6 @@ public class Pokemon {
     private boolean eh_lendario;
     private Date data_de_registro;
 
-    private int idade;
-    private char genre;
-
     // CONSTRUTOR
     Pokemon () {
         id = -1;
@@ -41,11 +38,28 @@ public class Pokemon {
         data_de_registro = new Date();
     }
 
-    Pokemon (int id, String nome, int idade, char genre) {
+    Pokemon (int id, int num_pokedex, String nome, int geracao,
+            String especie, float altura, float peso, String tipo1,
+            String tipo2, int hp, int ataque, int defesa, int ataque_especial,
+            int defesa_especial, int velocidade, boolean eh_mistico, boolean eh_lendario) {
+
+        
         this.id = id;
         this.nome = nome;
-        this.idade = idade;
-        this.genre = genre;
+        this.geracao = geracao;
+        this.especie = especie;
+        this.altura = altura;
+        this.peso = peso;
+        this.tipo1 = tipo1;
+        this.tipo2 = tipo2;
+        this.hp = hp;
+        this.ataque = ataque;
+        this.defesa = defesa;
+        this.ataque_especial = ataque_especial;
+        this.defesa_especial = defesa_especial;
+        this.velocidade = velocidade;
+        this.eh_mistico = eh_mistico;
+        this.eh_lendario = eh_lendario;
 
         data_de_registro = new Date();
     }
@@ -61,8 +75,7 @@ public class Pokemon {
         
         dos.writeInt(id);
         dos.writeUTF(nome);
-        dos.writeInt(idade);
-        dos.writeChar(genre);
+        
 
         dos.writeLong(data_de_registro.getTime());
 
