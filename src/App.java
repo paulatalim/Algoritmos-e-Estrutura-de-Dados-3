@@ -36,9 +36,9 @@ public class App {
     }
 
     public static void passar_arq_csv_para_db (RandomAccessFile arq_atual)  {
-        Pokemon poke;
+        Pokemon pokemon;
         String[] atributos_csv;
-        byte[] vet_byte;
+        byte[] poke_info_byte;
         String linha;
         int id_metadados = 0;
         
@@ -70,7 +70,7 @@ public class App {
                 atributos_csv = tratar_string(linha).split(",");                
 
                 //Cria o regirtro
-                poke = new Pokemon (id_metadados, Integer.parseInt(atributos_csv[0]), 
+                pokemon = new Pokemon (id_metadados, Integer.parseInt(atributos_csv[0]), 
                                     atributos_csv[1], Integer.parseInt(atributos_csv[2]),
                                     atributos_csv[5], Float.parseFloat(atributos_csv[8]), 
                                     Float.parseFloat(atributos_csv[9]), atributos_csv[6], 
@@ -80,10 +80,11 @@ public class App {
                                     Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), Boolean.parseBoolean(atributos_csv[4]));
 
                 //Escreve o registro
-                vet_byte = poke.toByteArray();
+                
+                poke_info_byte = pokemon.toByteArray();
                 dos.writeByte(' ');
-                dos.writeInt(vet_byte.length);
-                dos.write(vet_byte);
+                dos.writeInt(poke_info_byte.length);
+                dos.write(poke_info_byte);
 
                 //Atualiza o id
                 id_metadados++;
