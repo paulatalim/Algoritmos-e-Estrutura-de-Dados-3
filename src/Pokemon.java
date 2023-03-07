@@ -73,6 +73,11 @@ public class Pokemon {
         data_de_registro = new Date();
     }
 
+    /*** METODOS GET ***/
+    
+    /*** METODOS SET ***/
+
+    /*** OUTROS METODOS ***/
     /*
      * Descricao: essa funcao elabora um vetor de bytes com 
      * seus atributos para a insercao no arquivo
