@@ -37,7 +37,6 @@ public class App {
                 
                 i--;
             }
-            //System.out.println(sb);
         }
 
         return sb.toString();
