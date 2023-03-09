@@ -7,8 +7,8 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Pokemon {
+
     private int id;
-    private float id_secundario;
     private int num_pokedex;
     private String nome;
     private int geracao;
@@ -55,7 +55,6 @@ public class Pokemon {
             int defesa_especial, int velocidade, boolean eh_mistico, boolean eh_lendario) 
     {
         this.id = id;
-        id_secundario = id * 0.00001f;
         this.nome = nome;
         this.geracao = geracao;
         this.especie = especie;
@@ -70,27 +69,19 @@ public class Pokemon {
         this.defesa_especial = defesa_especial;
         this.velocidade = velocidade;
         this.eh_mistico = eh_mistico;
-        this.eh_lendario = eh_lendario;        
+        this.eh_lendario = eh_lendario;
+
         data_de_registro = new Date();
     }
 
     /*** METODOS GET E SET***/
+
     //id
     public int getid() {
         return id;
     }
-
     public void setNome(int id) {
         this.id = id;
-    }
-
-    //id_secundario
-    public float getIdSecundario () {
-        return id_secundario;
-    }
-
-    public void setIdSecundario (float id_secundario) {
-        this.id_secundario = id_secundario;
     }
 
     //num_pokedex
@@ -106,7 +97,6 @@ public class Pokemon {
     public String getnome() {
         return nome;
     }
-
     public void setnome(String nome) {
         this.nome = nome;
     }
@@ -115,7 +105,6 @@ public class Pokemon {
     public int getgeracao() {
         return geracao;
     }
-
     public void setgeracao(int geracao) {
         this.geracao = geracao;
     }
@@ -124,7 +113,6 @@ public class Pokemon {
     public String getespecie() {
         return especie;
     }
-    
     public void setespecie (String especie) {
         this.especie = especie;
     }
@@ -133,7 +121,6 @@ public class Pokemon {
     public float getaltura() {
         return altura;
     }
-
     public void setaltura(float altura) {
         this.altura = altura;
     }
@@ -142,7 +129,6 @@ public class Pokemon {
     public float getpeso() {
         return peso;
     }
-
     public void setpeso(float peso) {
         this.peso= peso;
     }
@@ -151,7 +137,6 @@ public class Pokemon {
     public String gettipo1() {
         return tipo1;
     }
-
     public void settipo1(String tipo1) {
         this.tipo1 = tipo1;
     }
@@ -160,7 +145,6 @@ public class Pokemon {
     public String gettipo2() {
         return tipo2;
     }
-
     public void settipo2(String tipo2) {
         this.tipo2 = tipo2;
     }
@@ -169,7 +153,6 @@ public class Pokemon {
     public int gethp() {
         return hp;
     }
-
     public void sethp(int  hp) {
         this. hp = hp;
     }
@@ -178,16 +161,14 @@ public class Pokemon {
     public int getataque() {
         return ataque;
     }
-
     public void setataque(int ataque) {
         this.ataque = ataque;
     }
 
-    //defesa
-    public int getdefesa() {
+     //defesa
+     public int getdefesa() {
         return defesa;
     }
-
     public void setdefesa(int defesa) {
         this.defesa = defesa;
     }
@@ -196,7 +177,6 @@ public class Pokemon {
     public int getataque_especial() {
         return ataque_especial;
     }
-
     public void setataque_especial(int ataque_especial) {
         this.ataque_especial = ataque_especial;
     }
@@ -205,34 +185,30 @@ public class Pokemon {
     public int getdefesa_especial() {
         return defesa_especial;
     }
-
     public void setdefesa_especial(int defesa_especial) {
         this.defesa_especial = defesa_especial;
     }
 
-    //velocidade
-    public int getvelocidade() {
+     //velocidade
+     public int getvelocidade() {
         return velocidade;
     }
-
-    public void setvelocidade(int velocidade) {
+    public void setvelocidade(int velocidadel) {
         this.velocidade = velocidade;
     }
 
-    //eh_mistico
-    public boolean geteh_mistico() {
+     //eh_mistico
+     public boolean geteh_mistico() {
         return eh_mistico;
     }
-
     public void seteh_mistico(boolean eh_mistico) {
         this.eh_mistico = eh_mistico;
     }
 
      //eh_lendario
-    public boolean geteh_lendario() {
+     public boolean geteh_lendario() {
         return eh_lendario;
     }
-
     public void seteh_lendario(boolean eh_lendario) {
         this.eh_lendario = eh_lendario;
     }
@@ -241,12 +217,11 @@ public class Pokemon {
     public Date getdata_de_registro() {
         return data_de_registro;
     }
-
     public void setdata_de_registro(Date data_de_registro) {
         this.data_de_registro = data_de_registro;
     }
     
-
+    
     /*** OUTROS METODOS ***/
     /*
      * Descricao: essa funcao elabora um vetor de bytes com 
@@ -328,5 +303,6 @@ public class Pokemon {
         System.out.println("Data: " + formatar_data.format(data_de_registro));
         System.out.println("Horario: " + formatar_horario.format(data_de_registro));
     }
-
+    
 }
+
