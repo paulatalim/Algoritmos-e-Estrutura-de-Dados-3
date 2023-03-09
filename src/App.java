@@ -111,13 +111,42 @@ public class App {
         }
     }
 
+    public static void ordenacao (RandomAccessFile arq) throws Exception {
+        /* DISTRIBUICAO */
+        //Criacao de arquivos temporarios
+        File arq_temp_1 = new File ("src/arqTemp1.db");
+        File arq_temp_2 = new File ("src/arqTemp2.db");
+        File arq_temp_3 = new File ("src/arqTemp3.db");
+        File arq_temp_4 = new File ("src/arqTemp4.db");
+        File arq_temp_5 = new File ("src/arqTemp5.db");
+        File arq_temp_6 = new File ("src/arqTemp6.db");
+
+        arq_temp_1.createNewFile();
+        arq_temp_2.createNewFile();
+        arq_temp_3.createNewFile();
+        arq_temp_4.createNewFile();
+        arq_temp_5.createNewFile();
+        arq_temp_6.createNewFile();
+
+        //Reinicia o ponteiro
+        arq.seek(0);
+
+        Pokemon[] bloco = new Pokemon [7];
+        
+    }
+
     public static void main(String[] args) {
         RandomAccessFile arq;
 
         try {
 
             arq = new RandomAccessFile("src/pokedex.db", "rw");
-            passar_arq_csv_para_db(arq);
+            
+
+            
+            ordenacao(arq);
+
+
             arq.close();
 
         } catch (Exception e) {
