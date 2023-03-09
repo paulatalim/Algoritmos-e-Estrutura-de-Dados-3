@@ -111,6 +111,7 @@ public class App {
         }
     }
 
+    public static heap () {}
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         /* DISTRIBUICAO */
         //Criacao de arquivos temporarios
