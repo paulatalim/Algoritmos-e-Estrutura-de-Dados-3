@@ -199,8 +199,19 @@ public class App {
 
         Pokemon[] bloco = new Pokemon [7];
 
-        heapsort(bloco);
+        //Preenche o vetor com os registros
+        int qnt_registros = arq.readInt();
+
+        arq.readByte();
+        arq.readInt();
         
+        //Ordena o vetor com o heap minimo
+        heapsort(bloco);
+        //Leitura de mais registros
+        
+        
+        
+
     }
 
     public static void main(String[] args) {
