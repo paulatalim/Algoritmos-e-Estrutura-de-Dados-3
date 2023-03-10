@@ -178,6 +178,8 @@ public class App {
     }
     
     public static void ordenacao (RandomAccessFile arq) throws Exception {
+        int i;
+
         /* DISTRIBUICAO */
         //Criacao de arquivos temporarios
         RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
@@ -204,7 +206,7 @@ public class App {
         byte lapide;
 
         //Preenche o vetor com os registros
-        for (int i = 0; i < bloco.length; i++) {
+        for (i = 0; i < bloco.length; i++) {
             //Le o arquivo
             lapide = arq.readByte();
             tam = arq.readInt();
@@ -227,73 +229,71 @@ public class App {
         Pokemon novo_pokemon = new Pokemon();
         Pokemon antigo_pokemon = new Pokemon();
 
-        //Le o arquivo
-        lapide = arq.readByte();
-        tam = arq.readInt();
-        poke_vet_byte = new byte [tam];
-        arq.read(poke_vet_byte);
+        while (arq.getFilePointer() < arq.length()) {
+            //Le o arquivo
+            lapide = arq.readByte();
+            tam = arq.readInt();
+            poke_vet_byte = new byte [tam];
+            arq.read(poke_vet_byte);
 
-        if (lapide == ' ') {    
-            novo_pokemon.fromByteArray(poke_vet_byte);
-        }
-
-        if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
-            novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
-            
-        }
-
-        int cont = 0;
-
-        //Verificando se ha a troca de arquivo
-        if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
-            cont ++;
-            
-            //Verifica se reinicia o contador
-            if (cont == 3) {
-                cont = 0;
+            if (lapide == ' ') {    
+                novo_pokemon.fromByteArray(poke_vet_byte);
             }
+
+            if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
+                novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
+                
+            }
+
+            int cont = 0;
+
+            //Verificando se ha a troca de arquivo
+            if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
+                cont ++;
+                
+                //Verifica se reinicia o contador
+                if (cont == 3) {
+                    cont = 0;
+                }
+            }
+
+            //Escreve o pokemon no arquivo
+            antigo_pokemon = bloco[0];
+            poke_vet_byte = bloco[0].toByteArray();
+
+            switch (cont) {
+                case 0:
+                    arq_temp_1.writeInt(poke_vet_byte.length);
+                    arq_temp_1.write(poke_vet_byte);
+                    break;
+                case 1:
+                    arq_temp_2.writeInt(poke_vet_byte.length);
+                    arq_temp_2.write(poke_vet_byte);
+                    break;
+                default:
+                    arq_temp_3.writeInt(poke_vet_byte.length);
+                    arq_temp_3.write(poke_vet_byte);
+            }
+            
+            //Inclui novo pokemon do vetor
+            bloco[0] = novo_pokemon;
+
+            //Ordena o vetor com heap
+            heapsort(bloco);
         }
-
-        //Escreve o pokemon no arquivo
-        antigo_pokemon = bloco[0];
-        poke_vet_byte = bloco[0].toByteArray();
-
-        switch (cont) {
-            case 0:
-                arq_temp_1.writeInt(poke_vet_byte.length);
-                arq_temp_1.write(poke_vet_byte);
-                break;
-            case 1:
-                arq_temp_2.writeInt(poke_vet_byte.length);
-                arq_temp_2.write(poke_vet_byte);
-                break;
-            default:
-                arq_temp_3.writeInt(poke_vet_byte.length);
-                arq_temp_3.write(poke_vet_byte);
-        }
         
-        
-
-
-
-        //Inclui novo pokemon
-
-        
-        
-
-        //Fecha os arquivos
+        //Fecha os arquivos temporarios
         arq_temp_1.close();
         arq_temp_2.close();
         arq_temp_3.close();
-
-        //Deleta os arquivos
-        File arq1;
-
-        arq1 = new File ("src/arqTemp1.db");
-
-        arq1.delete();
         
-        
+
+        //Deleta os arquivos temporarios
+        File arq_temp;
+        for (i = 0; i < 3; i++) {
+            arq_temp = new File ("src/arqTemp" + i + ".db");
+            arq_temp.delete();
+        }    
 
     }
 
