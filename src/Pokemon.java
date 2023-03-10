@@ -288,8 +288,11 @@ public class Pokemon {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         String[] types;
+        String type;
 
+        //Le o arquivo
         id = dis.readInt();
+        id_secundario = id * 0.00001f;
         num_pokedex = dis.readInt();
         nome = dis.readUTF();
         
@@ -297,7 +300,7 @@ public class Pokemon {
         especie = dis.readUTF();
         altura = dis.readFloat();
         peso = dis.readFloat();
-        types = dis.readUTF().split("-");
+        type = dis.readUTF();
         
         hp = dis.readInt();
         ataque = dis.readInt();
@@ -310,8 +313,13 @@ public class Pokemon {
 
         data_de_registro = new Date(dis.readLong());
 
+        //Atribui os valores do tipo
+        types = type.split("-");
         tipo1 = types[0];
-        tipo2 = types[1];
+
+        //Verifica se o pokemon possui tipo 2
+        if (types.length > 1)
+            tipo2 = types[1];
     }
 
     /*

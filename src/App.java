@@ -198,16 +198,51 @@ public class App {
         arq.seek(0);
 
         Pokemon[] bloco = new Pokemon [7];
+        
+        int qnt_registros = arq.readInt();
+        int tam;
+        byte[] poke_vet_byte;
 
         //Preenche o vetor com os registros
-        int qnt_registros = arq.readInt();
-
-        arq.readByte();
-        arq.readInt();
+        for (int i = 0; i < bloco.length; i++) {
+            //Verifica se o arquivo foi excluido
+            if (arq.readByte() == ' ') {
+                tam = arq.readInt();
+                poke_vet_byte = new byte [tam];
+                arq.read(poke_vet_byte);
+        
+                //Cria e registra o pokemon
+                bloco[i] = new Pokemon();
+                bloco[i].fromByteArray(poke_vet_byte);
+            
+            } else {
+                //Le o arquivo porem nao registra no vetor
+                tam = arq.readInt();
+                poke_vet_byte = new byte [tam];
+                arq.read(poke_vet_byte);
+            }
+        }
         
         //Ordena o vetor com o heap minimo
         heapsort(bloco);
-        //Leitura de mais registros
+
+        for (int i = 0; i < bloco.length; i++) {
+            System.out.println(bloco[i].getIdSecundario());
+        }
+
+        //Leitura do proximo registro
+        //Pokemon novo_pokemon = new Pokemon();
+
+        // if (arq.readByte() == ' ') {
+        //     tam = arq.readInt();
+        //     poke_vet_byte = new byte [tam];
+        //     arq.read(poke_vet_byte);
+    
+        //     novo_pokemon.fromByteArray(poke_vet_byte);
+        // } else {
+        //     arq.seek(arq.getFilePointer() + arq.readInt());
+        // }
+
         
         
         
@@ -220,8 +255,11 @@ public class App {
         try {
 
             arq = new RandomAccessFile("src/pokedex.db", "rw");
+            ordenacao(arq);
             arq.close();
-
+        // catch (Exception e) {
+        //     e.printStackTrace();
+        // }
         } catch (Exception e) {
             e.printStackTrace();
         }
