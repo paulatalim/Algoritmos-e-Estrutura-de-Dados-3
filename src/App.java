@@ -112,9 +112,9 @@ public class App {
     }
 
     /*
-    * Descricao: essa funcao troca dois elementos de um vetor de inteiros
-    * Parametros: um vetor de inteiros (vetor que tera os 
-    * elementos trocados) e dois inteiros (indice dos 
+    * Descricao: essa funcao troca dois elementos de um vetor de pokrmons
+    * Parametros: um vetor de pokrmons (vetor que tera os 
+    * elementos trocados) e dois pokrmons (indice dos 
     * dois elementos a serem trocados)
     */
     public static void swap (Pokemon[] vet, int i, int j) {
@@ -145,7 +145,7 @@ public class App {
     * Parametros: um vetor de inteiros (vetor a ser construido 
     * a arvore heap) e um inteiro (tamanho valido do vetor)
     */
-    public static void construir (Pokemon[] bloco, int tam) {
+    public static void construir_heap (Pokemon[] bloco, int tam) {
         int indice = indice_pai(tam);
         int i = tam;
 
@@ -163,17 +163,16 @@ public class App {
     }
 
     /* 
-    * Descricao: essa funcao ordena um vetor com numeros 
-    * do tipo inteiro em ordem crescente com o metodo HeapSort
+    * Descricao: ordena um vetor de pokemons com o heap min
     * 
-    * Parametro: um vetor de inteiros (vetor a ser ordenado)
+    * Parametro: um vetor de pokemons (vetor a ser ordenado)
     */
-    public static void heapsort (Pokemon[] bloco) {
+    public static void fazer_heapmin (Pokemon[] bloco) {
         int tam;
 
         //Construcao do heap
         for (tam = 1; tam < bloco.length; tam++) {
-            construir(bloco, tam);
+            construir_heap(bloco, tam);
         }
     }
     
@@ -193,15 +192,16 @@ public class App {
         // RandomAccessFile arq_temp_5 = new RandomAccessFile ("src/arqTemp5.db", "rw");
         // RandomAccessFile arq_temp_6 = new RandomAccessFile ("src/arqTemp6.db", "rw");
 
+        
         //Reinicia o ponteiro
         arq.seek(0);
 
-        Pokemon[] bloco = new Pokemon [7];
+        Pokemon[] bloco = new Pokemon [100];
         int qnt_registros = arq.readInt();
         int tam;
         byte[] poke_vet_byte;
         byte lapide;
-
+        
         //Preenche o vetor com os registros
         for (i = 0; i < bloco.length; i++) {
             //Le o arquivo
@@ -220,7 +220,7 @@ public class App {
         }
         
         //Ordena o vetor com o heap minimo
-        heapsort(bloco);
+        fazer_heapmin(bloco);
 
         //Leitura do proximo registro
         Pokemon novo_pokemon = new Pokemon();
@@ -280,7 +280,7 @@ public class App {
             bloco[0] = novo_pokemon;
 
             //Ordena o vetor com heap
-            heapsort(bloco);
+            fazer_heapmin(bloco);
         }
         
         /* INTERCALACAO */
@@ -292,7 +292,7 @@ public class App {
 
         System.out.println("Finalizando Intercalacao ...");
         limpar_console();
-        
+
         //Fecha os arquivos temporarios
         arq_temp_1.close();
         arq_temp_2.close();
