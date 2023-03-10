@@ -187,15 +187,14 @@ public class App {
         //Criacao de arquivos temporarios
         RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
         RandomAccessFile arq_temp_2 = new RandomAccessFile ("src/arqTemp2.db", "rw");
-        RandomAccessFile arq_temp_3 = new RandomAccessFile ("src/arqTemp3.db", "rw");
+        
         // RandomAccessFile arq_temp_4 = new RandomAccessFile ("src/arqTemp4.db", "rw");
         // RandomAccessFile arq_temp_5 = new RandomAccessFile ("src/arqTemp5.db", "rw");
-        // RandomAccessFile arq_temp_6 = new RandomAccessFile ("src/arqTemp6.db", "rw");
     
         //Reinicia o ponteiro
         arq.seek(0);
 
-        Pokemon[] bloco = new Pokemon [100];
+        Pokemon[] bloco = new Pokemon [10];
         int qnt_segmentos = arq.readInt();
         int tam;
         byte[] poke_vet_byte;
@@ -229,7 +228,7 @@ public class App {
             //Leitura do proximo registro
             Pokemon novo_pokemon = new Pokemon();
             Pokemon antigo_pokemon = new Pokemon();
-            int cont = 0;
+            boolean escrever_arq1 = true;
 
             //Mensagem para o usuario
             System.out.println("Distribuindo pokemons...");
@@ -254,30 +253,19 @@ public class App {
 
                 //Verificando se ha a troca de arquivo
                 if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
-                    cont ++;
-                    
-                    //Verifica se reinicia o contador
-                    if (cont == 3) {
-                        cont = 0;
-                    }
+                    escrever_arq1 = !escrever_arq1;
                 }
 
                 //Escreve o pokemon no arquivo
                 antigo_pokemon = bloco[0];
                 poke_vet_byte = bloco[0].toByteArray();
 
-                switch (cont) {
-                    case 0:
-                        arq_temp_1.writeInt(poke_vet_byte.length);
-                        arq_temp_1.write(poke_vet_byte);
-                        break;
-                    case 1:
-                        arq_temp_2.writeInt(poke_vet_byte.length);
-                        arq_temp_2.write(poke_vet_byte);
-                        break;
-                    default:
-                        arq_temp_3.writeInt(poke_vet_byte.length);
-                        arq_temp_3.write(poke_vet_byte);
+                if (escrever_arq1) {
+                    arq_temp_1.writeInt(poke_vet_byte.length);
+                    arq_temp_1.write(poke_vet_byte);
+                } else {
+                    arq_temp_2.writeInt(poke_vet_byte.length);
+                    arq_temp_2.write(poke_vet_byte);
                 }
                 
                 //Inclui novo pokemon do vetor
@@ -300,13 +288,11 @@ public class App {
         } finally {
             //Fecha os arquivos temporarios
             arq_temp_1.close();
-            arq_temp_2.close();
-            arq_temp_3.close();
-            
+            arq_temp_2.close();            
 
             //Deleta os arquivos temporarios
             File arq_temp;
-            for (i = 1; i <=3 ; i++) {
+            for (i = 1; i <= 2; i++) {
                 arq_temp = new File ("src/arqTemp" + i + ".db");
                 arq_temp.delete();
             }
@@ -316,10 +302,16 @@ public class App {
     }
 
     public static void main(String[] args) {
+        
+
         RandomAccessFile arq;
 
         try {
-
+            //Capa do trab
+            System.out.println("Olaaa");
+            System.in.read();
+            limpar_console();
+            
             arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
             ordenacao(arq);
