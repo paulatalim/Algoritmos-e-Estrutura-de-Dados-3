@@ -181,11 +181,11 @@ public class App {
         /* DISTRIBUICAO */
         //Criacao de arquivos temporarios
         RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
-        // File arq_temp_2 = new File ("src/arqTemp2.db");
-        // File arq_temp_3 = new File ("src/arqTemp3.db");
-        // File arq_temp_4 = new File ("src/arqTemp4.db");
-        // File arq_temp_5 = new File ("src/arqTemp5.db");
-        // File arq_temp_6 = new File ("src/arqTemp6.db");
+        RandomAccessFile arq_temp_2 = new RandomAccessFile ("src/arqTemp2.db", "rw");
+        RandomAccessFile arq_temp_3 = new RandomAccessFile ("src/arqTemp3.db", "rw");
+        // RandomAccessFile arq_temp_4 = new RandomAccessFile ("src/arqTemp4.db", "rw");
+        // RandomAccessFile arq_temp_5 = new RandomAccessFile ("src/arqTemp5.db", "rw");
+        // RandomAccessFile arq_temp_6 = new RandomAccessFile ("src/arqTemp6.db", "rw");
 
         // arq_temp_1.createNewFile();
         // arq_temp_2.createNewFile();
@@ -279,6 +279,19 @@ public class App {
         //Inclui novo pokemon
 
         
+        
+
+        //Fecha os arquivos
+        arq_temp_1.close();
+        arq_temp_2.close();
+        arq_temp_3.close();
+
+        //Deleta os arquivos
+        File arq1;
+
+        arq1 = new File ("src/arqTemp1.db");
+
+        arq1.delete();
         
         
 
