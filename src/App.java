@@ -196,7 +196,7 @@ public class App {
         arq.seek(0);
 
         Pokemon[] bloco = new Pokemon [100];
-        int qnt_registros = arq.readInt();
+        int qnt_segmentos = arq.readInt();
         int tam;
         byte[] poke_vet_byte;
         byte lapide;
@@ -215,16 +215,21 @@ public class App {
                     //Cria e registra o pokemon
                     bloco[i] = new Pokemon();
                     bloco[i].fromByteArray(poke_vet_byte);
-                
+                } else {
+                    i--;
                 }
             }
             
+            //Atualizacao na quantidade de segmentos
+            qnt_segmentos -= 6;
+
             //Ordena o vetor com o heap minimo
             fazer_heapmin(bloco);
 
             //Leitura do proximo registro
             Pokemon novo_pokemon = new Pokemon();
             Pokemon antigo_pokemon = new Pokemon();
+            int cont = 0;
 
             //Mensagem para o usuario
             System.out.println("Distribuindo pokemons...");
@@ -243,10 +248,9 @@ public class App {
 
                 if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
                     novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
-                    
+                } else {
+                    qnt_segmentos --;
                 }
-
-                int cont = 0;
 
                 //Verificando se ha a troca de arquivo
                 if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
