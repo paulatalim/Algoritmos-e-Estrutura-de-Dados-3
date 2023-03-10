@@ -180,7 +180,7 @@ public class App {
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         /* DISTRIBUICAO */
         //Criacao de arquivos temporarios
-        RandomAccessFile arq_temp_1 = new RandomAccessFile ("src/arqTemp1.db");
+        RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
         // File arq_temp_2 = new File ("src/arqTemp2.db");
         // File arq_temp_3 = new File ("src/arqTemp3.db");
         // File arq_temp_4 = new File ("src/arqTemp4.db");
@@ -225,6 +225,7 @@ public class App {
 
         //Leitura do proximo registro
         Pokemon novo_pokemon = new Pokemon();
+        Pokemon antigo_pokemon = new Pokemon();
 
         //Le o arquivo
         lapide = arq.readByte();
@@ -241,9 +242,37 @@ public class App {
             
         }
 
+        int cont = 0;
+
+        //Verificando se ha a troca de arquivo
+        if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
+            cont ++;
+            
+            //Verifica se reinicia o contador
+            if (cont == 3) {
+                cont = 0;
+            }
+        }
+
         //Escreve o pokemon no arquivo
+        antigo_pokemon = bloco[0];
         poke_vet_byte = bloco[0].toByteArray();
-        arq_temp_1.writeInt(poke_vet_byte.length);
+
+        switch (cont) {
+            case 0:
+                arq_temp_1.writeInt(poke_vet_byte.length);
+                arq_temp_1.write(poke_vet_byte);
+                break;
+            case 1:
+                arq_temp_2.writeInt(poke_vet_byte.length);
+                arq_temp_2.write(poke_vet_byte);
+                break;
+            default:
+                arq_temp_3.writeInt(poke_vet_byte.length);
+                arq_temp_3.write(poke_vet_byte);
+        }
+        
+        
 
 
 
