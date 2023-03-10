@@ -189,13 +189,6 @@ public class App {
         // RandomAccessFile arq_temp_5 = new RandomAccessFile ("src/arqTemp5.db", "rw");
         // RandomAccessFile arq_temp_6 = new RandomAccessFile ("src/arqTemp6.db", "rw");
 
-        // arq_temp_1.createNewFile();
-        // arq_temp_2.createNewFile();
-        // arq_temp_3.createNewFile();
-        // arq_temp_4.createNewFile();
-        // arq_temp_5.createNewFile();
-        // arq_temp_6.createNewFile();
-
         //Reinicia o ponteiro
         arq.seek(0);
 
@@ -282,6 +275,7 @@ public class App {
             heapsort(bloco);
         }
         
+        /* INTERCALACAO */
         //Fecha os arquivos temporarios
         arq_temp_1.close();
         arq_temp_2.close();
