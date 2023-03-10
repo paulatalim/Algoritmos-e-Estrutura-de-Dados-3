@@ -30,6 +30,7 @@ public class Pokemon {
     // CONSTRUTOR
     Pokemon () {
         id = -1;
+        id_secundario = 0;
         num_pokedex = -1;
         nome = "null";
         geracao = -1;
