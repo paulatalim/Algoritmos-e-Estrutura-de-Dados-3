@@ -181,6 +181,10 @@ public class App {
         int i;
 
         /* DISTRIBUICAO */
+        //Mensagem para o usuario
+        System.out.println("Iniciando etapa de distribuicao...");
+        limpar_console();
+
         //Criacao de arquivos temporarios
         RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
         RandomAccessFile arq_temp_2 = new RandomAccessFile ("src/arqTemp2.db", "rw");
@@ -221,6 +225,10 @@ public class App {
         //Leitura do proximo registro
         Pokemon novo_pokemon = new Pokemon();
         Pokemon antigo_pokemon = new Pokemon();
+
+        //Mensagem para o usuario
+        System.out.println("Distribuindo pokemons...");
+        limpar_console();
 
         while (arq.getFilePointer() < arq.length()) {
             //Le o arquivo
@@ -276,6 +284,15 @@ public class App {
         }
         
         /* INTERCALACAO */
+        System.out.println("Iniciando etapa de intercalacao ...");
+        limpar_console();
+
+        System.out.println("Intercalando pokemons ...");
+        limpar_console();
+
+        System.out.println("Finalizando Intercalacao ...");
+        limpar_console();
+        
         //Fecha os arquivos temporarios
         arq_temp_1.close();
         arq_temp_2.close();
@@ -284,10 +301,12 @@ public class App {
 
         //Deleta os arquivos temporarios
         File arq_temp;
-        for (i = 0; i < 3; i++) {
+        for (i = 1; i <=3 ; i++) {
             arq_temp = new File ("src/arqTemp" + i + ".db");
             arq_temp.delete();
-        }    
+        }
+
+        System.out.println("Ordenacao concluida");
 
     }
 
@@ -300,9 +319,6 @@ public class App {
             passar_arq_csv_para_db(arq);
             ordenacao(arq);
             arq.close();
-        // catch (Exception e) {
-        //     e.printStackTrace();
-        // }
         } catch (Exception e) {
             e.printStackTrace();
         }
