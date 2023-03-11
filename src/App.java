@@ -321,12 +321,33 @@ public class App {
     public static void main(String[] args) {
         RandomAccessFile arq;
 
+
         try {
             //Capa do trab
+            System.out.println ( "\n" + "Mariana, Paula e Yago apresenta:" + "\n\n\n" 
+                                + "\t" + "      *** POKE-TRABALHO 1 ***     " + "\n" 
+                                + "\t" + "Algoritimos e Estrutura de dados 3" + "\n\n");
             
-            arq = new RandomAccessFile("src/pokedex.db", "rw");
+            System.out.println ( "\t" + "       \\:.             .:/" + "\n"
+                                + "\t" + "        \\``._________.''/" + "\n"
+                                + "\t" + "         \\             /" + "\n"
+                                + "\t" + " .--.--, / .':.   .':. \\" + "\n"
+                                + "\t" + "/__:  /  | '::' . '::' |" + "\n"
+                                + "\t" + "   / /   |`.   ._.   .'|" + "\n"
+                                + "\t" + "  / /    |.'         '.|" + "\n"
+                                + "\t" + " /___-_-,|.\\  \\   /  /.|" + "\n"
+                                + "\t" + "      // |''\\.;   ;,/ '|" + "\n"
+                                + "\t" + "      `==|:=         =:|" + "\n"
+                                + "\t" + "         `.          .'" + "\n"
+                                + "\t" + "           :-._____.-:" + "\n"
+                                + "\t" + "          `''       `''" + "\n\n\n");
+
+
+            
+            
+                                arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
-            ordenacao(arq);
+            //ordenacao(arq);
             arq.close();
         } catch (Exception e) {
             e.printStackTrace();
