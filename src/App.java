@@ -88,7 +88,7 @@ public class App {
 
                 //Escreve o registro
                 poke_info_byte = pokemon.toByteArray();
-                dos.writeByte(' ');
+                dos.writeByte('*');
                 dos.writeInt(poke_info_byte.length);
                 dos.write(poke_info_byte);
 
@@ -188,8 +188,8 @@ public class App {
         RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
         RandomAccessFile arq_temp_2 = new RandomAccessFile ("src/arqTemp2.db", "rw");
         
+        // RandomAccessFile arq_temp_3 = new RandomAccessFile ("src/arqTemp3.db", "rw");
         // RandomAccessFile arq_temp_4 = new RandomAccessFile ("src/arqTemp4.db", "rw");
-        // RandomAccessFile arq_temp_5 = new RandomAccessFile ("src/arqTemp5.db", "rw");
     
         //Reinicia o ponteiro
         arq.seek(0);
@@ -202,7 +202,7 @@ public class App {
         
         try {
             //Preenche o vetor com os registros
-            for (i = 0; i < bloco.length; i++) {
+            for (i = 0; i < bloco.length && arq.getFilePointer() < arq.length(); i++) {
                 //Le o arquivo
                 lapide = arq.readByte();
                 tam = arq.readInt();
@@ -219,60 +219,66 @@ public class App {
                 }
             }
             
-            //Atualizacao na quantidade de segmentos
-            qnt_segmentos -= 6;
+            //Verifica se ha mais pokemons para se ler
+            if (arq.getFilePointer() != arq.length()) {
+                //Atualizacao na quantidade de segmentos
+                qnt_segmentos -= 6;
 
-            //Ordena o vetor com o heap minimo
-            fazer_heapmin(bloco);
-
-            //Leitura do proximo registro
-            Pokemon novo_pokemon = new Pokemon();
-            Pokemon antigo_pokemon = new Pokemon();
-            boolean escrever_arq1 = true;
-
-            //Mensagem para o usuario
-            System.out.println("Distribuindo pokemons...");
-            limpar_console();
-        
-            while (arq.getFilePointer() < arq.length()) {
-                //Le o arquivo
-                lapide = arq.readByte();
-                tam = arq.readInt();
-                poke_vet_byte = new byte [tam];
-                arq.read(poke_vet_byte);
-
-                if (lapide == ' ') {    
-                    novo_pokemon.fromByteArray(poke_vet_byte);
-                }
-
-                if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
-                    novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
-                } else {
-                    qnt_segmentos --;
-                }
-
-                //Verificando se ha a troca de arquivo
-                if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
-                    escrever_arq1 = !escrever_arq1;
-                }
-
-                //Escreve o pokemon no arquivo
-                antigo_pokemon = bloco[0];
-                poke_vet_byte = bloco[0].toByteArray();
-
-                if (escrever_arq1) {
-                    arq_temp_1.writeInt(poke_vet_byte.length);
-                    arq_temp_1.write(poke_vet_byte);
-                } else {
-                    arq_temp_2.writeInt(poke_vet_byte.length);
-                    arq_temp_2.write(poke_vet_byte);
-                }
-                
-                //Inclui novo pokemon do vetor
-                bloco[0] = novo_pokemon;
-
-                //Ordena o vetor com heap
+                //Ordena o vetor com o heap minimo
                 fazer_heapmin(bloco);
+
+                //Leitura do proximo registro
+                Pokemon novo_pokemon = new Pokemon();
+                Pokemon antigo_pokemon = new Pokemon();
+                boolean escrever_arq1 = true;
+
+                //Mensagem para o usuario
+                System.out.println("Distribuindo pokemons...");
+                limpar_console();
+            
+                while (arq.getFilePointer() < arq.length()) {
+                    //Le o arquivo
+                    lapide = arq.readByte();
+                    tam = arq.readInt();
+                    poke_vet_byte = new byte [tam];
+                    arq.read(poke_vet_byte);
+
+                    //Registra o novo pokemon
+                    if (lapide == ' ') {    
+                        novo_pokemon.fromByteArray(poke_vet_byte);
+
+                        //Vetifica se o novo registro pode entrar no antigo segmento
+                        if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
+                            novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
+                        } else {
+                            //Atualiza a quantidade de segmentos
+                            qnt_segmentos --;
+                        }
+
+                        //Verificando se ha a troca de arquivo
+                        if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
+                            escrever_arq1 = !escrever_arq1;
+                        }
+
+                        //Escreve o pokemon no arquivo
+                        antigo_pokemon = bloco[0];
+                        poke_vet_byte = bloco[0].toByteArray();
+
+                        if (escrever_arq1) {
+                            arq_temp_1.writeInt(poke_vet_byte.length);
+                            arq_temp_1.write(poke_vet_byte);
+                        } else {
+                            arq_temp_2.writeInt(poke_vet_byte.length);
+                            arq_temp_2.write(poke_vet_byte);
+                        }
+                        
+                        //Inclui novo pokemon do vetor
+                        bloco[0] = novo_pokemon;
+
+                        //Ordena o vetor com heap
+                        fazer_heapmin(bloco);
+                    }
+                }
             }
             
             /* INTERCALACAO */
@@ -291,19 +297,17 @@ public class App {
             arq_temp_2.close();            
 
             //Deleta os arquivos temporarios
-            File arq_temp;
-            for (i = 1; i <= 2; i++) {
-                arq_temp = new File ("src/arqTemp" + i + ".db");
-                arq_temp.delete();
-            }
+            // File arq_temp;
+            // for (i = 1; i <= 2; i++) {
+            //     arq_temp = new File ("src/arqTemp" + i + ".db");
+            //     arq_temp.delete();
+            // }
         }
         System.out.println("Ordenacao concluida");
 
     }
 
     public static void main(String[] args) {
-        
-
         RandomAccessFile arq;
 
         try {
