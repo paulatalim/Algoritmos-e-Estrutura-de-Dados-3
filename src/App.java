@@ -220,7 +220,7 @@ public class App {
             }
             
             //Verifica se ha mais pokemons para se ler
-            if (arq.getFilePointer() != arq.length()) {
+            if (arq.getFilePointer() < arq.length()) {
                 //Atualizacao na quantidade de segmentos
                 qnt_segmentos -= 6;
 
@@ -284,6 +284,16 @@ public class App {
             /* INTERCALACAO */
             System.out.println("Iniciando etapa de intercalacao ...");
             limpar_console();
+
+            //Verificar se ha registros para intercalar
+            //Le o primeiro arquivo
+            //Le o segundo arquivo
+            //Intercarla
+            //Verifica se ha troca de arquivo
+            //Verificar se um dos arquivos está vazio
+
+            //Limpar antigos arquivos de leitura
+            //Trocar arquivos
 
             System.out.println("Intercalando pokemons ...");
             limpar_console();
