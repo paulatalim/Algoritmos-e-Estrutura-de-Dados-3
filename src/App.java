@@ -286,6 +286,7 @@ public class App {
             limpar_console();
 
             //Verificar se ha registros para intercalar
+            //Reinicia os ponteiros do arquivo
             //Le o primeiro arquivo
             //Le o segundo arquivo
             //Intercarla
@@ -307,11 +308,11 @@ public class App {
             arq_temp_2.close();            
 
             //Deleta os arquivos temporarios
-            // File arq_temp;
-            // for (i = 1; i <= 2; i++) {
-            //     arq_temp = new File ("src/arqTemp" + i + ".db");
-            //     arq_temp.delete();
-            // }
+            File arq_temp;
+            for (i = 1; i <= 2; i++) {
+                arq_temp = new File ("src/arqTemp" + i + ".db");
+                arq_temp.delete();
+            }
         }
         System.out.println("Ordenacao concluida");
 
