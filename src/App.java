@@ -188,7 +188,7 @@ public class App {
     * Parametro: um inteiro (indice do elemento filho)
     * Retorno: um inteiro (indice do elemento pai)
     */
-    public static int indice_pai (int filho) {
+    public static int calcular_indice_pai (int filho) {
         int flag = filho;
 
         filho /= 2;
@@ -206,16 +206,16 @@ public class App {
     * a arvore heap) e um pokemon (tamanho valido do vetor)
     */
     public static void construir_heap (Pokemon[] bloco, int tam) {
-        int indice = indice_pai(tam);
+        int indice = calcular_indice_pai(tam);
         int i = tam;
 
         while (i > 0 && bloco[i].getIdSecundario() < bloco[indice].getIdSecundario()) {
             swap (bloco, i, indice);
 
-            i = indice_pai(i);
+            i = calcular_indice_pai(i);
 
             if (indice % 2 == 0) {
-                indice = indice_pai(indice);
+                indice = calcular_indice_pai(indice);
             } else {
                 indice /= 2;
             }
