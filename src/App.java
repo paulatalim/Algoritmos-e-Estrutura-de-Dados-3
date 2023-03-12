@@ -64,7 +64,7 @@ public class App {
                             + "\t\t\t\t\t" + "           :-._____.-:"       + "\n"
                             + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n");
     }
-    
+
     /*
      * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
      * Parametro: uma string (linha lida do arquivo)
@@ -368,27 +368,8 @@ public class App {
 
     public static void main(String[] args) {
         RandomAccessFile arq;
-
-
+        
         try {
-            System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
-                                + "\t\t\t\t\t" + "*** Poke-obrigado e ate logo ***" + "\n\n");
-            
-            System.out.println (  "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
-                                + "\t\t\t\t\t" + "        \\``._________.''/ "  + "\n"
-                                + "\t\t\t\t\t" + "         \\             / "   + "\n"
-                                + "\t\t\t\t\t" + " .--.--, / .':.   .':. \\"    + "\n"
-                                + "\t\t\t\t\t" + "/__:  /  | '::' . '::' |"     + "\n"
-                                + "\t\t\t\t\t" + "   / /   |`.   ._.   ;'\"/"   + "\n"
-                                + "\t\t\t\t\t" + "  / /    |.'        /  /"     + "\n"
-                                + "\t\t\t\t\t" + " /___-_-,|.\\  \\       .|"   + "\n"
-                                + "\t\t\t\t\t" + "      // |''\\.;       '|"    + "\n"
-                                + "\t\t\t\t\t" + "      `==|:=         =:|"     + "\n"
-                                + "\t\t\t\t\t" + "         `.          .'"      + "\n"
-                                + "\t\t\t\t\t" + "           :-._____.-:"       + "\n"
-                                + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n");
-
-
             arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
             //ordenacao(arq);
