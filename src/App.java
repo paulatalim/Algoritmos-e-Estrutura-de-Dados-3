@@ -6,6 +6,10 @@ import java.io.RandomAccessFile;
 
 public class App {
 
+    /************************
+     * MANIPULACAO DE TELAS *
+     ************************/
+
     /*
      * Descricao: essa funcao limpa a tela do console de windows, linux e MacOS
      */
@@ -64,6 +68,10 @@ public class App {
                             + "\t\t\t\t\t" + "           :-._____.-:"       + "\n"
                             + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n");
     }
+
+    /*********************
+     * IMPORTACAO DE CSV *
+     *********************/
 
     /*
      * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
@@ -159,6 +167,10 @@ public class App {
         }
     }
 
+    /*********************
+     * ORDENACAO EXTERNA *
+     *********************/
+    
     /*
     * Descricao: essa funcao troca dois elementos de um vetor de pokrmons
     * Parametros: um vetor de pokrmons (vetor que tera os 
@@ -368,7 +380,7 @@ public class App {
 
     public static void main(String[] args) {
         RandomAccessFile arq;
-        
+
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
