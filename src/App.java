@@ -279,11 +279,11 @@ public class App {
                     bloco[i] = new Pokemon();
                     bloco[i].fromByteArray(poke_vet_byte);
                 } else {
-                    long ta = arq.readInt();
-                    long ponteiro =  arq.getFilePointer();
+                    // long ta = arq.readInt();
+                    // long ponteiro =  arq.getFilePointer();
                     
-                    //tam = arq.readInt();
-                    arq.seek(ponteiro + ta);
+                    //tam = ;
+                    arq.seek(arq.readInt() + arq.getFilePointer());
                     i--;
                 }
             }
@@ -393,7 +393,7 @@ public class App {
         
             in_1.close();
             in_2.close();
-            
+
         } finally {
             //Fecha os arquivos temporarios
             arq_temp_1.close();
