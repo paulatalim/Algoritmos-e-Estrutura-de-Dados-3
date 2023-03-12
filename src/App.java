@@ -45,6 +45,7 @@ public class App {
 
         exibir_fim_tela();
     }
+
     /*
      * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
      * Parametro: uma string (linha lida do arquivo)
@@ -351,7 +352,19 @@ public class App {
 
 
         try {
-            
+            System.out.println (  "        \\:.             .:/ " + "\n"
+                                + "         \\``._________.''/ " + "\n"
+                                + "          \\             / " + "\n"
+                                + "  .--.--, / .':.   .':. \\" + "\n"
+                                + " /__:  /  | '::' . '::' |" + "\n"
+                                + "    / /   |`.   ._.   ;'\"/" + "\n"
+                                + "   / /    |.'        /  /" + "\n"
+                                + "  /___-_-,|.\\  \\       .|" + "\n"
+                                + "       // |''\\.;       '|" + "\n"
+                                + "       `==|:=         =:|" + "\n"
+                                + "          `.          .'" + "\n"
+                                + "            :-._____.-:" + "\n"
+                                + "           `''       `''");
 
 
             arq = new RandomAccessFile("src/pokedex.db", "rw");
