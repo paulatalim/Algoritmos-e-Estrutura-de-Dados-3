@@ -352,10 +352,10 @@ public class App {
 
 
         try {
-            System.out.println (  "\n\t" + "Deligando poke-sistema ..." + "\n\n"
-                                + "\t\t\t\t\t" + "*** poke-obrigado e ate logo ***" + "\n\n");
+            System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
+                                + "\t\t\t\t\t" + "*** Poke-obrigado e ate logo ***" + "\n\n");
             
-            System.out.println ( "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
+            System.out.println (  "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
                                 + "\t\t\t\t\t" + "        \\``._________.''/ "  + "\n"
                                 + "\t\t\t\t\t" + "         \\             / "   + "\n"
                                 + "\t\t\t\t\t" + " .--.--, / .':.   .':. \\"    + "\n"
