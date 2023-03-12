@@ -352,22 +352,22 @@ public class App {
 
 
         try {
-            System.out.println("Deligando poke-sistema ...\n" +
-                                "\t\t\t\t\t" + "*** poke-obrigado e ate logo ***" + "\n\n\n");
+            System.out.println (  "\n\t" + "Deligando poke-sistema ..." + "\n\n"
+                                + "\t\t\t\t\t" + "*** poke-obrigado e ate logo ***" + "\n\n");
             
             System.out.println ( "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
-                                + "\t\t\t\t\t" +"        \\``._________.''/ "  + "\n"
-                                + "\t\t\t\t\t" +"         \\             / "   + "\n"
-                                + "\t\t\t\t\t" +" .--.--, / .':.   .':. \\"    + "\n"
-                                + "\t\t\t\t\t" +"/__:  /  | '::' . '::' |"     + "\n"
-                                + "\t\t\t\t\t" +"   / /   |`.   ._.   ;'\"/"   + "\n"
-                                + "\t\t\t\t\t" +"  / /    |.'        /  /"     + "\n"
-                                + "\t\t\t\t\t" +" /___-_-,|.\\  \\       .|"   + "\n"
-                                + "\t\t\t\t\t" +"      // |''\\.;       '|"    + "\n"
-                                + "\t\t\t\t\t" +"      `==|:=         =:|"     + "\n"
-                                +"\t\t\t\t\t" + "         `.          .'"      + "\n"
-                                +"\t\t\t\t\t" + "           :-._____.-:"       + "\n"
-                                +"\t\t\t\t\t" + "          `''       `''" + "\n\n\n");
+                                + "\t\t\t\t\t" + "        \\``._________.''/ "  + "\n"
+                                + "\t\t\t\t\t" + "         \\             / "   + "\n"
+                                + "\t\t\t\t\t" + " .--.--, / .':.   .':. \\"    + "\n"
+                                + "\t\t\t\t\t" + "/__:  /  | '::' . '::' |"     + "\n"
+                                + "\t\t\t\t\t" + "   / /   |`.   ._.   ;'\"/"   + "\n"
+                                + "\t\t\t\t\t" + "  / /    |.'        /  /"     + "\n"
+                                + "\t\t\t\t\t" + " /___-_-,|.\\  \\       .|"   + "\n"
+                                + "\t\t\t\t\t" + "      // |''\\.;       '|"    + "\n"
+                                + "\t\t\t\t\t" + "      `==|:=         =:|"     + "\n"
+                                + "\t\t\t\t\t" + "         `.          .'"      + "\n"
+                                + "\t\t\t\t\t" + "           :-._____.-:"       + "\n"
+                                + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n");
 
 
             arq = new RandomAccessFile("src/pokedex.db", "rw");
