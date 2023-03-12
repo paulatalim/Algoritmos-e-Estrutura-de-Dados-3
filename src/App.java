@@ -268,18 +268,22 @@ public class App {
         try {
             //Preenche o vetor com os registros
             for (i = 0; i < bloco.length && arq.getFilePointer() < arq.length(); i++) {
-                //Le o arquivo
-                lapide = arq.readByte();
-                tam = arq.readInt();
-                poke_vet_byte = new byte [tam];
-                arq.read(poke_vet_byte);
-
+                
                 //Verifica se o arquivo foi excluido
-                if (lapide == ' ') {
+                if (arq.readByte() == ' ') {
+                    //Le o arquivo
+                    poke_vet_byte = new byte [arq.readInt()];
+                    arq.read(poke_vet_byte);
+
                     //Cria e registra o pokemon
                     bloco[i] = new Pokemon();
                     bloco[i].fromByteArray(poke_vet_byte);
                 } else {
+                    long ta = arq.readInt();
+                    long ponteiro =  arq.getFilePointer();
+                    
+                    //tam = arq.readInt();
+                    arq.seek(ponteiro + ta);
                     i--;
                 }
             }
@@ -387,6 +391,9 @@ public class App {
             System.out.println("Finalizando Intercalacao ...");
             limpar_console();
         
+            in_1.close();
+            in_2.close();
+            
         } finally {
             //Fecha os arquivos temporarios
             arq_temp_1.close();
@@ -412,7 +419,7 @@ public class App {
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
-            //ordenacao(arq);
+            ordenacao(arq);
             arq.close();
         } catch (Exception e) {
             e.printStackTrace();
