@@ -18,11 +18,33 @@ public class App {
     }
 
     public static void exibir_fim_tela () throws Exception {
-        System.out.print("\n\n" + "Pressione 'enter' para continuar");
+        System.out.print("\n\n\t" + "Pressione 'enter' para continuar");
         System.in.read();
         limpar_console();
     }
-    
+
+    public static void exibir_tela_inicial_e_info () throws Exception {
+        //Capa do trab
+        System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresenta:"  + "\n\n\n" 
+                            + "\t\t\t\t\t" + "      *** POKE-TRABALHO ***"       + "\n" 
+                            + "\t\t\t\t\t" + "Algoritmos e Estrutura de Dados 3" + "\n\n");
+
+        System.out.println (  "\t\t\t\t\t" + "         \\:.             .:/" + "\n"
+                            + "\t\t\t\t\t" + "          \\``._________.''/"  + "\n"
+                            + "\t\t\t\t\t" + "           \\             /"   + "\n"
+                            + "\t\t\t\t\t" + "   .--.--, / .':.   .':. \\"   + "\n"
+                            + "\t\t\t\t\t" + "  /__:  /  | '::' . '::' |"    + "\n"
+                            + "\t\t\t\t\t" + "     / /   |`.   ._.   .'|"    + "\n"
+                            + "\t\t\t\t\t" + "    / /    |.'         '.|"    + "\n"
+                            + "\t\t\t\t\t" + "   /___-_-,|.\\  \\   /  /.|"  + "\n"
+                            + "\t\t\t\t\t" + "        // |''\\.;   ;,/ '|"   + "\n"
+                            + "\t\t\t\t\t" + "        `==|:=         =:|"    + "\n"
+                            + "\t\t\t\t\t" + "           `.          .'"     + "\n"
+                            + "\t\t\t\t\t" + "             :-._____.-:"      + "\n"
+                            + "\t\t\t\t\t" + "            `''       `''"     + "\n\n\n");
+
+        exibir_fim_tela();
+    }
     /*
      * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
      * Parametro: uma string (linha lida do arquivo)
@@ -329,24 +351,8 @@ public class App {
 
 
         try {
-            //Capa do trab
-            System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresenta:"  + "\n\n\n" 
-                                + "\t\t\t\t\t" + "      *** POKE-TRABALHO ***"       + "\n" 
-                                + "\t\t\t\t\t" + "Algoritmos e Estrutura de Dados 3" + "\n\n");
             
-            System.out.println (  "\t\t\t\t\t" + "         \\:.             .:/" + "\n"
-                                + "\t\t\t\t\t" + "          \\``._________.''/"  + "\n"
-                                + "\t\t\t\t\t" + "           \\             /"   + "\n"
-                                + "\t\t\t\t\t" + "   .--.--, / .':.   .':. \\"   + "\n"
-                                + "\t\t\t\t\t" + "  /__:  /  | '::' . '::' |"    + "\n"
-                                + "\t\t\t\t\t" + "     / /   |`.   ._.   .'|"    + "\n"
-                                + "\t\t\t\t\t" + "    / /    |.'         '.|"    + "\n"
-                                + "\t\t\t\t\t" + "   /___-_-,|.\\  \\   /  /.|"  + "\n"
-                                + "\t\t\t\t\t" + "        // |''\\.;   ;,/ '|"   + "\n"
-                                + "\t\t\t\t\t" + "        `==|:=         =:|"    + "\n"
-                                + "\t\t\t\t\t" + "           `.          .'"     + "\n"
-                                + "\t\t\t\t\t" + "             :-._____.-:"      + "\n"
-                                + "\t\t\t\t\t" + "            `''       `''"     + "\n\n\n");
+
 
             arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
