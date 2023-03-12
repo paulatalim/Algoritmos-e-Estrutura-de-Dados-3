@@ -170,11 +170,11 @@ public class App {
     /*********************
      * ORDENACAO EXTERNA *
      *********************/
-    
+
     /*
-    * Descricao: essa funcao troca dois elementos de um vetor de pokrmons
-    * Parametros: um vetor de pokrmons (vetor que tera os 
-    * elementos trocados) e dois pokrmons (indice dos 
+    * Descricao: essa funcao troca dois elementos de um vetor de pokemons
+    * Parametros: um vetor de pokemons (vetor que tera os 
+    * elementos trocados) e dois pokemons (indice dos 
     * dois elementos a serem trocados)
     */
     public static void swap (Pokemon[] vet, int i, int j) {
@@ -200,10 +200,10 @@ public class App {
     }
 
     /* 
-    * Descricao: essa funcao constroi o heap de um vetor de inteiros
+    * Descricao: essa funcao constroi o heap de um vetor de pokemons
     * 
-    * Parametros: um vetor de inteiros (vetor a ser construido 
-    * a arvore heap) e um inteiro (tamanho valido do vetor)
+    * Parametros: um vetor de pokemons (vetor a ser construido 
+    * a arvore heap) e um pokemon (tamanho valido do vetor)
     */
     public static void construir_heap (Pokemon[] bloco, int tam) {
         int indice = indice_pai(tam);
