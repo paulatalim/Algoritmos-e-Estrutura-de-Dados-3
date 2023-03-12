@@ -17,6 +17,12 @@ public class App {
 		    Runtime.getRuntime().exec("clear");
     }
 
+    public static void exibir_fim_tela () throws Exception {
+        System.out.print("\n\n" + "Pressione 'enter' para continuar");
+        System.in.read();
+        limpar_console();
+    }
+    
     /*
      * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
      * Parametro: uma string (linha lida do arquivo)
