@@ -324,28 +324,25 @@ public class App {
 
         try {
             //Capa do trab
-            System.out.println ( "\n" + "Mariana, Paula e Yago apresenta:" + "\n\n\n" 
-                                + "\t" + "      *** POKE-TRABALHO 1 ***     " + "\n" 
-                                + "\t" + "Algoritimos e Estrutura de dados 3" + "\n\n");
+            System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresenta:"  + "\n\n\n" 
+                                + "\t\t\t\t\t" + "      *** POKE-TRABALHO ***"       + "\n" 
+                                + "\t\t\t\t\t" + "Algoritmos e Estrutura de Dados 3" + "\n\n");
             
-            System.out.println ( "\t" + "       \\:.             .:/" + "\n"
-                                + "\t" + "        \\``._________.''/" + "\n"
-                                + "\t" + "         \\             /" + "\n"
-                                + "\t" + " .--.--, / .':.   .':. \\" + "\n"
-                                + "\t" + "/__:  /  | '::' . '::' |" + "\n"
-                                + "\t" + "   / /   |`.   ._.   .'|" + "\n"
-                                + "\t" + "  / /    |.'         '.|" + "\n"
-                                + "\t" + " /___-_-,|.\\  \\   /  /.|" + "\n"
-                                + "\t" + "      // |''\\.;   ;,/ '|" + "\n"
-                                + "\t" + "      `==|:=         =:|" + "\n"
-                                + "\t" + "         `.          .'" + "\n"
-                                + "\t" + "           :-._____.-:" + "\n"
-                                + "\t" + "          `''       `''" + "\n\n\n");
+            System.out.println (  "\t\t\t\t\t" + "         \\:.             .:/" + "\n"
+                                + "\t\t\t\t\t" + "          \\``._________.''/"  + "\n"
+                                + "\t\t\t\t\t" + "           \\             /"   + "\n"
+                                + "\t\t\t\t\t" + "   .--.--, / .':.   .':. \\"   + "\n"
+                                + "\t\t\t\t\t" + "  /__:  /  | '::' . '::' |"    + "\n"
+                                + "\t\t\t\t\t" + "     / /   |`.   ._.   .'|"    + "\n"
+                                + "\t\t\t\t\t" + "    / /    |.'         '.|"    + "\n"
+                                + "\t\t\t\t\t" + "   /___-_-,|.\\  \\   /  /.|"  + "\n"
+                                + "\t\t\t\t\t" + "        // |''\\.;   ;,/ '|"   + "\n"
+                                + "\t\t\t\t\t" + "        `==|:=         =:|"    + "\n"
+                                + "\t\t\t\t\t" + "           `.          .'"     + "\n"
+                                + "\t\t\t\t\t" + "             :-._____.-:"      + "\n"
+                                + "\t\t\t\t\t" + "            `''       `''"     + "\n\n\n");
 
-
-            
-            
-                                arq = new RandomAccessFile("src/pokedex.db", "rw");
+            arq = new RandomAccessFile("src/pokedex.db", "rw");
             passar_arq_csv_para_db(arq);
             //ordenacao(arq);
             arq.close();
