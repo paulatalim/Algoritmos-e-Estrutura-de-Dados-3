@@ -261,7 +261,7 @@ public class App {
 
         Pokemon[] bloco = new Pokemon [10];
         int qnt_segmentos = arq.readInt();
-        int tam;
+        //int tam;
         byte[] poke_vet_byte;
         byte lapide;
         
@@ -279,10 +279,7 @@ public class App {
                     bloco[i] = new Pokemon();
                     bloco[i].fromByteArray(poke_vet_byte);
                 } else {
-                    // long ta = arq.readInt();
-                    // long ponteiro =  arq.getFilePointer();
-                    
-                    //tam = ;
+                    //Pula o registro
                     arq.seek(arq.readInt() + arq.getFilePointer());
                     i--;
                 }
@@ -306,17 +303,14 @@ public class App {
                 limpar_console();
             
                 while (arq.getFilePointer() < arq.length()) {
-                    //Le o arquivo
-                    lapide = arq.readByte();
-                    tam = arq.readInt();
-                    poke_vet_byte = new byte [tam];
-                    arq.read(poke_vet_byte);
-
-                    //Registra o novo pokemon
-                    if (lapide == ' ') {    
+                    //Verifica se o registro existe
+                    if (arq.readByte() == ' ') {
+                        //Le o arquivo
+                        poke_vet_byte = new byte [arq.readInt()];
+                        arq.read(poke_vet_byte);
                         novo_pokemon.fromByteArray(poke_vet_byte);
 
-                        //Vetifica se o novo registro pode entrar no antigo segmento
+                        //Verifica se o novo registro pode entrar no antigo segmento
                         if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
                             novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
                         } else {
@@ -346,6 +340,9 @@ public class App {
 
                         //Ordena o vetor com heap
                         fazer_heapmin(bloco);
+                    } else {
+                        //Pula o arquivo
+                        arq.seek(arq.readInt() + arq.getFilePointer());
                     }
                 }
             }
