@@ -1,7 +1,10 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.DataInputStream;
 import java.io.RandomAccessFile;
 
 public class App {
@@ -245,8 +248,12 @@ public class App {
         limpar_console();
 
         //Criacao de arquivos temporarios
-        RandomAccessFile arq_temp_1 = new RandomAccessFile("src/arqTemp1.db", "rw");
-        RandomAccessFile arq_temp_2 = new RandomAccessFile ("src/arqTemp2.db", "rw");
+        FileOutputStream arq_temp_1 = new FileOutputStream ("src/arqTemp1.db");
+        FileOutputStream arq_temp_2 = new FileOutputStream ("src/arqTemp2.db");
+
+        //Abre para escrita
+        DataOutputStream out_1 = new DataOutputStream (arq_temp_1);
+        DataOutputStream out_2 = new DataOutputStream (arq_temp_2);
         
         // RandomAccessFile arq_temp_3 = new RandomAccessFile ("src/arqTemp3.db", "rw");
         // RandomAccessFile arq_temp_4 = new RandomAccessFile ("src/arqTemp4.db", "rw");
@@ -325,11 +332,11 @@ public class App {
                         poke_vet_byte = bloco[0].toByteArray();
 
                         if (escrever_arq1) {
-                            arq_temp_1.writeInt(poke_vet_byte.length);
-                            arq_temp_1.write(poke_vet_byte);
+                            out_1.writeInt(poke_vet_byte.length);
+                            out_1.write(poke_vet_byte);
                         } else {
-                            arq_temp_2.writeInt(poke_vet_byte.length);
-                            arq_temp_2.write(poke_vet_byte);
+                            out_2.writeInt(poke_vet_byte.length);
+                            out_2.write(poke_vet_byte);
                         }
                         
                         //Inclui novo pokemon do vetor
@@ -346,7 +353,8 @@ public class App {
             limpar_console();
 
             //Verificar se ha registros para intercalar
-            //Reinicia os ponteiros do arquivo
+            //Fecha arquivo de escrita para leitura
+            //Abre arquivo para escrita
             //Le o primeiro arquivo
             //Le o segundo arquivo
             //Intercarla
@@ -365,7 +373,10 @@ public class App {
         } finally {
             //Fecha os arquivos temporarios
             arq_temp_1.close();
-            arq_temp_2.close();            
+            arq_temp_2.close();
+
+            out_1.close();
+            out_2.close();
 
             //Deleta os arquivos temporarios
             File arq_temp;
