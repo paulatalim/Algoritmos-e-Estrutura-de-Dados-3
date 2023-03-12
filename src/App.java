@@ -254,8 +254,7 @@ public class App {
         DataOutputStream out_1 = new DataOutputStream (arq_temp_1);
         DataOutputStream out_2 = new DataOutputStream (arq_temp_2);
         
-        // RandomAccessFile arq_temp_3 = new RandomAccessFile ("src/arqTemp3.db", "rw");
-        // RandomAccessFile arq_temp_4 = new RandomAccessFile ("src/arqTemp4.db", "rw");
+        
     
         //Reinicia o ponteiro
         arq.seek(0);
@@ -352,8 +351,27 @@ public class App {
             limpar_console();
 
             //Verificar se ha registros para intercalar
+
             //Fecha arquivo de escrita para leitura
-            //Abre arquivo para escrita
+            arq_temp_1.close();
+            arq_temp_2.close();
+
+            out_1.close();
+            out_2.close();
+
+            FileInputStream arq_in_1 = new FileInputStream("src/arqTemp1.db");
+            FileInputStream arq_in_2 = new FileInputStream("src/arqTemp2.db");
+
+            FileOutputStream arq_out_1 = new FileOutputStream ("src/arqTemp3.db");
+            FileOutputStream arq_out_2 = new FileOutputStream ("src/arqTemp4.db");
+
+            //Abre objetos de leitura e escrita
+            out_1 = new DataOutputStream(arq_out_1);
+            out_2 = new DataOutputStream(arq_out_2);
+
+            DataInputStream in_1 = new DataInputStream(arq_in_1);
+            DataInputStream in_2 = new DataInputStream(arq_in_2);
+
             //Le o primeiro arquivo
             //Le o segundo arquivo
             //Intercarla
