@@ -193,7 +193,7 @@ public class Pokemon {
      public int getvelocidade() {
         return velocidade;
     }
-    public void setvelocidade(int velocidadel) {
+    public void setvelocidade(int velocidade) {
         this.velocidade = velocidade;
     }
 
@@ -295,7 +295,26 @@ public class Pokemon {
      */
     public void exibir_pokemon () {
 
-
+        System.out.println("Nome: " + this.nome);
+        System.out.println("Numero na Pokédex: " + this.num_pokedex);
+        System.out.println("Geração: " + this.geracao);
+        System.out.println("Espécie: " + this.especie);
+        System.out.println("Altura: " + this.altura);
+        System.out.println("Peso: " + this.peso);
+        System.out.println("Tipo 1: " + this.tipo1);
+        System.out.println("Tipo 2: " + this.tipo2);
+        System.out.println("HP: " + this.hp);
+        System.out.println("Ataque: " + this.ataque);
+        System.out.println("Desefa: " + this.defesa);
+        System.out.println("Ataque Especial: " + this.ataque_especial);
+        System.out.println("Desefa Especial: " + this.defesa_especial);
+        System.out.println("Velocidade: " + this.velocidade);
+        if(eh_mistico == true){
+            System.out.println("Místico");
+        }
+        if(eh_lendario == true){
+            System.out.println("Lendário");
+        }
         //Escreve a data
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
