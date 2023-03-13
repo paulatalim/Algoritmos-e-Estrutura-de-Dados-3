@@ -247,23 +247,23 @@ public class App {
         limpar_console();
 
         //Criacao de arquivos temporarios
-        FileOutputStream arq_temp_1 = new FileOutputStream ("src/arqTemp1.db");
-        FileOutputStream arq_temp_2 = new FileOutputStream ("src/arqTemp2.db");
+        FileOutputStream arq_out_1 = new FileOutputStream ("src/arqTemp1.db");
+        FileOutputStream arq_out_2 = new FileOutputStream ("src/arqTemp2.db");
+        FileInputStream arq_in_1 = new FileInputStream ("src/arqTemp1.db");
+        FileInputStream arq_in_2 = new FileInputStream ("src/arqTemp2.db");
 
         //Abre para escrita
-        DataOutputStream out_1 = new DataOutputStream (arq_temp_1);
-        DataOutputStream out_2 = new DataOutputStream (arq_temp_2);
+        DataOutputStream out_1 = new DataOutputStream (arq_out_1);
+        DataOutputStream out_2 = new DataOutputStream (arq_out_2);
+        DataInputStream in_1 = new DataInputStream(arq_in_1);
+        DataInputStream in_2 = new DataInputStream(arq_in_2);
         
-        
-    
         //Reinicia o ponteiro
         arq.seek(0);
 
         Pokemon[] bloco = new Pokemon [10];
         int qnt_segmentos = arq.readInt();
-        //int tam;
         byte[] poke_vet_byte;
-        byte lapide;
         
         try {
             //Preenche o vetor com os registros
@@ -354,24 +354,29 @@ public class App {
             //Verificar se ha registros para intercalar
 
             //Fecha arquivo de escrita para leitura
-            arq_temp_1.close();
-            arq_temp_2.close();
+            arq_out_1.close();
+            arq_out_2.close();
+            arq_in_1.close();
+            arq_in_2.close();
 
             out_1.close();
             out_2.close();
+            in_1.close();
+            in_2.close();
 
-            FileInputStream arq_in_1 = new FileInputStream("src/arqTemp1.db");
-            FileInputStream arq_in_2 = new FileInputStream("src/arqTemp2.db");
+            //Abre os arquivos
+            arq_in_1 = new FileInputStream("src/arqTemp1.db");
+            arq_in_2 = new FileInputStream("src/arqTemp2.db");
 
-            FileOutputStream arq_out_1 = new FileOutputStream ("src/arqTemp3.db");
-            FileOutputStream arq_out_2 = new FileOutputStream ("src/arqTemp4.db");
+            arq_out_1 = new FileOutputStream("src/arqTemp3.db");
+            arq_out_2 = new FileOutputStream("src/arqTemp4.db");
 
             //Abre objetos de leitura e escrita
             out_1 = new DataOutputStream(arq_out_1);
             out_2 = new DataOutputStream(arq_out_2);
 
-            DataInputStream in_1 = new DataInputStream(arq_in_1);
-            DataInputStream in_2 = new DataInputStream(arq_in_2);
+            in_1 = new DataInputStream(arq_in_1);
+            in_2 = new DataInputStream(arq_in_2);
 
             //Le o primeiro arquivo
             //Le o segundo arquivo
@@ -388,20 +393,23 @@ public class App {
             System.out.println("Finalizando Intercalacao ...");
             limpar_console();
         
-            in_1.close();
-            in_2.close();
 
         } finally {
             //Fecha os arquivos temporarios
-            arq_temp_1.close();
-            arq_temp_2.close();
+            arq_out_1.close();
+            arq_out_2.close();
+            arq_in_1.close();
+            arq_in_2.close();
 
             out_1.close();
             out_2.close();
 
+            in_1.close();
+            in_2.close();
+
             //Deleta os arquivos temporarios
             File arq_temp;
-            for (i = 1; i <= 2; i++) {
+            for (i = 1; i <= 4; i++) {
                 arq_temp = new File ("src/arqTemp" + i + ".db");
                 arq_temp.delete();
             }
