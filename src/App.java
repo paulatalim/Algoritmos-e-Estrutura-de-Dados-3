@@ -410,11 +410,16 @@ public class App {
     public static void main(String[] args) {
         RandomAccessFile arq;
 
+        Pokemon pokemon = new Pokemon();
+        
+
         try {
-            arq = new RandomAccessFile("src/pokedex.db", "rw");
-            passar_arq_csv_para_db(arq);
-            ordenacao(arq);
-            arq.close();
+            pokemon.exibir_pokemon();
+            exibir_fim_tela();
+            // arq = new RandomAccessFile("src/pokedex.db", "rw");
+            // passar_arq_csv_para_db(arq);
+            // ordenacao(arq);
+            // arq.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

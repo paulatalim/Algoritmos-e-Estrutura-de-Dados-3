@@ -45,8 +45,8 @@ public class Pokemon {
         ataque_especial = -1;
         defesa_especial = -1;
         velocidade = -1;
-        eh_mistico = false;
-        eh_lendario = false;
+        eh_mistico = true;
+        eh_lendario = true;
         data_de_registro = new Date();
     }
 
@@ -330,32 +330,37 @@ public class Pokemon {
     public void exibir_pokemon () {
 
         System.out.println("Nome: " + this.nome);
-        System.out.println("Numero na Pokédex: " + this.num_pokedex);
+        System.out.println("Numero na Pokedex: " + this.num_pokedex);
         System.out.println("Geração: " + this.geracao);
         System.out.println("Espécie: " + this.especie);
         System.out.println("Altura: " + this.altura);
         System.out.println("Peso: " + this.peso);
         System.out.println("Tipo 1: " + this.tipo1);
-        System.out.println("Tipo 2: " + this.tipo2);
+
+        if (tipo2.compareTo("null") != 0) {
+            System.out.println("Tipo 2: " + this.tipo2);
+        }
+
         System.out.println("HP: " + this.hp);
         System.out.println("Ataque: " + this.ataque);
-        System.out.println("Desefa: " + this.defesa);
+        System.out.println("Defesa: " + this.defesa);
         System.out.println("Ataque Especial: " + this.ataque_especial);
-        System.out.println("Desefa Especial: " + this.defesa_especial);
+        System.out.println("Defesa Especial: " + this.defesa_especial);
         System.out.println("Velocidade: " + this.velocidade);
-        if(eh_mistico == true){
-            System.out.println("Místico");
-        }
-        if(eh_lendario == true){
-            System.out.println("Lendário");
+
+        if(eh_mistico){
+            System.out.println("Esse pokemon e mistico !!!");
+        } else if (eh_lendario){
+            System.out.println("Esse pokemon e lendario !!!");
         }
 
         //Escreve a data
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
-        System.out.println("Criacao do registro do pokemon");
-        System.out.println("Data: " + formatar_data.format(data_de_registro));
-        System.out.println("Horario: " + formatar_horario.format(data_de_registro));
+
+        System.out.println (  "Criacao do registro do pokemon" + "\n"
+                            + "Data: " + formatar_data.format(data_de_registro) + "\n"
+                            + "Horario: " + formatar_horario.format(data_de_registro));
     }
 
 }
