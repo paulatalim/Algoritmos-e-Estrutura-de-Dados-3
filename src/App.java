@@ -26,6 +26,7 @@ public class App {
     public static void exibir_fim_tela () throws Exception {
         System.out.print("\n\n\t" + "Pressione 'enter' para continuar");
         System.in.read();
+        System.in.read(new byte[System.in.available()]);
         limpar_console();
     }
 
@@ -49,6 +50,19 @@ public class App {
                             + "\t\t\t\t\t" + "             :-._____.-:"      + "\n"
                             + "\t\t\t\t\t" + "            `''       `''"     + "\n\n\n");
 
+        exibir_fim_tela();
+
+        System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                         + "\n\n\n"
+                            + "\t"           + "Esse sistema eh um trabalho de Algortmos e Estrutura de Dados 3"        + "\n"
+                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"    + "\n"
+                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."          + "\n\n"
+
+                            + "\t"           + "A seguir sera importado a base de dados .csv para a base de dados .db," + "\n"
+                            + "\t"           + "logo em seguida, aparecera um menu das opcoes para a manipulacao"       + "\n"
+                            + "\t"           + "do arquivo."                                                            + "\n\n"
+
+                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                             + "\n\n\n");
+        
         exibir_fim_tela();
     }
 
@@ -414,8 +428,9 @@ public class App {
         
 
         try {
-            pokemon.exibir_pokemon();
-            exibir_fim_tela();
+            exibir_tela_inicial_e_info();
+            //pokemon.exibir_pokemon();
+            //exibir_fim_tela();
             // arq = new RandomAccessFile("src/pokedex.db", "rw");
             // passar_arq_csv_para_db(arq);
             // ordenacao(arq);
