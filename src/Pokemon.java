@@ -329,24 +329,24 @@ public class Pokemon {
      */
     public void exibir_pokemon () {
 
-        System.out.println("Nome: " + this.nome);
-        System.out.println("Numero na Pokedex: " + this.num_pokedex);
-        System.out.println("Geração: " + this.geracao);
-        System.out.println("Espécie: " + this.especie);
-        System.out.println("Altura: " + this.altura);
-        System.out.println("Peso: " + this.peso);
-        System.out.println("Tipo 1: " + this.tipo1);
+        System.out.println("Nome: " + nome
+                            + "Numero na Pokedex: " + num_pokedex
+                            + "Geração: " + geracao
+                            + "Espécie: " + especie
+                            + "Altura: " + altura
+                            + "Peso: " + peso
+                            + "Tipo 1: " + tipo1);
 
         if (tipo2.compareTo("null") != 0) {
-            System.out.println("Tipo 2: " + this.tipo2);
+            System.out.println("Tipo 2: " + tipo2);
         }
 
-        System.out.println("HP: " + this.hp);
-        System.out.println("Ataque: " + this.ataque);
-        System.out.println("Defesa: " + this.defesa);
-        System.out.println("Ataque Especial: " + this.ataque_especial);
-        System.out.println("Defesa Especial: " + this.defesa_especial);
-        System.out.println("Velocidade: " + this.velocidade);
+        System.out.println (  "HP: " + hp
+                            + "Ataque: " + ataque
+                            + "Defesa: " + defesa
+                            + "Ataque Especial: " + ataque_especial
+                            + "Defesa Especial: " + defesa_especial
+                            + "Velocidade: " + velocidade);
 
         if(eh_mistico){
             System.out.println("Esse pokemon e mistico !!!");
