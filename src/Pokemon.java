@@ -45,8 +45,8 @@ public class Pokemon {
         ataque_especial = -1;
         defesa_especial = -1;
         velocidade = -1;
-        eh_mistico = true;
-        eh_lendario = true;
+        eh_mistico = false;
+        eh_lendario = false;
         data_de_registro = new Date();
     }
 
@@ -329,7 +329,7 @@ public class Pokemon {
      */
     public void exibir_pokemon () {
 
-        System.out.println("\n\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
+        System.out.println ("\n\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
 
         System.out.println ("\n\t" + "Informacoes basicas".toUpperCase() + "\n"
                             + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
@@ -352,18 +352,18 @@ public class Pokemon {
                             + "\t" + "Velocidade: " + velocidade);
 
         if(eh_mistico){
-            System.out.println("\t" +"Esse pokemon e mistico !!!");
+            System.out.println("\n\t" + "Esse pokemon e mistico !!!");
         } else if (eh_lendario){
-            System.out.println("\t" +"Esse pokemon e lendario !!!");
+            System.out.println("\n\t" + "Esse pokemon e lendario !!!");
         }
 
         //Escreve a data
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
 
-        System.out.println ("\n\t" +  "Criacao do registro".toUpperCase() + "\n"
-                            +"\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
-                            + "\t" +"Horario: " + formatar_horario.format(data_de_registro));
+        System.out.println ("\n\t" + "Criacao do registro".toUpperCase() + "\n"
+                            + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
+                            + "\t" + "Horario: " + formatar_horario.format(data_de_registro));
     }
 
 }

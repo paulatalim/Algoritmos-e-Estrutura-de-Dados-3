@@ -429,7 +429,7 @@ public class App {
 
         try {
             pokemon.exibir_pokemon();
-            //exibir_fim_tela();
+            exibir_fim_tela();
             // arq = new RandomAccessFile("src/pokedex.db", "rw");
             // passar_arq_csv_para_db(arq);
             // ordenacao(arq);
