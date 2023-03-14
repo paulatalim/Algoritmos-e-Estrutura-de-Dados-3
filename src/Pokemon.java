@@ -329,38 +329,41 @@ public class Pokemon {
      */
     public void exibir_pokemon () {
 
-        System.out.println("Nome: " + nome
-                            + "Numero na Pokedex: " + num_pokedex
-                            + "Geração: " + geracao
-                            + "Espécie: " + especie
-                            + "Altura: " + altura
-                            + "Peso: " + peso
-                            + "Tipo 1: " + tipo1);
+        System.out.println("\n\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
+
+        System.out.println ("\n\t" + "Informacoes basicas".toUpperCase() + "\n"
+                            + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
+                            + "\t" + "Geracao: " + geracao + "\n"
+                            + "\t" + "Especie: " + especie + "\n"
+                            + "\t" + "Altura: " + altura + "\n"
+                            + "\t" + "Peso: " + peso + "\n"
+                            + "\t" + "Tipo 1: " + tipo1);
 
         if (tipo2.compareTo("null") != 0) {
             System.out.println("Tipo 2: " + tipo2);
         }
 
-        System.out.println (  "HP: " + hp
-                            + "Ataque: " + ataque
-                            + "Defesa: " + defesa
-                            + "Ataque Especial: " + ataque_especial
-                            + "Defesa Especial: " + defesa_especial
-                            + "Velocidade: " + velocidade);
+        System.out.println ("\n\t" + "Estatisticas basicas".toUpperCase()+ "\n"
+                            + "\t" + "HP: " + hp + "\n"
+                            + "\t" + "Ataque: " + ataque + "\n"
+                            + "\t" + "Defesa: " + defesa + "\n"
+                            + "\t" + "Ataque Especial: " + ataque_especial + "\n"
+                            + "\t" + "Defesa Especial: " + defesa_especial + "\n"
+                            + "\t" + "Velocidade: " + velocidade);
 
         if(eh_mistico){
-            System.out.println("Esse pokemon e mistico !!!");
+            System.out.println("\t" +"Esse pokemon e mistico !!!");
         } else if (eh_lendario){
-            System.out.println("Esse pokemon e lendario !!!");
+            System.out.println("\t" +"Esse pokemon e lendario !!!");
         }
 
         //Escreve a data
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
 
-        System.out.println (  "Criacao do registro do pokemon" + "\n"
-                            + "Data: " + formatar_data.format(data_de_registro) + "\n"
-                            + "Horario: " + formatar_horario.format(data_de_registro));
+        System.out.println ("\n\t" +  "Criacao do registro".toUpperCase() + "\n"
+                            +"\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
+                            + "\t" +"Horario: " + formatar_horario.format(data_de_registro));
     }
 
 }
