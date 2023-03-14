@@ -95,159 +95,158 @@ public class Pokemon {
     }
 
     //num_pokedex
-    public int getnum_pokedex() {
+    public int getNumPokedex() {
         return num_pokedex;
     }
 
-    public void setnum_pokedex(int num_pokedex) {
+    public void setNumPokedex(int num_pokedex) {
         this.num_pokedex = num_pokedex;
     }
 
     //nome
-    public String getnome() {
+    public String getNome() {
         return nome;
     }
 
-    public void setnome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
     //geracao
-    public int getgeracao() {
+    public int getGeracao() {
         return geracao;
     }
 
-    public void setgeracao(int geracao) {
+    public void setGeracao(int geracao) {
         this.geracao = geracao;
     }
 
     //especie
-    public String getespecie() {
+    public String getEspecie() {
         return especie;
     }
     
-    public void setespecie (String especie) {
+    public void setEspecie (String especie) {
         this.especie = especie;
     }
 
     //altura
-    public float getaltura() {
+    public float getAltura() {
         return altura;
     }
 
-    public void setaltura(float altura) {
+    public void setAltura(float altura) {
         this.altura = altura;
     }
 
     //peso
-    public float getpeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setpeso(float peso) {
+    public void setPeso(float peso) {
         this.peso= peso;
     }
 
     //tipo1
-    public String gettipo1() {
+    public String getTipo1() {
         return tipo1;
     }
 
-    public void settipo1(String tipo1) {
+    public void setTipo1(String tipo1) {
         this.tipo1 = tipo1;
     }
 
     //tipo2
-    public String gettipo2() {
+    public String getTipo2() {
         return tipo2;
     }
 
-    public void settipo2(String tipo2) {
+    public void setTipo2(String tipo2) {
         this.tipo2 = tipo2;
     }
 
     //hp
-    public int gethp() {
+    public int getHp() {
         return hp;
     }
 
-    public void sethp(int  hp) {
+    public void setHp(int  hp) {
         this. hp = hp;
     }
 
     //ataque
-    public int getataque() {
+    public int getAtaque() {
         return ataque;
     }
 
-    public void setataque(int ataque) {
+    public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
 
     //defesa
-    public int getdefesa() {
+    public int getDefesa() {
         return defesa;
     }
 
-    public void setdefesa(int defesa) {
+    public void setDefesa(int defesa) {
         this.defesa = defesa;
     }
 
     //ataque_especial
-    public int getataque_especial() {
+    public int getAtaqueEspecial() {
         return ataque_especial;
     }
 
-    public void setataque_especial(int ataque_especial) {
+    public void setAtaqueEpecial(int ataque_especial) {
         this.ataque_especial = ataque_especial;
     }
 
     //defesa_especial
-    public int getdefesa_especial() {
+    public int getDefesaEspecial() {
         return defesa_especial;
     }
 
-    public void setdefesa_especial(int defesa_especial) {
+    public void setDefesaEspecial(int defesa_especial) {
         this.defesa_especial = defesa_especial;
     }
 
     //velocidade
-    public int getvelocidade() {
+    public int getVelocidade() {
         return velocidade;
     }
 
-    public void setvelocidade(int velocidade) {
+    public void setVelocidade(int velocidade) {
         this.velocidade = velocidade;
     }
 
     //eh_mistico
-    public boolean geteh_mistico() {
+    public boolean getEhMistico() {
         return eh_mistico;
     }
 
-    public void seteh_mistico(boolean eh_mistico) {
+    public void setEhMistico(boolean eh_mistico) {
         this.eh_mistico = eh_mistico;
     }
 
      //eh_lendario
-    public boolean geteh_lendario() {
+    public boolean getEhLendario() {
         return eh_lendario;
     }
 
-    public void seteh_lendario(boolean eh_lendario) {
+    public void setEhLendario(boolean eh_lendario) {
         this.eh_lendario = eh_lendario;
     }
 
     //data_de_registro
-    public Date getdata_de_registro() {
+    public Date getDataDeRegistro() {
         return data_de_registro;
     }
 
-    public void setdata_de_registro(Date data_de_registro) {
+    public void setDataDeRegistro(Date data_de_registro) {
         this.data_de_registro = data_de_registro;
     }
     
-
     /*** OUTROS METODOS ***/
     /*
      * Descricao: essa funcao elabora um vetor de bytes com 
