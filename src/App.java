@@ -428,6 +428,7 @@ public class App {
         
 
         try {
+            exibir_tela_inicial_e_info();
             pokemon.exibir_pokemon();
             exibir_fim_tela();
             // arq = new RandomAccessFile("src/pokedex.db", "rw");

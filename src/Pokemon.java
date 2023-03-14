@@ -328,7 +328,7 @@ public class Pokemon {
      */
     public void exibir_pokemon () {
 
-        System.out.println ("\n\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
+        System.out.println ("\n\t\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
 
         System.out.println ("\n\t" + "Informacoes basicas".toUpperCase() + "\n"
                             + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
