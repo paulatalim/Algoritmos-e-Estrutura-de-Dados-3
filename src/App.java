@@ -416,16 +416,20 @@ public class App {
                 if (poke1_antigo.getId() > poke1.getId()) {
                     terminou_segmento1 = true;
 
-
                     //Escreve o resto do segmento de poke 2
-                    tam = in_2.readInt();
-                    vet = new byte [tam];
-                    in_2.read(vet);
-                    poke2.fromByteArray(vet);
+                    while (poke2_antigo.getId() < poke2.getId()) {
 
-                    vet = poke2.toByteArray();
-                    out_1.writeInt(in_2.readInt());
-                    out_1.write(vet);
+                        vet = poke2.toByteArray();
+                        out_1.writeInt(vet.length);
+                        out_1.write(vet);
+
+                        //Le o proximo pokemon
+                        poke2_antigo = poke2;
+                        tam = in_2.readInt();
+                        vet = new byte [tam];
+                        in_2.read(vet);
+                        poke2.fromByteArray(vet);
+                    }
                 }
 
             } else {
@@ -441,13 +445,28 @@ public class App {
 
                 if (poke1_antigo.getId() > poke1.getId()) {
                     terminou_segmento2 = true;
-
-
+                    
                     //Escreve o resto do segmento de poke 1
+                    while (poke1_antigo.getId() < poke1.getId()) {
+
+                        vet = poke1.toByteArray();
+                        out_1.writeInt(vet.length);
+                        out_1.write(vet);
+
+                        //Le o proximo pokemon
+                        poke1_antigo = poke1;
+                        tam = in_1.readInt();
+                        vet = new byte [tam];
+                        in_1.read(vet);
+                        poke1.fromByteArray(vet);
+                    }
                 }
             }
 
             //Verifica se ha troca de arquivo
+            if (terminou_segmento1 || terminou_segmento2) {
+                
+            }
             //Verificar se um dos arquivos está vazio
 
             //Limpar antigos arquivos de leitura
