@@ -277,10 +277,6 @@ public class App {
         return pokemon;
     }
 
-    public static int booleanToInt (boolean bool) {
-        return (bool) ? 1 : 0;
-    }
-
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         int i;
 
@@ -419,8 +415,7 @@ public class App {
             boolean escrever_primeiro_arq = true;
             boolean modo1 = false;
 
-            boolean segundo_input = false;
-            int indice = booleanToInt(segundo_input);
+            int indice;
 
             //Verifica se ha somente um bloco
             while (in[0].available() > 0 && in[1].available() > 0) {
@@ -506,22 +501,16 @@ public class App {
             arq.setLength(0);
             arq.writeInt(metadados);
 
-            byte[] vet2;
-
-            if (in[0].available() > 0) {
-                indice = 0;
-            } else {
-                indice = 1;
-            }
+            indice = in[0].available() > 0 ? 0 : 1;
 
             while (in[indice].available() > 0) {
                 //escrever arq
-                vet2 = new byte [in[indice].readInt()];
-                in[indice].read(vet2);
+                poke_vet_byte = new byte [in[indice].readInt()];
+                in[indice].read(poke_vet_byte);
 
                 arq.writeByte(' ');
-                arq.writeInt(vet2.length);
-                arq.write(vet2);
+                arq.writeInt(poke_vet_byte.length);
+                arq.write(poke_vet_byte);
             }
             
             System.out.println("Intercalando pokemons ...");
