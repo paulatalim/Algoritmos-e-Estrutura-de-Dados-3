@@ -77,7 +77,7 @@ public class Pokemon {
 
     /*** METODOS GET E SET***/
     //id
-    public int getid() {
+    public int getId() {
         return id;
     }
 

@@ -273,7 +273,7 @@ public class App {
         arq.seek(0);
 
         Pokemon[] bloco = new Pokemon [10];
-        int qnt_segmentos = arq.readInt();
+        int metadados = arq.readInt();
         byte[] poke_vet_byte;
         
         try {
@@ -298,9 +298,6 @@ public class App {
             
             //Verifica se ha mais pokemons para se ler
             if (arq.getFilePointer() < arq.length()) {
-                //Atualizacao na quantidade de segmentos
-                qnt_segmentos -= 6;
-
                 //Ordena o vetor com o heap minimo
                 fazer_heapmin(bloco);
 
@@ -324,9 +321,6 @@ public class App {
                         //Verifica se o novo registro pode entrar no antigo segmento
                         if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
                             novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
-                        } else {
-                            //Atualiza a quantidade de segmentos
-                            qnt_segmentos --;
                         }
 
                         //Verificando se ha a troca de arquivo
@@ -386,9 +380,73 @@ public class App {
             
         try {
             //Verificar se ha registros para intercalar
+
+            Pokemon poke1 = new Pokemon();
+            Pokemon poke2 = new Pokemon();
+            Pokemon poke1_antigo = new Pokemon();
+            Pokemon poke2_antigo = new Pokemon();
+
+            boolean terminou_segmento1 = false;
+            boolean terminou_segmento2 = false;
+
+
             //Le o primeiro arquivo
+            int tam = in_1.readInt();
+            byte[] vet = new byte [tam];
+            in_1.read(vet);
+            poke1.fromByteArray(vet);
+
             //Le o segundo arquivo
-            //Intercarla
+            tam = in_2.readInt();
+            vet = new byte [tam];
+            poke2.fromByteArray(vet);
+
+            //Intercala
+            if (poke1.getId() < poke2.getId()) {
+                vet = poke1.toByteArray();
+                out_1.writeInt(vet.length);
+                out_1.write(vet);
+
+                poke1_antigo = poke1;
+                tam = in_1.readInt();
+                vet = new byte [tam];
+                in_1.read(vet);
+                poke1.fromByteArray(vet);
+
+                if (poke1_antigo.getId() > poke1.getId()) {
+                    terminou_segmento1 = true;
+
+
+                    //Escreve o resto do segmento de poke 2
+                    tam = in_2.readInt();
+                    vet = new byte [tam];
+                    in_2.read(vet);
+                    poke2.fromByteArray(vet);
+
+                    vet = poke2.toByteArray();
+                    out_1.writeInt(in_2.readInt());
+                    out_1.write(vet);
+                }
+
+            } else {
+                vet = poke2.toByteArray();
+                out_1.writeInt(vet.length);
+                out_1.write(vet);
+
+                poke2_antigo = poke2;
+                tam = in_2.readInt();
+                vet = new byte [tam];
+                in_2.read(vet);
+                poke2.fromByteArray(vet);
+
+                if (poke1_antigo.getId() > poke1.getId()) {
+                    terminou_segmento2 = true;
+
+
+                    //Escreve o resto do segmento de poke 1
+                }
+            }
+
             //Verifica se ha troca de arquivo
             //Verificar se um dos arquivos está vazio
 
