@@ -434,37 +434,29 @@ public class App {
             
                 //Intercala de arquivos
                 while (in[0].available() > 0 && in[1].available() > 0) {
+
+                    //Verifica o proximo registro a ser registrado
                     if (poke[0].getId() < poke[1].getId()) {
-                        indice = 0;
-
-                        poke_antigo = poke[indice];
-                        poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
-
-                        if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
-                            terminou_segmento = true;
-                            indice = 1;
-
-                            //Escreve o resto do segmento de poke 2
-                            while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
-                                poke_antigo = poke[indice];
-                                poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
-                            }
-                        }
-    
+                        indice = 0;    
                     } else {
                         indice = 1;
-                        poke_antigo = poke[indice];
-                        poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
+                    }
+                    
+                    //Registra o novo pokemon
+                    poke_antigo = poke[indice];
+                    poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
 
-                        if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
-                            terminou_segmento = true;
-                            indice = 0;
+                    //Verifica se o segmento acabou
+                    if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
+                        terminou_segmento = true;
 
-                            //Escreve o resto do segmento de poke 1
-                            while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
-                                poke_antigo = poke[indice];
-                                poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
-                            }
+                        //If ternario para inverter o indice
+                        indice = indice == 0 ? 1 : 0;
+
+                        //Escreve o resto do segmento do outro arquivo
+                        while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
+                            poke_antigo = poke[indice];
+                            poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
                         }
                     }
 
