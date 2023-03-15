@@ -278,6 +278,9 @@ public class App {
     }
 
     public static void ordenacao (RandomAccessFile arq) throws Exception {
+        Pokemon novo_pokemon = new Pokemon();
+        Pokemon antigo_pokemon = new Pokemon();
+        boolean escrever_arq1 = true;
         int i;
 
         /* DISTRIBUICAO */
@@ -327,15 +330,11 @@ public class App {
                 //Ordena o vetor com o heap minimo
                 fazer_heapmin(bloco);
 
-                //Leitura do proximo registro
-                Pokemon novo_pokemon = new Pokemon();
-                Pokemon antigo_pokemon = new Pokemon();
-                boolean escrever_arq1 = true;
-
                 //Mensagem para o usuario
                 System.out.println("Distribuindo pokemons...");
                 limpar_console();
             
+                //Leitura do proximo registro
                 while (arq.getFilePointer() < arq.length()) {
                     //Verifica se o registro existe
                     if (arq.readByte() == ' ') {
@@ -390,36 +389,29 @@ public class App {
         limpar_console();
         
         //Abre os arquivos
-        // FileInputStream arq_in_1 = new FileInputStream("src/arqTemp1.db");
-        // FileInputStream arq_in_2 = new FileInputStream("src/arqTemp2.db");
-
         FileInputStream[] arq_in = new FileInputStream [2];
         DataInputStream[] in = new DataInputStream [2];
+        Pokemon[] poke = new Pokemon[2];
 
-        //Abre objetos de leitura e escrita
-        for (i = 0; i < 2; i++) {
-            arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
-            arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+        boolean terminou_segmento = false;
+        boolean escrever_primeiro_arq = true;
+        boolean modo1 = false;
 
-            in[i] = new DataInputStream(arq_in[i]);
-            out[i] = new DataOutputStream(arq_out[i]);
-        }
-            
+        int indice;
+        
         try {
-            //Verificar se ha registros para intercalar
+            //Abre objetos de leitura e escrita
+            for (i = 0; i < 2; i++) {
+                arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+                arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
 
-            Pokemon[] poke = new Pokemon[2];
-            poke[0] = new Pokemon();
-            poke[1] = new Pokemon();
-            Pokemon poke_antigo = new Pokemon();
+                in[i] = new DataInputStream(arq_in[i]);
+                out[i] = new DataOutputStream(arq_out[i]);
 
-            boolean terminou_segmento = false;
-            boolean escrever_primeiro_arq = true;
-            boolean modo1 = false;
+                poke[i] = new Pokemon();
+            }
 
-            int indice;
-
-            //Verifica se ha somente um bloco
+            //Verifica se ha registros para intercalar
             while (in[0].available() > 0 && in[1].available() > 0) {
 
                 //Le o primeiro registro dos arquivos
@@ -440,19 +432,19 @@ public class App {
                     }
                     
                     //Registra o novo pokemon
-                    poke_antigo = poke[indice];
+                    antigo_pokemon = poke[indice];
                     poke[indice] = escrever_pokemon(poke[indice], in[indice], out[0], out[1], escrever_primeiro_arq);
 
                     //Verifica se o segmento acabou
-                    if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
+                    if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
                         terminou_segmento = true;
 
                         //If ternario para inverter o indice
                         indice = indice == 0 ? 1 : 0;
 
                         //Escreve o resto do segmento do outro arquivo
-                        while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
-                            poke_antigo = poke[indice];
+                        while (antigo_pokemon.getId() < poke[indice].getId() || in[indice].available() > 0) {
+                            antigo_pokemon = poke[indice];
                             poke[indice] = escrever_pokemon(poke[indice], in[indice], out[0], out[1], escrever_primeiro_arq);
                         }
                     }
@@ -467,7 +459,6 @@ public class App {
                 }
 
                 //Trocar arquivos
-
                 for (i = 0; i < 2; i++) {
                     arq_in[i].close();
                     arq_out[i].close();
@@ -476,26 +467,21 @@ public class App {
 
                 }
 
-                if (modo1) {
-                    arq_in[0] = new FileInputStream("src/arqTemp1.db");
-                    arq_in[1] = new FileInputStream("src/arqTemp2.db");
-                    arq_out[0] = new FileOutputStream("src/arqTemp3.db");
-                    arq_out[1] = new FileOutputStream("src/arqTemp4.db");
-                    
-                } else {
-                    arq_in[0] = new FileInputStream("src/arqTemp3.db");
-                    arq_in[1] = new FileInputStream("src/arqTemp4.db");
-                    arq_out[0] = new FileOutputStream("src/arqTemp1.db");
-                    arq_out[1] = new FileOutputStream("src/arqTemp2.db");
+                for (i = 0; i < 2; i++) {
+                    if (modo1) {
+                        arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+                        arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+                    } else {
+                        arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
+                        arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
+                    }
+
+                    in[i] = new DataInputStream(arq_in[i]);
+                    out[i] = new DataOutputStream(arq_out[i]);
                     
                 }
 
-                modo1 = !modo1;
-
-                in[0] = new DataInputStream(arq_in_1);
-                in[1] = new DataInputStream(arq_in_2);
-                out[0] = new DataOutputStream(arq_out[0]);
-                out[1] = new DataOutputStream(arq_out[1]);
+                modo1 = !modo1;        
             }
 
             //Limpar antigos arquivos de leitura
@@ -521,14 +507,12 @@ public class App {
             limpar_console();
 
         } finally {
-            in[0].close();
-            in[1].close();
-            out[0].close();
-            out[1].close();
-            arq_in_1.close();
-            arq_in_2.close();
-            arq_out[0].close();
-            arq_out[1].close();
+            for (i = 0; i < 2; i++) {
+                arq_in[i].close();
+                arq_out[i].close();
+                in[i].close();
+                out[i].close();
+            }
 
             //Deleta os arquivos temporarios
             File arq_temp;
