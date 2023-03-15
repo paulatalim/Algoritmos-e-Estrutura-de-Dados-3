@@ -62,7 +62,7 @@ public class App {
                             + "\t"           + "o processo de importacao, ou caso o arquivo .db exista, sera direcionado"    + "\n"
                             + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
                             + "\t"           + "as acoes desejadas."                                                         + "\n\n"
-                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n\n\n");
+                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n");
         
         exibir_fim_tela();
     }
@@ -430,8 +430,8 @@ public class App {
 
         try {
             exibir_tela_inicial_e_info();
-            pokemon.exibir_pokemon();
-            exibir_fim_tela();
+            // pokemon.exibir_pokemon();
+            // exibir_fim_tela();
             // arq = new RandomAccessFile("src/pokedex.db", "rw");
             // passar_arq_csv_para_db(arq);
             // ordenacao(arq);
