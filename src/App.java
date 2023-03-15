@@ -52,18 +52,18 @@ public class App {
 
         exibir_fim_tela();
 
-        System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                         + "\n\n\n"
-                            + "\t"           + "Esse sistema eh um trabalho de Algortmos e Estrutura de Dados 3"        + "\n"
-                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"    + "\n"
-                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."          + "\n\n"
+        System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                              + "\n\n\n"
+                            + "\t"           + "Esse sistema eh um trabalho de Algortmos e Estrutura de Dados 3"             + "\n"
+                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"         + "\n"
+                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."               + "\n\n"
 
-                            + "\t"           + "Se a base de dados .db nao for encontrada, as informacoes serao"       + "\n"
-                            + "\t"           + "importadas do arquivo .csv para preenche-la automaticamente. Apos" + "\n"
-                            + "\t"           + "o processo de importacao, ou caso o arquivo .db exista, sera direcionado" + "\n"
+                            + "\t"           + "Se a base de dados .db nao for encontrada, as informacoes serao"             + "\n"
+                            + "\t"           + "importadas do arquivo .csv para preenche-la automaticamente. Apos"           + "\n"
+                            + "\t"           + "o processo de importacao, ou caso o arquivo .db exista, sera direcionado"    + "\n"
                             + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
-                            + "\t"           + "as acoes desejadas."                                                     + "\n\n"
+                            + "\t"           + "as acoes desejadas."                                                         + "\n\n"
 
-                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                             + "\n\n\n");
+                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n\n\n");
         
         exibir_fim_tela();
     }
