@@ -253,6 +253,24 @@ public class App {
         }
     }
     
+    public static Pokemon escrever_pokemon (Pokemon pokemon, DataInputStream in, DataOutputStream out) throws Exception {
+        byte[] vet;
+        Pokemon poke_antigo = new Pokemon();
+
+        vet = pokemon.toByteArray();
+                        
+        out.writeInt(vet.length);
+        out.write(vet);
+
+        poke_antigo = pokemon;
+        int tam = in.readInt();
+        vet = new byte [tam];
+        in.read(vet);
+        pokemon.fromByteArray(vet);
+
+        return poke_antigo;
+    }
+
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         int i;
 
@@ -410,18 +428,10 @@ public class App {
                         vet = poke1.toByteArray();
                         
                         if (escrever_primeiro_arq) {
-                            out_1.writeInt(vet.length);
-                            out_1.write(vet);
+                            poke1_antigo = escrever_pokemon(poke1, in_1, out_1);
                         } else {
-                            out_2.writeInt(vet.length);
-                            out_2.write(vet);
+                            poke1_antigo = escrever_pokemon(poke1, in_1, out_2);
                         }
-
-                        poke1_antigo = poke1;
-                        tam = in_1.readInt();
-                        vet = new byte [tam];
-                        in_1.read(vet);
-                        poke1.fromByteArray(vet);
 
                         if (poke1_antigo.getId() > poke1.getId()) {
                             terminou_segmento1 = true;
