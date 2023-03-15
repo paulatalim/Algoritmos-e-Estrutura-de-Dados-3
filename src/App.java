@@ -57,11 +57,12 @@ public class App {
                             + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"    + "\n"
                             + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."          + "\n\n"
 
-                                       + "Se a base de dados .db nao for encontrada, as informacoes serao importadas"+ "\n"
-                                             + "do arquivo .csv para preenche-la automaticamente. Apos o processo de importacao,"+ "\n"
-                                             +  "ou caso o arquivo .db exista, sera direcionado para o menu de opcoes de manipulacao"+ "\n"
-                                             +  "da base de dados, onde podera executar as acoes desejadas."       + "\n"
-                            + "\t"                                                                      + "\n\n"
+                            + "\t"           + "Se a base de dados .db nao for encontrada, as informacoes serao"       + "\n"
+                            + "\t"           + "importadas do arquivo .csv para preenche-la automaticamente. Apos" + "\n"
+                            + "\t"           + "o processo de importacao, ou caso o arquivo .db exista, sera direcionado" + "\n"
+                            + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
+                            + "\t"           + "as acoes desejadas."                                                     + "\n\n"
+
                             + "\t\t\t\t\t"   +                            "Seja bem vindo!"                             + "\n\n\n");
         
         exibir_fim_tela();

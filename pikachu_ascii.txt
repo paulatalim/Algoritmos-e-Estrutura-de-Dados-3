@@ -12,7 +12,11 @@ System.out.println (  "       \\:.             .:/" + "\n"
                                 + "           :-._____.-:" + "\n"
                                 + "          `''       `''");
 
-Se a base de dados .db não for encontrada, as informações serão importadas do arquivo .csv para preenchê-la automaticamente. Após o processo de importação, ou caso o arquivo .db exista, será direcionado para o menu de opções de manipulação da base de dados, onde poderá executar as ações desejadas.
+Se a base de dados .db não for encontrada, as informações serão 
+importadas do arquivo .csv para preenchê-la automaticamente. Após 
+o processo de importação, ou caso o arquivo .db exista, será direcionado 
+para o menu de opções de manipulação da base de dados, onde poderá executar 
+as ações desejadas.
 
           ,___
             |[_]|
