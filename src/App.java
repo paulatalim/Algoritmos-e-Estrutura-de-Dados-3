@@ -52,17 +52,17 @@ public class App {
 
         exibir_fim_tela();
 
-        System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                              + "\n\n\n"
-                            + "\t"           + "Esse sistema eh um trabalho de Algortmos e Estrutura de Dados 3"             + "\n"
-                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"         + "\n"
-                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."               + "\n\n"
+        System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                         + "\n\n\n"
+                            + "\t"           + "Esse sistema eh um trabalho de Algortmos e Estrutura de Dados 3"        + "\n"
+                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"    + "\n"
+                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."          + "\n\n"
 
-                            + "\t"           + "Se a base de dados .db nao for encontrada ou estiver vazia, "                + "\n"
-                            + "\t"           + "as informacoes serao importadas do arquivo .csv para preenche-la "           + "\n"
-                            + "\t"           + "automaticamente. Apos o processo de importacao, ou caso o arquivo .db "      + "\n"
-                            + "\t"           + "exista, sera direcionado para o menu de opcoes de manipulacao da base "      + "\n"
-                            + "\t"           + "de dados, onde podera executar as acoes desejadas."                          + "\n\n"
-                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n");
+                            + "\t"           + "Se a base de dados .db nao for encontrada ou estiver vazia, "           + "\n"
+                            + "\t"           + "as informacoes serao importadas do arquivo .csv para preenche-la "      + "\n"
+                            + "\t"           + "automaticamente. Apos o processo de importacao, ou caso o arquivo .db " + "\n"
+                            + "\t"           + "exista, sera direcionado para o menu de opcoes de manipulacao da base " + "\n"
+                            + "\t"           + "de dados, onde podera executar as acoes desejadas."                     + "\n\n"
+                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                             + "\n");
         
         exibir_fim_tela();
     }
