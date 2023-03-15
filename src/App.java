@@ -253,22 +253,28 @@ public class App {
         }
     }
     
-    public static Pokemon escrever_pokemon (Pokemon pokemon, DataInputStream in, DataOutputStream out) throws Exception {
-        byte[] vet;
-        Pokemon poke_antigo = new Pokemon();
+    public static Pokemon escrever_pokemon (Pokemon pokemon, 
+                                            DataInputStream in, 
+                                            DataOutputStream out_1, 
+                                            DataOutputStream out_2, 
+                                            boolean escolha_out) throws Exception 
+    {
+        byte[] vet = pokemon.toByteArray();
+        
+        if (escolha_out) {
+            out_1.writeInt(vet.length);
+            out_1.write(vet);
+        } else {
+            out_2.writeInt(vet.length);
+            out_2.write(vet);
+        }
 
-        vet = pokemon.toByteArray();
-                        
-        out.writeInt(vet.length);
-        out.write(vet);
-
-        poke_antigo = pokemon;
         int tam = in.readInt();
         vet = new byte [tam];
         in.read(vet);
         pokemon.fromByteArray(vet);
 
-        return poke_antigo;
+        return pokemon;
     }
 
     public static void ordenacao (RandomAccessFile arq) throws Exception {
@@ -425,97 +431,30 @@ public class App {
                 //Intercala de arquivos
                 while (in_1.available() > 0 && in_2.available() > 0) {
                     if (poke1.getId() < poke2.getId()) {
-                        vet = poke1.toByteArray();
-                        
-                        if (escrever_primeiro_arq) {
-                            poke1_antigo = escrever_pokemon(poke1, in_1, out_1);
-                        } else {
-                            poke1_antigo = escrever_pokemon(poke1, in_1, out_2);
-                        }
+                        poke1_antigo = poke1;
+                        poke1_antigo = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
 
-                        if (poke1_antigo.getId() > poke1.getId()) {
+                        if (poke1_antigo.getId() > poke1.getId() || in_1.available() <= 0) {
                             terminou_segmento1 = true;
 
                             //Escreve o resto do segmento de poke 2
-                            while (poke2_antigo.getId() < poke2.getId() && in_2.available() > 0) {
-
-                                vet = poke2.toByteArray();
-
-                                if (escrever_primeiro_arq) {
-                                    out_1.writeInt(vet.length);
-                                    out_1.write(vet);
-                                } else {
-                                    out_2.writeInt(vet.length);
-                                    out_2.write(vet);
-                                }
-                                
-                                //Le o proximo pokemon
+                            while (poke2_antigo.getId() < poke2.getId() || in_2.available() > 0) {
                                 poke2_antigo = poke2;
-                                tam = in_2.readInt();
-                                vet = new byte [tam];
-                                in_2.read(vet);
-                                poke2.fromByteArray(vet);
-                            }
-                        } else if (in_1.available() <= 0) {
-                            while (in_2.available() > 0) {
-                                vet = poke2.toByteArray();
-
-                                if (escrever_primeiro_arq) {
-                                    out_1.writeInt(vet.length);
-                                    out_1.write(vet);
-                                } else {
-                                    out_2.writeInt(vet.length);
-                                    out_2.write(vet);
-                                }
-                                
-                                //Le o proximo pokemon
-                                poke2_antigo = poke2;
-                                tam = in_2.readInt();
-                                vet = new byte [tam];
-                                in_2.read(vet);
-                                poke2.fromByteArray(vet);
+                                poke2_antigo = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
                             }
                         }
     
                     } else {
-                        vet = poke2.toByteArray();
-
-                        if (escrever_primeiro_arq) {
-                            out_1.writeInt(vet.length);
-                            out_1.write(vet);
-                        } else {
-                            out_2.writeInt(vet.length);
-                            out_2.write(vet);
-                        }
-
                         poke2_antigo = poke2;
-                        tam = in_2.readInt();
-                        vet = new byte [tam];
-                        in_2.read(vet);
-                        poke2.fromByteArray(vet);
+                        poke2 = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
 
-                        if (poke1_antigo.getId() > poke1.getId()) {
+                        if (poke2_antigo.getId() > poke2.getId() || in_2.available() <= 0) {
                             terminou_segmento2 = true;
                             
                             //Escreve o resto do segmento de poke 1
-                            while (poke1_antigo.getId() < poke1.getId()) {
-
-                                vet = poke1.toByteArray();
-                                
-                                if (escrever_primeiro_arq) {
-                                    out_1.writeInt(vet.length);
-                                    out_1.write(vet);
-                                } else {
-                                    out_2.writeInt(vet.length);
-                                    out_2.write(vet);
-                                }
-
-                                //Le o proximo pokemon
+                            while (poke1_antigo.getId() < poke1.getId() || in_1.available() > 0) {
                                 poke1_antigo = poke1;
-                                tam = in_1.readInt();
-                                vet = new byte [tam];
-                                in_1.read(vet);
-                                poke1.fromByteArray(vet);
+                                poke1_antigo = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
                             }
                         }
                     }
@@ -563,11 +502,30 @@ public class App {
                 out_2 = new DataOutputStream(arq_out_2);
             }
 
-            //Verificar se um dos arquivos está vazio
-
             //Limpar antigos arquivos de leitura
-            
+            arq.setLength(0);
+            arq.writeInt(metadados);
 
+            byte[] vet2;
+
+            while (in_1.available() > 0) {
+                //escrever arq
+                vet2 = new byte [in_1.readInt()];
+                in_1.read(vet2);
+
+                arq.writeByte(' ');
+                arq.writeInt(vet2.length);
+                arq.write(vet2);
+            }
+
+            while (in_2.available() > 0) {
+                vet2 = new byte [in_2.readInt()];
+                in_2.read(vet2);
+                arq.writeByte(' ');
+                arq.writeInt(vet2.length);
+                arq.write(vet2);
+            }
+            
             System.out.println("Intercalando pokemons ...");
             limpar_console();
 
