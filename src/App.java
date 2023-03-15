@@ -57,11 +57,11 @@ public class App {
                             + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"         + "\n"
                             + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."               + "\n\n"
 
-                            + "\t"           + "Se a base de dados .db nao for encontrada ou estiver vazia, as informacoes serao"             + "\n"
-                            + "\t"           + "importadas do arquivo .csv para preenche-la automaticamente. Apos"           + "\n"
-                            + "\t"           + "o processo de importacao, ou caso o arquivo .db exista, sera direcionado"    + "\n"
-                            + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
-                            + "\t"           + "as acoes desejadas."                                                         + "\n\n"
+                            + "\t"           + "Se a base de dados .db nao for encontrada ou estiver vazia, "                + "\n"
+                            + "\t"           + "as informacoes serao importadas do arquivo .csv para preenche-la "           + "\n"
+                            + "\t"           + "automaticamente. Apos o processo de importacao, ou caso o arquivo .db "      + "\n"
+                            + "\t"           + "exista, sera direcionado para o menu de opcoes de manipulacao da base "      + "\n"
+                            + "\t"           + "de dados, onde podera executar as acoes desejadas."                          + "\n\n"
                             + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n");
         
         exibir_fim_tela();
@@ -435,6 +435,7 @@ public class App {
                 passar_arq_csv_para_db(arq);
             }
             
+            exibir_tela_inicial_e_info();
             // ordenacao(arq);
             arq.close();
         } catch (Exception e) {
