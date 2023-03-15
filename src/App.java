@@ -62,7 +62,6 @@ public class App {
                             + "\t"           + "o processo de importacao, ou caso o arquivo .db exista, sera direcionado"    + "\n"
                             + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
                             + "\t"           + "as acoes desejadas."                                                         + "\n\n"
-
                             + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n\n\n");
         
         exibir_fim_tela();
