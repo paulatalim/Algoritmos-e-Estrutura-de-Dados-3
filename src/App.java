@@ -255,22 +255,16 @@ public class App {
     
     public static Pokemon escrever_pokemon (Pokemon pokemon, 
                                             DataInputStream in, 
-                                            DataOutputStream out_1, 
-                                            DataOutputStream out_2, 
+                                            DataOutputStream[] out,
                                             boolean escolha_out) throws Exception 
     {
         byte[] vet = pokemon.toByteArray();
+        int indice = escolha_out ? 1 : 0;
         
-        if (escolha_out) {
-            out_1.writeInt(vet.length);
-            out_1.write(vet);
-        } else {
-            out_2.writeInt(vet.length);
-            out_2.write(vet);
-        }
-
-        int tam = in.readInt();
-        vet = new byte [tam];
+        out[indice].writeInt(vet.length);
+        out[indice].write(vet);
+        
+        vet = new byte [in.readInt()];
         in.read(vet);
         pokemon.fromByteArray(vet);
 
@@ -391,13 +385,16 @@ public class App {
         //Abre os arquivos
         FileInputStream[] arq_in = new FileInputStream [2];
         DataInputStream[] in = new DataInputStream [2];
-        Pokemon[] poke = new Pokemon[2];
+        Pokemon[] poke = new Pokemon [2];
 
         boolean terminou_segmento = false;
-        boolean escrever_primeiro_arq = true;
+        //boolean escrever_arq1 = true;
         boolean modo1 = false;
 
         int indice;
+
+        //Reinicia variaveis
+        escrever_arq1 = true;
         
         try {
             //Abre objetos de leitura e escrita
@@ -425,15 +422,11 @@ public class App {
                 while (in[0].available() > 0 && in[1].available() > 0) {
 
                     //Verifica o proximo registro a ser registrado
-                    if (poke[0].getId() < poke[1].getId()) {
-                        indice = 0;    
-                    } else {
-                        indice = 1;
-                    }
+                    indice = (poke[0].getId() < poke[1].getId()) ? 0 : 1;
                     
                     //Registra o novo pokemon
                     antigo_pokemon = poke[indice];
-                    poke[indice] = escrever_pokemon(poke[indice], in[indice], out[0], out[1], escrever_primeiro_arq);
+                    poke[indice] = escrever_pokemon(poke[indice], in[indice], out, escrever_arq1);
 
                     //Verifica se o segmento acabou
                     if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
@@ -445,13 +438,13 @@ public class App {
                         //Escreve o resto do segmento do outro arquivo
                         while (antigo_pokemon.getId() < poke[indice].getId() || in[indice].available() > 0) {
                             antigo_pokemon = poke[indice];
-                            poke[indice] = escrever_pokemon(poke[indice], in[indice], out[0], out[1], escrever_primeiro_arq);
+                            poke[indice] = escrever_pokemon(poke[indice], in[indice], out, escrever_arq1);
                         }
                     }
 
                     //Verifica se ha troca de arquivo
                     if (terminou_segmento) {
-                        escrever_primeiro_arq = !escrever_primeiro_arq;
+                        escrever_arq1 = !escrever_arq1;
                         
                         //Reinicia variavel
                         terminou_segmento = false;
@@ -478,7 +471,6 @@ public class App {
 
                     in[i] = new DataInputStream(arq_in[i]);
                     out[i] = new DataOutputStream(arq_out[i]);
-                    
                 }
 
                 modo1 = !modo1;        
