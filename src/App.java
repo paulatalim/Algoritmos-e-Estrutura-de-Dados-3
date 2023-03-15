@@ -286,12 +286,8 @@ public class App {
         limpar_console();
 
         //Criacao de arquivos temporarios
-        FileOutputStream arq_out_1 = new FileOutputStream ("src/arqTemp1.db");
-        FileOutputStream arq_out_2 = new FileOutputStream ("src/arqTemp2.db");
-
-        //Abre para escrita
-        DataOutputStream out_1 = new DataOutputStream (arq_out_1);
-        DataOutputStream out_2 = new DataOutputStream (arq_out_2);
+        FileOutputStream[] arq_out = new FileOutputStream [2];
+        DataOutputStream[] out = new DataOutputStream [2];
         
         //Reinicia o ponteiro
         arq.seek(0);
@@ -301,6 +297,12 @@ public class App {
         byte[] poke_vet_byte;
         
         try {
+            //Abre os objetos
+            for (i = 0; i < 2; i++) {
+                arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");
+                out[i] = new DataOutputStream (arq_out[i]);
+            }
+
             //Preenche o vetor com os registros
             for (i = 0; i < bloco.length && arq.getFilePointer() < arq.length(); i++) {
                 
@@ -357,11 +359,11 @@ public class App {
                         poke_vet_byte = bloco[0].toByteArray();
 
                         if (escrever_arq1) {
-                            out_1.writeInt(poke_vet_byte.length);
-                            out_1.write(poke_vet_byte);
+                            out[0].writeInt(poke_vet_byte.length);
+                            out[0].write(poke_vet_byte);
                         } else {
-                            out_2.writeInt(poke_vet_byte.length);
-                            out_2.write(poke_vet_byte);
+                            out[1].writeInt(poke_vet_byte.length);
+                            out[1].write(poke_vet_byte);
                         }
                         
                         //Inclui novo pokemon do vetor
@@ -377,11 +379,10 @@ public class App {
             }
         } finally {
             //Fecha os arquivos temporarios
-            arq_out_1.close();
-            arq_out_2.close();
-
-            out_1.close();
-            out_2.close();            
+            for (i = 0; i < 2; i ++) {
+                arq_out[i].close();
+                out[i].close();
+            }         
         }
             
         /* INTERCALACAO */
@@ -389,19 +390,20 @@ public class App {
         limpar_console();
         
         //Abre os arquivos
-        FileInputStream arq_in_1 = new FileInputStream("src/arqTemp1.db");
-        FileInputStream arq_in_2 = new FileInputStream("src/arqTemp2.db");
+        // FileInputStream arq_in_1 = new FileInputStream("src/arqTemp1.db");
+        // FileInputStream arq_in_2 = new FileInputStream("src/arqTemp2.db");
 
-        arq_out_1 = new FileOutputStream("src/arqTemp3.db");
-        arq_out_2 = new FileOutputStream("src/arqTemp4.db");
+        FileInputStream[] arq_in = new FileInputStream [2];
+        DataInputStream[] in = new DataInputStream [2];
 
         //Abre objetos de leitura e escrita
-        out_1 = new DataOutputStream(arq_out_1);
-        out_2 = new DataOutputStream(arq_out_2);
-        
-        DataInputStream[] in = new DataInputStream [2];
-        in[0] = new DataInputStream(arq_in_1);
-        in[1] = new DataInputStream(arq_in_2);
+        for (i = 0; i < 2; i++) {
+            arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+            arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+
+            in[i] = new DataInputStream(arq_in[i]);
+            out[i] = new DataOutputStream(arq_out[i]);
+        }
             
         try {
             //Verificar se ha registros para intercalar
@@ -439,7 +441,7 @@ public class App {
                     
                     //Registra o novo pokemon
                     poke_antigo = poke[indice];
-                    poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
+                    poke[indice] = escrever_pokemon(poke[indice], in[indice], out[0], out[1], escrever_primeiro_arq);
 
                     //Verifica se o segmento acabou
                     if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
@@ -451,7 +453,7 @@ public class App {
                         //Escreve o resto do segmento do outro arquivo
                         while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
                             poke_antigo = poke[indice];
-                            poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
+                            poke[indice] = escrever_pokemon(poke[indice], in[indice], out[0], out[1], escrever_primeiro_arq);
                         }
                     }
 
@@ -465,27 +467,26 @@ public class App {
                 }
 
                 //Trocar arquivos
-                arq_in_1.close();
-                in[0].close();
-                in[1].close();
-                out_1.close();
-                out_2.close();
-                arq_in_1.close();
-                arq_in_2.close();
-                arq_out_1.close();
-                arq_out_2.close();
+
+                for (i = 0; i < 2; i++) {
+                    arq_in[i].close();
+                    arq_out[i].close();
+                    in[i].close();
+                    out[i].close();
+
+                }
 
                 if (modo1) {
-                    arq_in_1 = new FileInputStream("src/arqTemp1.db");
-                    arq_in_2 = new FileInputStream("src/arqTemp2.db");
-                    arq_out_1 = new FileOutputStream("src/arqTemp3.db");
-                    arq_out_2 = new FileOutputStream("src/arqTemp4.db");
+                    arq_in[0] = new FileInputStream("src/arqTemp1.db");
+                    arq_in[1] = new FileInputStream("src/arqTemp2.db");
+                    arq_out[0] = new FileOutputStream("src/arqTemp3.db");
+                    arq_out[1] = new FileOutputStream("src/arqTemp4.db");
                     
                 } else {
-                    arq_in_1 = new FileInputStream("src/arqTemp3.db");
-                    arq_in_2 = new FileInputStream("src/arqTemp4.db");
-                    arq_out_1 = new FileOutputStream("src/arqTemp1.db");
-                    arq_out_2 = new FileOutputStream("src/arqTemp2.db");
+                    arq_in[0] = new FileInputStream("src/arqTemp3.db");
+                    arq_in[1] = new FileInputStream("src/arqTemp4.db");
+                    arq_out[0] = new FileOutputStream("src/arqTemp1.db");
+                    arq_out[1] = new FileOutputStream("src/arqTemp2.db");
                     
                 }
 
@@ -493,8 +494,8 @@ public class App {
 
                 in[0] = new DataInputStream(arq_in_1);
                 in[1] = new DataInputStream(arq_in_2);
-                out_1 = new DataOutputStream(arq_out_1);
-                out_2 = new DataOutputStream(arq_out_2);
+                out[0] = new DataOutputStream(arq_out[0]);
+                out[1] = new DataOutputStream(arq_out[1]);
             }
 
             //Limpar antigos arquivos de leitura
@@ -522,12 +523,12 @@ public class App {
         } finally {
             in[0].close();
             in[1].close();
-            out_1.close();
-            out_2.close();
+            out[0].close();
+            out[1].close();
             arq_in_1.close();
             arq_in_2.close();
-            arq_out_1.close();
-            arq_out_2.close();
+            arq_out[0].close();
+            arq_out[1].close();
 
             //Deleta os arquivos temporarios
             File arq_temp;
@@ -552,7 +553,7 @@ public class App {
                 passar_arq_csv_para_db(arq);
             }
             
-            // ordenacao(arq);
+            ordenacao(arq);
             arq.close();
         } catch (Exception e) {
             e.printStackTrace();
