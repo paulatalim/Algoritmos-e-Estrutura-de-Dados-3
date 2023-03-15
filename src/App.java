@@ -277,6 +277,10 @@ public class App {
         return pokemon;
     }
 
+    public static int booleanToInt (boolean bool) {
+        return (bool) ? 1 : 0;
+    }
+
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         int i;
 
@@ -398,60 +402,68 @@ public class App {
         //Abre objetos de leitura e escrita
         out_1 = new DataOutputStream(arq_out_1);
         out_2 = new DataOutputStream(arq_out_2);
-
-        DataInputStream in_1 = new DataInputStream(arq_in_1);
-        DataInputStream in_2 = new DataInputStream(arq_in_2);
+        
+        DataInputStream[] in = new DataInputStream [2];
+        in[0] = new DataInputStream(arq_in_1);
+        in[1] = new DataInputStream(arq_in_2);
             
         try {
             //Verificar se ha registros para intercalar
 
-            Pokemon poke1 = new Pokemon();
-            Pokemon poke2 = new Pokemon();
+            Pokemon[] poke = new Pokemon[2];
+            poke[0] = new Pokemon();
+            poke[1] = new Pokemon();
             Pokemon poke_antigo = new Pokemon();
 
             boolean terminou_segmento = false;
             boolean escrever_primeiro_arq = true;
             boolean modo1 = false;
 
+            boolean segundo_input = false;
+            int indice = booleanToInt(segundo_input);
+
             //Verifica se ha somente um bloco
-            while (in_1.available() > 0 && in_2.available() > 0) {
-                //Le o primeiro arquivo
-                poke_vet_byte = new byte [in_1.readInt()];
-                in_1.read(poke_vet_byte);
-                poke1.fromByteArray(poke_vet_byte);
+            while (in[0].available() > 0 && in[1].available() > 0) {
 
-                //Le o segundo arquivo
-                poke_vet_byte = new byte [in_2.readInt()];
-                in_2.read(poke_vet_byte);
-                poke2.fromByteArray(poke_vet_byte);
-
+                //Le o primeiro registro dos arquivos
+                for (i = 0; i < 2; i ++) {
+                    poke_vet_byte = new byte [in[i].readInt()];
+                    in[i].read(poke_vet_byte);
+                    poke[i].fromByteArray(poke_vet_byte);
+                }
+            
                 //Intercala de arquivos
-                while (in_1.available() > 0 && in_2.available() > 0) {
-                    if (poke1.getId() < poke2.getId()) {
-                        poke_antigo = poke1;
-                        poke1 = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
+                while (in[0].available() > 0 && in[1].available() > 0) {
+                    if (poke[0].getId() < poke[1].getId()) {
+                        indice = 0;
 
-                        if (poke_antigo.getId() > poke1.getId() || in_1.available() <= 0) {
+                        poke_antigo = poke[indice];
+                        poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
+
+                        if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
                             terminou_segmento = true;
+                            indice = 1;
 
                             //Escreve o resto do segmento de poke 2
-                            while (poke_antigo.getId() < poke2.getId() || in_2.available() > 0) {
-                                poke_antigo = poke2;
-                                poke2 = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
+                            while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
+                                poke_antigo = poke[indice];
+                                poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
                             }
                         }
     
                     } else {
-                        poke_antigo = poke2;
-                        poke2 = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
+                        indice = 1;
+                        poke_antigo = poke[indice];
+                        poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
 
-                        if (poke_antigo.getId() > poke2.getId() || in_2.available() <= 0) {
+                        if (poke_antigo.getId() > poke[indice].getId() || in[indice].available() <= 0) {
                             terminou_segmento = true;
-                            
+                            indice = 0;
+
                             //Escreve o resto do segmento de poke 1
-                            while (poke_antigo.getId() < poke1.getId() || in_1.available() > 0) {
-                                poke_antigo = poke1;
-                                poke1 = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
+                            while (poke_antigo.getId() < poke[indice].getId() || in[indice].available() > 0) {
+                                poke_antigo = poke[indice];
+                                poke[indice] = escrever_pokemon(poke[indice], in[indice], out_1, out_2, escrever_primeiro_arq);
                             }
                         }
                     }
@@ -467,8 +479,8 @@ public class App {
 
                 //Trocar arquivos
                 arq_in_1.close();
-                in_1.close();
-                in_2.close();
+                in[0].close();
+                in[1].close();
                 out_1.close();
                 out_2.close();
                 arq_in_1.close();
@@ -492,8 +504,8 @@ public class App {
 
                 modo1 = !modo1;
 
-                in_1 = new DataInputStream(arq_in_1);
-                in_2 = new DataInputStream(arq_in_2);
+                in[0] = new DataInputStream(arq_in_1);
+                in[1] = new DataInputStream(arq_in_2);
                 out_1 = new DataOutputStream(arq_out_1);
                 out_2 = new DataOutputStream(arq_out_2);
             }
@@ -504,19 +516,17 @@ public class App {
 
             byte[] vet2;
 
-            while (in_1.available() > 0) {
-                //escrever arq
-                vet2 = new byte [in_1.readInt()];
-                in_1.read(vet2);
-
-                arq.writeByte(' ');
-                arq.writeInt(vet2.length);
-                arq.write(vet2);
+            if (in[0].available() > 0) {
+                indice = 0;
+            } else {
+                indice = 1;
             }
 
-            while (in_2.available() > 0) {
-                vet2 = new byte [in_2.readInt()];
-                in_2.read(vet2);
+            while (in[indice].available() > 0) {
+                //escrever arq
+                vet2 = new byte [in[indice].readInt()];
+                in[indice].read(vet2);
+
                 arq.writeByte(' ');
                 arq.writeInt(vet2.length);
                 arq.write(vet2);
@@ -529,8 +539,8 @@ public class App {
             limpar_console();
 
         } finally {
-            in_1.close();
-            in_2.close();
+            in[0].close();
+            in[1].close();
             out_1.close();
             out_2.close();
             arq_in_1.close();
