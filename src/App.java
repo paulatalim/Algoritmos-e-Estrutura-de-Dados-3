@@ -388,108 +388,170 @@ public class App {
 
             boolean terminou_segmento1 = false;
             boolean terminou_segmento2 = false;
+            boolean escrever_primeiro_arq = true;
+            boolean modo1 = false;
 
-            //Le o primeiro arquivo
-            int tam = in_1.readInt();
-            byte[] vet = new byte [tam];
-            in_1.read(vet);
-            poke1.fromByteArray(vet);
-
-            //Le o segundo arquivo
-            tam = in_2.readInt();
-            vet = new byte [tam];
-            poke2.fromByteArray(vet);
-
-
-            //Intercala um segmento
+            //Verifica se ha somente um bloco
             while (in_1.available() > 0 && in_2.available() > 0) {
-                if (poke1.getId() < poke2.getId()) {
-                    vet = poke1.toByteArray();
-                    out_1.writeInt(vet.length);
-                    out_1.write(vet);
+                //Le o primeiro arquivo
+                int tam = in_1.readInt();
+                byte[] vet = new byte [tam];
+                in_1.read(vet);
+                poke1.fromByteArray(vet);
 
-                    poke1_antigo = poke1;
-                    tam = in_1.readInt();
-                    vet = new byte [tam];
-                    in_1.read(vet);
-                    poke1.fromByteArray(vet);
+                //Le o segundo arquivo
+                tam = in_2.readInt();
+                vet = new byte [tam];
+                poke2.fromByteArray(vet);
 
-                    if (poke1_antigo.getId() > poke1.getId()) {
-                        terminou_segmento1 = true;
-
-                        //Escreve o resto do segmento de poke 2
-                        while (poke2_antigo.getId() < poke2.getId()) {
-
-                            vet = poke2.toByteArray();
-                            out_1.writeInt(vet.length);
-                            out_1.write(vet);
-
-                            //Le o proximo pokemon
-                            poke2_antigo = poke2;
-                            tam = in_2.readInt();
-                            vet = new byte [tam];
-                            in_2.read(vet);
-                            poke2.fromByteArray(vet);
-                        }
-                    }
-
-                } else {
-                    vet = poke2.toByteArray();
-                    out_1.writeInt(vet.length);
-                    out_1.write(vet);
-
-                    poke2_antigo = poke2;
-                    tam = in_2.readInt();
-                    vet = new byte [tam];
-                    in_2.read(vet);
-                    poke2.fromByteArray(vet);
-
-                    if (poke1_antigo.getId() > poke1.getId()) {
-                        terminou_segmento2 = true;
+                //Intercala de arquivos
+                while (in_1.available() > 0 && in_2.available() > 0) {
+                    if (poke1.getId() < poke2.getId()) {
+                        vet = poke1.toByteArray();
                         
-                        //Escreve o resto do segmento de poke 1
-                        while (poke1_antigo.getId() < poke1.getId()) {
-
-                            vet = poke1.toByteArray();
+                        if (escrever_primeiro_arq) {
                             out_1.writeInt(vet.length);
                             out_1.write(vet);
-
-                            //Le o proximo pokemon
-                            poke1_antigo = poke1;
-                            tam = in_1.readInt();
-                            vet = new byte [tam];
-                            in_1.read(vet);
-                            poke1.fromByteArray(vet);
+                        } else {
+                            out_2.writeInt(vet.length);
+                            out_2.write(vet);
                         }
+
+                        poke1_antigo = poke1;
+                        tam = in_1.readInt();
+                        vet = new byte [tam];
+                        in_1.read(vet);
+                        poke1.fromByteArray(vet);
+
+                        if (poke1_antigo.getId() > poke1.getId()) {
+                            terminou_segmento1 = true;
+
+                            //Escreve o resto do segmento de poke 2
+                            while (poke2_antigo.getId() < poke2.getId() && in_2.available() > 0) {
+
+                                vet = poke2.toByteArray();
+
+                                if (escrever_primeiro_arq) {
+                                    out_1.writeInt(vet.length);
+                                    out_1.write(vet);
+                                } else {
+                                    out_2.writeInt(vet.length);
+                                    out_2.write(vet);
+                                }
+                                
+                                //Le o proximo pokemon
+                                poke2_antigo = poke2;
+                                tam = in_2.readInt();
+                                vet = new byte [tam];
+                                in_2.read(vet);
+                                poke2.fromByteArray(vet);
+                            }
+                        } else if (in_1.available() <= 0) {
+                            while (in_2.available() > 0) {
+                                vet = poke2.toByteArray();
+
+                                if (escrever_primeiro_arq) {
+                                    out_1.writeInt(vet.length);
+                                    out_1.write(vet);
+                                } else {
+                                    out_2.writeInt(vet.length);
+                                    out_2.write(vet);
+                                }
+                                
+                                //Le o proximo pokemon
+                                poke2_antigo = poke2;
+                                tam = in_2.readInt();
+                                vet = new byte [tam];
+                                in_2.read(vet);
+                                poke2.fromByteArray(vet);
+                            }
+                        }
+    
+                    } else {
+                        vet = poke2.toByteArray();
+
+                        if (escrever_primeiro_arq) {
+                            out_1.writeInt(vet.length);
+                            out_1.write(vet);
+                        } else {
+                            out_2.writeInt(vet.length);
+                            out_2.write(vet);
+                        }
+
+                        poke2_antigo = poke2;
+                        tam = in_2.readInt();
+                        vet = new byte [tam];
+                        in_2.read(vet);
+                        poke2.fromByteArray(vet);
+
+                        if (poke1_antigo.getId() > poke1.getId()) {
+                            terminou_segmento2 = true;
+                            
+                            //Escreve o resto do segmento de poke 1
+                            while (poke1_antigo.getId() < poke1.getId()) {
+
+                                vet = poke1.toByteArray();
+                                
+                                if (escrever_primeiro_arq) {
+                                    out_1.writeInt(vet.length);
+                                    out_1.write(vet);
+                                } else {
+                                    out_2.writeInt(vet.length);
+                                    out_2.write(vet);
+                                }
+
+                                //Le o proximo pokemon
+                                poke1_antigo = poke1;
+                                tam = in_1.readInt();
+                                vet = new byte [tam];
+                                in_1.read(vet);
+                                poke1.fromByteArray(vet);
+                            }
+                        }
+                    }
+
+                    //Verifica se ha troca de arquivo
+                    if (terminou_segmento1 || terminou_segmento2) {
+                        escrever_primeiro_arq = !escrever_primeiro_arq;
+                        
+                        //Reinicia variaveis
+                        terminou_segmento1 = false;
+                        terminou_segmento2 = false;
                     }
                 }
 
-                //Verifica se ha troca de arquivo
-                if (terminou_segmento1 || terminou_segmento2) {
+                //Trocar arquivos
+                arq_in_1.close();
+                in_1.close();
+                in_2.close();
+                out_1.close();
+                out_2.close();
+                arq_in_1.close();
+                arq_in_2.close();
+                arq_out_1.close();
+                arq_out_2.close();
 
+                if (modo1) {
+                    arq_in_1 = new FileInputStream("src/arqTemp1.db");
+                    arq_in_2 = new FileInputStream("src/arqTemp2.db");
+                    arq_out_1 = new FileOutputStream("src/arqTemp3.db");
+                    arq_out_2 = new FileOutputStream("src/arqTemp4.db");
+                    
+                } else {
+                    arq_in_1 = new FileInputStream("src/arqTemp3.db");
+                    arq_in_2 = new FileInputStream("src/arqTemp4.db");
+                    arq_out_1 = new FileOutputStream("src/arqTemp1.db");
+                    arq_out_2 = new FileOutputStream("src/arqTemp2.db");
+                    
                 }
+
+                modo1 = !modo1;
+
+                in_1 = new DataInputStream(arq_in_1);
+                in_2 = new DataInputStream(arq_in_2);
+                out_1 = new DataOutputStream(arq_out_1);
+                out_2 = new DataOutputStream(arq_out_2);
             }
-            
-            //Trocar arquivos
-            arq_in_1.close();
-            in_1.close();
-            in_2.close();
-            out_1.close();
-            out_2.close();
-            arq_in_1.close();
-            arq_in_2.close();
-            arq_out_1.close();
-            arq_out_2.close();
-
-            arq_out_1 = new FileOutputStream("src/arqTemp1.db");
-            arq_out_2 = new FileOutputStream("src/arqTemp2.db");
-            arq_in_1 = new FileInputStream("src/arqTemp3.db");
-            arq_in_2 = new FileInputStream("src/arqTemp4.db");
-
-            in_1 = new DataInputStream(arq_in_1);
-            in_2 = new DataInputStream(arq_in_2);
-            out_1 = new DataOutputStream(arq_out_1);
-            out_2 = new DataOutputStream(arq_out_2);
 
             //Verificar se um dos arquivos está vazio
 
