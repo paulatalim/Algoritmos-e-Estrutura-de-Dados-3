@@ -407,65 +407,61 @@ public class App {
 
             Pokemon poke1 = new Pokemon();
             Pokemon poke2 = new Pokemon();
-            Pokemon poke1_antigo = new Pokemon();
-            Pokemon poke2_antigo = new Pokemon();
+            Pokemon poke_antigo = new Pokemon();
 
-            boolean terminou_segmento1 = false;
-            boolean terminou_segmento2 = false;
+            boolean terminou_segmento = false;
             boolean escrever_primeiro_arq = true;
             boolean modo1 = false;
 
             //Verifica se ha somente um bloco
             while (in_1.available() > 0 && in_2.available() > 0) {
                 //Le o primeiro arquivo
-                int tam = in_1.readInt();
-                byte[] vet = new byte [tam];
-                in_1.read(vet);
-                poke1.fromByteArray(vet);
+                poke_vet_byte = new byte [in_1.readInt()];
+                in_1.read(poke_vet_byte);
+                poke1.fromByteArray(poke_vet_byte);
 
                 //Le o segundo arquivo
-                tam = in_2.readInt();
-                vet = new byte [tam];
-                poke2.fromByteArray(vet);
+                poke_vet_byte = new byte [in_2.readInt()];
+                in_2.read(poke_vet_byte);
+                poke2.fromByteArray(poke_vet_byte);
 
                 //Intercala de arquivos
                 while (in_1.available() > 0 && in_2.available() > 0) {
                     if (poke1.getId() < poke2.getId()) {
-                        poke1_antigo = poke1;
-                        poke1_antigo = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
+                        poke_antigo = poke1;
+                        poke1 = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
 
-                        if (poke1_antigo.getId() > poke1.getId() || in_1.available() <= 0) {
-                            terminou_segmento1 = true;
+                        if (poke_antigo.getId() > poke1.getId() || in_1.available() <= 0) {
+                            terminou_segmento = true;
 
                             //Escreve o resto do segmento de poke 2
-                            while (poke2_antigo.getId() < poke2.getId() || in_2.available() > 0) {
-                                poke2_antigo = poke2;
-                                poke2_antigo = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
+                            while (poke_antigo.getId() < poke2.getId() || in_2.available() > 0) {
+                                poke_antigo = poke2;
+                                poke2 = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
                             }
                         }
     
                     } else {
-                        poke2_antigo = poke2;
+                        poke_antigo = poke2;
                         poke2 = escrever_pokemon(poke2, in_2, out_1, out_2, escrever_primeiro_arq);
 
-                        if (poke2_antigo.getId() > poke2.getId() || in_2.available() <= 0) {
-                            terminou_segmento2 = true;
+                        if (poke_antigo.getId() > poke2.getId() || in_2.available() <= 0) {
+                            terminou_segmento = true;
                             
                             //Escreve o resto do segmento de poke 1
-                            while (poke1_antigo.getId() < poke1.getId() || in_1.available() > 0) {
-                                poke1_antigo = poke1;
-                                poke1_antigo = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
+                            while (poke_antigo.getId() < poke1.getId() || in_1.available() > 0) {
+                                poke_antigo = poke1;
+                                poke1 = escrever_pokemon(poke1, in_1, out_1, out_2, escrever_primeiro_arq);
                             }
                         }
                     }
 
                     //Verifica se ha troca de arquivo
-                    if (terminou_segmento1 || terminou_segmento2) {
+                    if (terminou_segmento) {
                         escrever_primeiro_arq = !escrever_primeiro_arq;
                         
-                        //Reinicia variaveis
-                        terminou_segmento1 = false;
-                        terminou_segmento2 = false;
+                        //Reinicia variavel
+                        terminou_segmento = false;
                     }
                 }
 
