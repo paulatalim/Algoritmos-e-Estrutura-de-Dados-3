@@ -39,7 +39,7 @@ public class App {
      */
     public static void exibir_tela_inicial_e_info () throws Exception {
         //Capa do trab
-        System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresenta:"  + "\n\n\n" 
+        System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresentam:"  + "\n\n\n" 
                             + "\t\t\t\t\t" + "      *** POKE-TRABALHO ***"       + "\n" 
                             + "\t\t\t\t\t" + "Algoritmos e Estrutura de Dados 3" + "\n\n");
 
@@ -60,7 +60,7 @@ public class App {
         exibir_fim_tela();
 
         System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                         + "\n\n\n"
-                            + "\t"           + "Esse sistema eh um trabalho de Algortmos e Estrutura de Dados 3"        + "\n"
+                            + "\t"           + "Esse sistema eh um trabalho de Algoritmos e Estrutura de Dados 3"        + "\n"
                             + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"    + "\n"
                             + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."          + "\n\n"
 
@@ -68,7 +68,7 @@ public class App {
                             + "\t"           + "as informacoes serao importadas do arquivo .csv para preenche-la "      + "\n"
                             + "\t"           + "automaticamente. Apos o processo de importacao, ou caso o arquivo .db " + "\n"
                             + "\t"           + "exista, sera direcionado para o menu de opcoes de manipulacao da base " + "\n"
-                            + "\t"           + "de dados, onde podera executar as acoes desejadas."                     + "\n\n"
+                            + "\t"           + "de dados, onde podera executar as acoes desejadas."                     + "\n\n\n"
                             + "\t\t\t\t\t"   +                            "Seja bem vindo!"                             + "\n");
         
         exibir_fim_tela();
@@ -422,13 +422,17 @@ public class App {
         Pokemon[] poke = new Pokemon [vet_tam];
 
         boolean terminou_segmento = false;
-        boolean inverter_arq = true;
+        boolean inverter_arq = false;
 
         //Reinicia variaveis
         escrever_arq1 = true;
         
         //Abre objetos de leitura e escrita
         for (i = 0; i < vet_tam; i++) {
+            arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+            arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+            in[i] = new DataInputStream(arq_in[i]);
+            out[i] = new DataOutputStream(arq_out[i]);
             poke[i] = new Pokemon();
         }
 
@@ -439,19 +443,6 @@ public class App {
 
         //Verifica se ha registros para intercalar
         while (in[0].available() > 0 && in[1].available() > 0) {
-            //Troca de arquivos
-            for (i = 0; i < vet_tam; i++) {
-                if (inverter_arq) {
-                    arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
-                    arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
-                } else {
-                    arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
-                    arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
-                }
-
-                in[i] = new DataInputStream(arq_in[i]);
-                out[i] = new DataOutputStream(arq_out[i]);
-            }
 
             //Reajuste na variavel
             inverter_arq = !inverter_arq;
@@ -503,6 +494,20 @@ public class App {
                 in[i].close();
                 out[i].close();
             }
+
+            //Troca de arquivos
+            for (i = 0; i < vet_tam; i++) {
+                if (inverter_arq) {
+                    arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+                    arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+                } else {
+                    arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
+                    arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
+                }
+
+                in[i] = new DataInputStream(arq_in[i]);
+                out[i] = new DataOutputStream(arq_out[i]);
+            }
         }
 
         //Limpar antigos arquivos de leitura
@@ -511,6 +516,14 @@ public class App {
 
         //Reajuste de variavel
         indice = 0;
+
+        //Fecha os arquivos e objetos
+        for (i = 0 ; i < vet_tam; i++) {
+            arq_in[i].close();
+            arq_out[i].close();
+            in[i].close();
+            out[i].close();
+        }
 
         for (i = 1; i < 4; i ++) {
             //Verifica em qual arquivo q possui dados
@@ -555,6 +568,8 @@ public class App {
 
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
+
+            exibir_tela_inicial_e_info();
             
             //Verifica se o arquivo esta vazio, acabou de ser criado
             if (arq.length() == 0) {
@@ -562,9 +577,12 @@ public class App {
                 passar_arq_csv_para_db(arq);
                 exibir_fim_tela();
             }
+
             ordenacao(arq);
             exibir_fim_tela();
             arq.close();
+
+            exibir_tela_agradecimentos();
         } catch (Exception e) {
             e.printStackTrace();
         }
