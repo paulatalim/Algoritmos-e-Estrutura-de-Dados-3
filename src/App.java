@@ -318,7 +318,7 @@ public class App {
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
-        System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de distribuicao ...");
 
         //Abre os objetos
@@ -411,8 +411,10 @@ public class App {
         }
             
         /* INTERCALACAO */
+
+        //Mensagem para o usuario
         limpar_console();
-        System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de intercalacao ...");
         
         FileInputStream[] arq_in = new FileInputStream [vet_tam];
@@ -420,26 +422,26 @@ public class App {
         Pokemon[] poke = new Pokemon [vet_tam];
 
         boolean terminou_segmento = false;
-        boolean modo1 = true;
+        boolean inverter_arq = true;
 
         //Reinicia variaveis
         escrever_arq1 = true;
-        
         
         //Abre objetos de leitura e escrita
         for (i = 0; i < vet_tam; i++) {
             poke[i] = new Pokemon();
         }
 
+        //Mensagem para o usuario
         limpar_console();
-        System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
-                        + "\t" + "Intercalando pokemons ...");
+        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Intercalando pokemons ...");
 
         //Verifica se ha registros para intercalar
         while (in[0].available() > 0 && in[1].available() > 0) {
             //Troca de arquivos
             for (i = 0; i < vet_tam; i++) {
-                if (modo1) {
+                if (inverter_arq) {
                     arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
                     arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
                 } else {
@@ -452,7 +454,7 @@ public class App {
             }
 
             //Reajuste na variavel
-            modo1 = !modo1;
+            inverter_arq = !inverter_arq;
 
             //Le o primeiro registro dos arquivos
             for (i = 0; i < vet_tam; i ++) {
@@ -493,6 +495,7 @@ public class App {
                     terminou_segmento = false;
                 }
             }
+
             //Trocar arquivos
             for (i = 0; i < vet_tam; i++) {
                 arq_in[i].close();
@@ -500,7 +503,6 @@ public class App {
                 in[i].close();
                 out[i].close();
             }
-            
         }
 
         //Limpar antigos arquivos de leitura
@@ -510,11 +512,12 @@ public class App {
         //Reajuste de variavel
         indice = 0;
 
-        for (i  = 1; i < 4; i ++) {
+        for (i = 1; i < 4; i ++) {
             //Verifica em qual arquivo q possui dados
-            arq_in[indice] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+            arq_in[indice] = new FileInputStream("src/arqTemp" + i + ".db");
             in[indice] = new DataInputStream(arq_in[indice]);
 
+            //Transferencia de dados do arquivo temporario para o arquivo .db
             while (in[indice].available() > 0) {
                 //escrever arq
                 poke_vet_byte = new byte [in[indice].readInt()];
@@ -529,6 +532,7 @@ public class App {
             in[indice].close();
         }
 
+        //Mensagem para o usuario
         limpar_console();
         System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Finalizando Intercalacao ...");
@@ -539,8 +543,8 @@ public class App {
             arq_temp = new File ("src/arqTemp" + i + ".db");
             arq_temp.delete();
         }
-        
 
+        //Mensagem para o usuario
         limpar_console();
         System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
