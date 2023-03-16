@@ -721,7 +721,7 @@ public class App {
         RandomAccessFile arq;
         Scanner scanner = new Scanner (System.in);
 
-        int num;
+        int opcao, id;
         Pokemon pokemon = new Pokemon();
         crud crud;
 
@@ -753,11 +753,11 @@ public class App {
                                         + "\t" + "0 - Para FECHAR" + "\n");
 
                     System.out.print("\t" + "Sua opcao: ");
-                    num =scanner.nextInt();
+                    opcao =scanner.nextInt();
                     limpar_console();
-                } while (num < 0 || num > 5);
+                } while (opcao < 0 || opcao > 5);
     
-                switch (num) {
+                switch (opcao) {
                     case 1:
                         limpar_console ();
     
@@ -863,42 +863,31 @@ public class App {
     
                         break;
     
-                    case 2:
-                        limpar_console ();
+                    case 2:    ;
+                        System.out.print("Digite O id do pokemon procurado: "); 
+                        id = scanner.nextInt();
+                        limpar_console();
     
-                        int lerId;
-                        System.out.println("Digite O id do pokemon procurado: "); 
-                        lerId = scanner.nextInt();
-    
-                        pokemon = crud.ler(lerId); 
-                        pokemon.exibir_pokemon();
-    
-                        System.out.print("\n"); 
-    
+                        pokemon = crud.ler(id); 
+                        pokemon.exibir_pokemon(); 
                         break;
     
                     case 3:
-                        limpar_console ();
-    
-                        int  atualizarId;
-                        Boolean foi_atualizado;
-    
-                        System.out.println("Digite O id do pokemon a ser atualizado: ");
-                        atualizarId = scanner.nextInt();
+                        System.out.print("Digite O id do pokemon a ser atualizado: ");
+                        id = scanner.nextInt();
                         
-                        pokemon = crud.ler(atualizarId); 
+                        pokemon = crud.ler(id); 
                         pokemon.exibir_pokemon();
     
                         //Funções para atualizar o pokemon
-                        foi_atualizado = crud.atualizar(pokemon); //Verifica o tamnho do novo registro
                         escolher_atualizar(pokemon); //Escolhe o atributo e atualiza
                         
-                       if (foi_atualizado == true){
+                        //Atualiza o pokemon no arquivo e retorna um boolean
+                        if (crud.atualizar(pokemon)){
                             System.out.println("\nO pokemon foi atualizado com sucesso!");
-                        }
-                        else{
+                        } else {
                             System.out.println("\nPokemon não encontrado");
-                       }
+                        }
                         break;
     
                     case 4:
@@ -916,8 +905,13 @@ public class App {
                         
                         break;
                 }
+
+                //Preparo para reiniciar programa
+                if (opcao != 0) {
+                    exibir_fim_tela();
+                }
                 
-            } while(num != 0);
+            } while(opcao != 0);
 
             scanner.close();
             arq.close();

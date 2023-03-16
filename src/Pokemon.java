@@ -343,7 +343,7 @@ public class Pokemon {
                             + "\t" + "Tipo 1: " + tipo1);
 
         if (tipo2.compareTo("null") != 0) {
-            System.out.println("Tipo 2: " + tipo2);
+            System.out.println("\t" + "Tipo 2: " + tipo2);
         }
 
         System.out.println ("\n\t" + "Estatisticas basicas".toUpperCase()+ "\n"
