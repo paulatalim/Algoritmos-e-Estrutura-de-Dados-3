@@ -23,6 +23,9 @@ public class App {
 		    Runtime.getRuntime().exec("clear");
     }
 
+    /*
+     * Descricao: essa funcao exibe no fim da tela
+     */
     public static void exibir_fim_tela () throws Exception {
         System.out.print("\n\n\t" + "Pressione 'enter' para continuar");
         System.in.read();
@@ -30,6 +33,10 @@ public class App {
         limpar_console();
     }
 
+    /*
+     * Descricao: essa funcao exibe a tela inicial, as informacoes 
+     * do grupo e instrucoes do sistema
+     */
     public static void exibir_tela_inicial_e_info () throws Exception {
         //Capa do trab
         System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresenta:"  + "\n\n\n" 
@@ -67,6 +74,9 @@ public class App {
         exibir_fim_tela();
     }
 
+    /*
+     * Descricao: essa funcao exibe a tela fnal, tela de agradecimentos
+     */
     public static void exibir_tela_agradecimentos () {
         System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
                             + "\t\t\t\t\t" + "*** Poke-obrigado e ate logo ***" + "\n\n");
@@ -115,6 +125,10 @@ public class App {
         return sb.toString();
     }
 
+    /*
+     * Descricao: essa funcao importa um arquivo csv e passa sua informacoes para a database
+     * Parametro: um arquivo RandomAccessFile (arquivo database a ser preenchido)
+     */
     public static void passar_arq_csv_para_db (RandomAccessFile arq_atual)  {
         Pokemon pokemon;
         String[] atributos_csv;
@@ -232,7 +246,6 @@ public class App {
 
     /* 
     * Descricao: essa funcao constroi o heap de um vetor de pokemons
-    * 
     * Parametros: um vetor de pokemons (vetor a ser construido 
     * a arvore heap) e um pokemon (tamanho valido do vetor)
     */
@@ -255,7 +268,6 @@ public class App {
 
     /* 
     * Descricao: ordena um vetor de pokemons com o heap min
-    * 
     * Parametro: um vetor de pokemons (vetor a ser ordenado)
     */
     public static void fazer_heapmin (Pokemon[] bloco) {
@@ -285,6 +297,10 @@ public class App {
         return pokemon;
     }
 
+    /* 
+    * Descricao: ordena os registros do arquivo com a ordenacao externa
+    * Parametro: arquivo RandomAccessFile (arquivo a ser ordenado)
+    */
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         Pokemon[] bloco = new Pokemon [10];
         byte[] poke_vet_byte;
