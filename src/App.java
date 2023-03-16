@@ -738,10 +738,24 @@ public class App {
                 exibir_fim_tela();
             }
 
+            //Repete o programa
             do {
 
-                System.out.println("Digite: \n\n 1 - Para CRIAR\n 2 - Para LER\n 3 - Para ATUALIZAR\n 4 - Para DELETAR\n 5 - para ORDENAR\n 0 - Para FECHAR");
-                num =scanner.nextInt();
+                //Validacao da entrada do usuario
+                do {
+                    //Exibe o menu das opcoes
+                    System.out.println (  "\t" + "Digite: \n\n"
+                                        + "\t" + "1 - Para CRIAR\n"
+                                        + "\t" + "2 - Para LER\n "
+                                        + "\t" + "3 - Para ATUALIZAR\n"
+                                        + "\t" + "4 - Para DELETAR\n"
+                                        + "\t" + "5 - para ORDENAR\n"
+                                        + "\t" + "0 - Para FECHAR" + "\n");
+
+                    System.out.print("\t" + "Sua opcao: ");
+                    num =scanner.nextInt();
+                    limpar_console();
+                } while (num < 0 || num > 5);
     
                 switch (num) {
                     case 1:
@@ -903,8 +917,9 @@ public class App {
                         break;
                 }
                 
-            }
-            while(num!=0);
+            } while(num != 0);
+
+            scanner.close();
             arq.close();
 
             exibir_tela_agradecimentos();

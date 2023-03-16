@@ -4,7 +4,7 @@ import java.io.RandomAccessFile;
 public class crud{
 
     //Acessar o arquivo
-    private static RandomAccessFile arq;
+    private RandomAccessFile arq;
 
     crud (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
@@ -27,7 +27,7 @@ public class crud{
     }
 
     //READ
-    public static Pokemon ler (int id) throws Exception {
+    public Pokemon ler (int id) throws Exception {
         Pokemon pokemon = new Pokemon();
         byte[]poke_vet_antigo;
 
@@ -66,7 +66,7 @@ public class crud{
         while(arq.getFilePointer()<arq.length()){
             long lapide = arq.getFilePointer();
 
-            if (arq.readByte() == ' '){ //Se não possuir uma lapide
+            if (arq.readByte() == ' ') { //Se não possuir uma lapide
                 poke_vet_antigo = new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
@@ -95,7 +95,7 @@ public class crud{
                 }
             } else{
                 //Pula o registro
-                arq.seek(arq.readInt()+arq.getFilePointer());
+                arq.seek(arq.readInt() + arq.getFilePointer());
             }
 
         }
@@ -113,7 +113,7 @@ public class crud{
         while(arq.getFilePointer()<arq.length()){
 
             long ponteiro = arq.getFilePointer();
-            if(arq.readByte()==' '){
+            if(arq.readByte() == ' '){
                 poke_vet_antigo=new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
@@ -129,7 +129,5 @@ public class crud{
         }
 
         System.out.println("Pokemon excluido com sucesso");
-}
-
-   
+    }
 }
