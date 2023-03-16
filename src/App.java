@@ -267,10 +267,10 @@ public class App {
         }
     }
     
-    public static Pokemon escrever_pokemon (Pokemon pokemon, 
-                                            DataInputStream in, 
-                                            DataOutputStream[] out,
-                                            boolean escolha_out) throws Exception 
+    public static Pokemon escrever_pokemon_e_ler_prox ( Pokemon pokemon, 
+                                                        DataInputStream in, 
+                                                        DataOutputStream[] out,
+                                                        boolean escolha_out) throws Exception 
     {
         byte[] vet = pokemon.toByteArray();
         int indice = escolha_out ? 1 : 0;
@@ -286,30 +286,30 @@ public class App {
     }
 
     public static void ordenacao (RandomAccessFile arq) throws Exception {
-        Pokemon novo_pokemon = new Pokemon();
-        Pokemon antigo_pokemon = new Pokemon();
+        Pokemon[] bloco = new Pokemon [10];
+        byte[] poke_vet_byte;
+        int i, metadados;
         boolean escrever_arq1 = true;
         int indice = 0;
-        int i;
+        final int vet_tam = 2; // Constante inteira
 
-        //Declaracao de constante para o tamanho dos vetores
-        final int vet_tam = 2;
+        Pokemon novo_pokemon = new Pokemon();
+        Pokemon antigo_pokemon = new Pokemon();
+
+        //Criacao de arquivos temporarios
+        FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
+        DataOutputStream[] out = new DataOutputStream [vet_tam];
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
         System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de distribuicao ...");
 
-        //Criacao de arquivos temporarios
-        FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
-        DataOutputStream[] out = new DataOutputStream [vet_tam];
-        
         //Reinicia o ponteiro
         arq.seek(0);
 
-        Pokemon[] bloco = new Pokemon [10];
-        int metadados = arq.readInt();
-        byte[] poke_vet_byte;
+        //Leitura de metadados
+        metadados = arq.readInt();
         
         try {
             //Abre os objetos
@@ -402,14 +402,12 @@ public class App {
         System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de intercalacao ...");
         
-        
-        //Abre os arquivos
         FileInputStream[] arq_in = new FileInputStream [vet_tam];
         DataInputStream[] in = new DataInputStream [vet_tam];
         Pokemon[] poke = new Pokemon [vet_tam];
 
         boolean terminou_segmento = false;
-        boolean modo1 = false;
+        boolean modo1 = true;
 
         //Reinicia variaveis
         escrever_arq1 = true;
@@ -417,12 +415,6 @@ public class App {
         try {
             //Abre objetos de leitura e escrita
             for (i = 0; i < vet_tam; i++) {
-                arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
-                arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
-
-                in[i] = new DataInputStream(arq_in[i]);
-                out[i] = new DataOutputStream(arq_out[i]);
-
                 poke[i] = new Pokemon();
             }
 
@@ -432,6 +424,22 @@ public class App {
 
             //Verifica se ha registros para intercalar
             while (in[0].available() > 0 && in[1].available() > 0) {
+                //Troca de arquivos
+                for (i = 0; i < vet_tam; i++) {
+                    if (modo1) {
+                        arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+                        arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+                    } else {
+                        arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
+                        arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
+                    }
+
+                    in[i] = new DataInputStream(arq_in[i]);
+                    out[i] = new DataOutputStream(arq_out[i]);
+                }
+
+                //Reajuste na variavel
+                modo1 = !modo1;
 
                 //Le o primeiro registro dos arquivos
                 for (i = 0; i < vet_tam; i ++) {
@@ -448,7 +456,7 @@ public class App {
                     
                     //Registra o novo pokemon
                     antigo_pokemon = poke[indice];
-                    poke[indice] = escrever_pokemon(poke[indice], in[indice], out, escrever_arq1);
+                    poke[indice] = escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1);
 
                     //Verifica se o segmento acabou
                     if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
@@ -460,7 +468,7 @@ public class App {
                         //Escreve o resto do segmento do outro arquivo
                         while (antigo_pokemon.getId() < poke[indice].getId() || in[indice].available() > 0) {
                             antigo_pokemon = poke[indice];
-                            poke[indice] = escrever_pokemon(poke[indice], in[indice], out, escrever_arq1);
+                            poke[indice] = escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1);
                         }
                     }
 
@@ -481,20 +489,20 @@ public class App {
                     out[i].close();
                 }
 
-                for (i = 0; i < vet_tam; i++) {
-                    if (modo1) {
-                        arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
-                        arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
-                    } else {
-                        arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
-                        arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
-                    }
+                // for (i = 0; i < vet_tam; i++) {
+                //     if (modo1) {
+                //         arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
+                //         arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
+                //     } else {
+                //         arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
+                //         arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
+                //     }
 
-                    in[i] = new DataInputStream(arq_in[i]);
-                    out[i] = new DataOutputStream(arq_out[i]);
-                }
+                //     in[i] = new DataInputStream(arq_in[i]);
+                //     out[i] = new DataOutputStream(arq_out[i]);
+                // }
 
-                modo1 = !modo1;        
+                // modo1 = !modo1;        
             }
 
             //Limpar antigos arquivos de leitura
