@@ -128,6 +128,10 @@ public class App {
         File arq_csv = new File("src/pokedex.csv");
         Scanner scanner = null;
 
+        //Exibe mensagem para o usuario
+        System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
+                            + "\t" + "Iniciando importacao ..." + "\n");
+        
         try {
             //Abre os objetos do arquivos db
             arq_db = new FileOutputStream("src/pokedex.db");
@@ -141,6 +145,11 @@ public class App {
 
             //Escreve os metadados no arquivo
             dos.writeInt(id_metadados);
+
+            //Exibe mensagem para o usuario
+            limpar_console();
+            System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
+                            + "\t" + "Importando arquivo ..." + "\n");
 
             //Le o arquivo csv e passa as informacoes para o arquivo db
             while (scanner.hasNextLine()) {
@@ -173,6 +182,11 @@ public class App {
             dos.close();
             
             arq_atual.writeInt(id_metadados-1);
+
+            //Exibe mensagem para o usuario
+            limpar_console();
+            System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
+                            + "\t" + "Importacao concluida com sucesso !!!" + "\n");
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -534,6 +548,7 @@ public class App {
             if (arq.length() == 0) {
                 //Importa arquivo .csv automatico
                 passar_arq_csv_para_db(arq);
+                exibir_fim_tela();
             }
             
             ordenacao(arq);
