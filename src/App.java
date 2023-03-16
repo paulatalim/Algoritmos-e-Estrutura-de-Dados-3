@@ -719,6 +719,11 @@ public class App {
 
     public static void main(String[] args) {
         RandomAccessFile arq;
+        Scanner scanner = new Scanner (System.in);
+
+        int num;
+        Pokemon pokemon = new Pokemon();
+        crud crud = new crud();
 
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
@@ -732,8 +737,172 @@ public class App {
                 exibir_fim_tela();
             }
 
-            ordenacao(arq);
-            exibir_fim_tela();
+            do {
+
+                System.out.println("Digite: \n\n 1 - Para CRIAR\n 2 - Para LER\n 3 - Para ATUALIZAR\n 4 - Para DELETAR\n 5 - para ORDENAR\n 0 - Para FECHAR");
+                num =scanner.nextInt();
+    
+                switch (num) {
+                    case 1:
+                        limpar_console ();
+    
+                        //nome
+                        System.out.println("Digite o novo: ");
+                        System.out.println("\nNome: ");
+                        if(scanner.hasNextLine()){
+                            scanner.nextLine();
+                        }
+                        String novoNome = new String (scanner.nextLine());
+    
+                        // num_pokedex;
+                        System.out.println("\nNumero na Pokedex: ");
+                        int novoNum = (scanner.nextInt());
+    
+                         // geracao
+                         System.out.println("\nGeração: ");
+                         int novoGeracao = (scanner.nextInt());
+    
+                         // especie
+                        System.out.println("\nEspecie: ");
+                        if(scanner.hasNextLine()){
+                            scanner.nextLine();
+                        }
+                        String novoEspecie = new String (scanner.nextLine());
+    
+                        // altura
+                        System.out.println("\nAltura: ");
+                        Float novoAltura = (float) (scanner.nextInt());
+    
+                         //peso
+                         System.out.println("\nPeso: ");
+                         Float novoPeso = (float) (scanner.nextInt());
+    
+                         //tipo 1
+                         System.out.println("\nTipo 1: ");
+                         if(scanner.hasNextLine()){
+                            scanner.nextLine();
+                        }
+                         String novoTipo1= new String (scanner.nextLine());
+    
+                         //tipo 2
+                         System.out.println("\nTipo 2: ");
+                         if(scanner.hasNextLine()){
+                            scanner.nextLine();
+                        }
+                         String novoTipo2 = new String (scanner.nextLine());
+    
+                         //hp
+                         System.out.println("\nHp: ");
+                         int novoHp = (scanner.nextInt());
+    
+                         //ataque
+                         System.out.println("\nAtaque: ");
+                         int novoAtaque = (scanner.nextInt());
+    
+                         //defesa
+                         System.out.println("\nDefesa: ");
+                         int novoDefesa = (scanner.nextInt());
+                        
+                         //ataque_especial
+                         System.out.println("\nAtaque Especial: ");
+                         int novoAtaque_especial= (scanner.nextInt());
+    
+                         //defesa_especial
+                         System.out.println("\nDefesa Especial: ");
+                         int novoDefesa_especial = (scanner.nextInt());
+    
+                         //velocidade
+                         System.out.println("\nVelocidade: ");
+                         int novoVelocidade = (scanner.nextInt());
+    
+                         //eh_mistico
+                         System.out.println("\nÉ mistico: ");
+                         Boolean novoEh_mistico = new Boolean (scanner.nextBoolean());
+    
+                         //eh_lendario
+                         System.out.println("\nÉ lendario: ");
+                         Boolean novoEh_lendario = new Boolean (scanner.nextBoolean());
+        
+                        pokemon.setnome(novoNome); 
+                        pokemon.setnum_pokedex(novoNum); 
+                        pokemon.setgeracao(novoGeracao);
+                        pokemon.setespecie(novoEspecie);
+                        pokemon.setaltura(novoAltura);
+                        pokemon.setpeso(novoPeso);
+                        pokemon.settipo1(novoTipo1);
+                        pokemon.settipo2(novoTipo2);
+                        pokemon.sethp(novoHp);
+                        pokemon.setataque(novoAtaque);
+                        pokemon.setdefesa(novoDefesa);
+                        pokemon.setataque_especial(novoAtaque_especial);
+                        pokemon.setdefesa_especial(novoDefesa_especial);
+                        pokemon.setvelocidade(novoVelocidade);
+                        pokemon.seteh_mistico(novoEh_mistico);
+                        pokemon.seteh_lendario(novoEh_lendario);
+    
+                        crud.criar(pokemon);
+                        System.out.print("\n"); 
+                        pokemon.exibir_pokemon();
+                        System.out.print("\n"); 
+    
+                        break;
+    
+                    case 2:
+                        limpar_console ();
+    
+                        int lerId;
+                        System.out.println("Digite O id do pokemon procurado: "); 
+                        lerId = scanner.nextInt();
+    
+                        pokemon = crud.ler(lerId); 
+                        pokemon.exibir_pokemon();
+    
+                        System.out.print("\n"); 
+    
+                        break;
+    
+                    case 3:
+                        limpar_console ();
+    
+                        int  atualizarId;
+                        Boolean foi_atualizado;
+    
+                        System.out.println("Digite O id do pokemon a ser atualizado: ");
+                        atualizarId = scanner.nextInt();
+                        
+                        pokemon = crud.ler(atualizarId); 
+                        pokemon.exibir_pokemon();
+    
+                        //Funções para atualizar o pokemon
+                        foi_atualizado = crud.atualizar(pokemon); //Verifica o tamnho do novo registro
+                        escolher_atualizar(pokemon); //Escolhe o atributo e atualiza
+                        
+                       if (foi_atualizado == true){
+                            System.out.println("\nO pokemon foi atualizado com sucesso!");
+                        }
+                        else{
+                            System.out.println("\nPokemon não encontrado");
+                       }
+                        break;
+    
+                    case 4:
+                        limpar_console ();
+    
+                        int deletarId;
+                        System.out.println("Digite O id do pokemon procurado: "); 
+                        deletarId = scanner.nextInt();
+                        crud.excluir(deletarId);
+    
+                        break; 
+    
+                    case 5:
+                        limpar_console ();
+                        
+                        break;
+                }
+                
+            }
+            while(num!=0);
             arq.close();
 
             exibir_tela_agradecimentos();
