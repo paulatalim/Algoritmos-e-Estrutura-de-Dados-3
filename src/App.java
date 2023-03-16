@@ -163,7 +163,7 @@ public class App {
             //Exibe mensagem para o usuario
             limpar_console();
             System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
-                            + "\t" + "Importando arquivo ..." + "\n");
+                                + "\t" + "Importando arquivo ..." + "\n");
 
             //Le o arquivo csv e passa as informacoes para o arquivo db
             while (scanner.hasNextLine()) {
@@ -200,7 +200,7 @@ public class App {
             //Exibe mensagem para o usuario
             limpar_console();
             System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
-                            + "\t" + "Importacao concluida com sucesso !!!" + "\n");
+                                + "\t" + "Importacao concluida com sucesso !!!" + "\n");
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -503,22 +503,7 @@ public class App {
                     arq_out[i].close();
                     in[i].close();
                     out[i].close();
-                }
-
-                // for (i = 0; i < vet_tam; i++) {
-                //     if (modo1) {
-                //         arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
-                //         arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
-                //     } else {
-                //         arq_in[i] = new FileInputStream("src/arqTemp" + (i+3) + ".db");
-                //         arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");        
-                //     }
-
-                //     in[i] = new DataInputStream(arq_in[i]);
-                //     out[i] = new DataOutputStream(arq_out[i]);
-                // }
-
-                // modo1 = !modo1;        
+                }    
             }
 
             //Limpar antigos arquivos de leitura
