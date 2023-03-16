@@ -275,16 +275,19 @@ public class App {
         Pokemon novo_pokemon = new Pokemon();
         Pokemon antigo_pokemon = new Pokemon();
         boolean escrever_arq1 = true;
+        int indice = 0;
         int i;
+
+        //Declaracao de constante para o tamanho dos vetores
+        final int vet_tam = 2;
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
         System.out.println("Iniciando etapa de distribuicao...");
-        limpar_console();
 
         //Criacao de arquivos temporarios
-        FileOutputStream[] arq_out = new FileOutputStream [2];
-        DataOutputStream[] out = new DataOutputStream [2];
+        FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
+        DataOutputStream[] out = new DataOutputStream [vet_tam];
         
         //Reinicia o ponteiro
         arq.seek(0);
@@ -295,7 +298,7 @@ public class App {
         
         try {
             //Abre os objetos
-            for (i = 0; i < 2; i++) {
+            for (i = 0; i < vet_tam; i++) {
                 arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");
                 out[i] = new DataOutputStream (arq_out[i]);
             }
@@ -325,9 +328,11 @@ public class App {
                 fazer_heapmin(bloco);
 
                 //Mensagem para o usuario
-                System.out.println("Distribuindo pokemons...");
                 limpar_console();
-            
+                System.out.println("Distribuindo pokemons...");
+
+                int ajuste_id = 0;
+                
                 //Leitura do proximo registro
                 while (arq.getFilePointer() < arq.length()) {
                     //Verifica se o registro existe
@@ -339,25 +344,23 @@ public class App {
 
                         //Verifica se o novo registro pode entrar no antigo segmento
                         if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
-                            novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + 1);
+                            ajuste_id ++;
                         }
 
+                        novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + ajuste_id);
+
+                        
                         //Verificando se ha a troca de arquivo
                         if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
-                            escrever_arq1 = !escrever_arq1;
+                            indice = (indice == 0) ? 1 : 0;
                         }
 
                         //Escreve o pokemon no arquivo
                         antigo_pokemon = bloco[0];
                         poke_vet_byte = bloco[0].toByteArray();
 
-                        if (escrever_arq1) {
-                            out[0].writeInt(poke_vet_byte.length);
-                            out[0].write(poke_vet_byte);
-                        } else {
-                            out[1].writeInt(poke_vet_byte.length);
-                            out[1].write(poke_vet_byte);
-                        }
+                        out[indice].writeInt(poke_vet_byte.length);
+                        out[indice].write(poke_vet_byte);
                         
                         //Inclui novo pokemon do vetor
                         bloco[0] = novo_pokemon;
@@ -372,33 +375,31 @@ public class App {
             }
         } finally {
             //Fecha os arquivos temporarios
-            for (i = 0; i < 2; i ++) {
+            for (i = 0; i < vet_tam; i ++) {
                 arq_out[i].close();
                 out[i].close();
             }         
         }
             
         /* INTERCALACAO */
-        System.out.println("Iniciando etapa de intercalacao ...");
         limpar_console();
+        System.out.println("Iniciando etapa de intercalacao ...");
+        
         
         //Abre os arquivos
-        FileInputStream[] arq_in = new FileInputStream [2];
-        DataInputStream[] in = new DataInputStream [2];
-        Pokemon[] poke = new Pokemon [2];
+        FileInputStream[] arq_in = new FileInputStream [vet_tam];
+        DataInputStream[] in = new DataInputStream [vet_tam];
+        Pokemon[] poke = new Pokemon [vet_tam];
 
         boolean terminou_segmento = false;
-        //boolean escrever_arq1 = true;
         boolean modo1 = false;
-
-        int indice;
 
         //Reinicia variaveis
         escrever_arq1 = true;
         
         try {
             //Abre objetos de leitura e escrita
-            for (i = 0; i < 2; i++) {
+            for (i = 0; i < vet_tam; i++) {
                 arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
                 arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
 
@@ -408,11 +409,14 @@ public class App {
                 poke[i] = new Pokemon();
             }
 
+            limpar_console();
+            System.out.println("Intercalando pokemons ...");
+
             //Verifica se ha registros para intercalar
             while (in[0].available() > 0 && in[1].available() > 0) {
 
                 //Le o primeiro registro dos arquivos
-                for (i = 0; i < 2; i ++) {
+                for (i = 0; i < vet_tam; i ++) {
                     poke_vet_byte = new byte [in[i].readInt()];
                     in[i].read(poke_vet_byte);
                     poke[i].fromByteArray(poke_vet_byte);
@@ -452,15 +456,14 @@ public class App {
                 }
 
                 //Trocar arquivos
-                for (i = 0; i < 2; i++) {
+                for (i = 0; i < vet_tam; i++) {
                     arq_in[i].close();
                     arq_out[i].close();
                     in[i].close();
                     out[i].close();
-
                 }
 
-                for (i = 0; i < 2; i++) {
+                for (i = 0; i < vet_tam; i++) {
                     if (modo1) {
                         arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
                         arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
@@ -492,14 +495,11 @@ public class App {
                 arq.write(poke_vet_byte);
             }
             
-            System.out.println("Intercalando pokemons ...");
             limpar_console();
-
             System.out.println("Finalizando Intercalacao ...");
-            limpar_console();
 
         } finally {
-            for (i = 0; i < 2; i++) {
+            for (i = 0; i < vet_tam; i++) {
                 arq_in[i].close();
                 arq_out[i].close();
                 in[i].close();
@@ -514,7 +514,8 @@ public class App {
             }
         }
 
-        System.out.println("Ordenacao concluida");
+        limpar_console();
+        System.out.println("*** ORDENACAO EXTERNA ***\n" + "Ordenacao concluida");
     }
 
     public static void main(String[] args) {
