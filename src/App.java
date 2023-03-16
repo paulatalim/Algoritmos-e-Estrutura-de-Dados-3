@@ -283,7 +283,8 @@ public class App {
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
-        System.out.println("Iniciando etapa de distribuicao...");
+        System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Iniciando etapa de distribuicao ...");
 
         //Criacao de arquivos temporarios
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
@@ -329,7 +330,8 @@ public class App {
 
                 //Mensagem para o usuario
                 limpar_console();
-                System.out.println("Distribuindo pokemons...");
+                System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Distribuindo pokemons ...");
 
                 int ajuste_id = 0;
                 
@@ -383,7 +385,8 @@ public class App {
             
         /* INTERCALACAO */
         limpar_console();
-        System.out.println("Iniciando etapa de intercalacao ...");
+        System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Iniciando etapa de intercalacao ...");
         
         
         //Abre os arquivos
@@ -410,7 +413,8 @@ public class App {
             }
 
             limpar_console();
-            System.out.println("Intercalando pokemons ...");
+            System.out.println("\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Intercalando pokemons ...");
 
             //Verifica se ha registros para intercalar
             while (in[0].available() > 0 && in[1].available() > 0) {
@@ -496,7 +500,8 @@ public class App {
             }
             
             limpar_console();
-            System.out.println("Finalizando Intercalacao ...");
+            System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                                + "\t" + "Finalizando Intercalacao ...");
 
         } finally {
             for (i = 0; i < vet_tam; i++) {
@@ -515,7 +520,8 @@ public class App {
         }
 
         limpar_console();
-        System.out.println("*** ORDENACAO EXTERNA ***\n" + "Ordenacao concluida");
+        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
     public static void main(String[] args) {
@@ -531,6 +537,7 @@ public class App {
             }
             
             ordenacao(arq);
+            exibir_fim_tela();
             arq.close();
         } catch (Exception e) {
             e.printStackTrace();
