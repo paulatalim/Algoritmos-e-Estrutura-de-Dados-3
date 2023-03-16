@@ -18,7 +18,7 @@ crud()throws Exception {
     public void criar(Pokemon pokemon) throws Exception {
         arq.seek(0);
         int id = arq.readInt();
-        pokemon.setid(id);//Gerar um id aleatorio
+        pokemon.setId(id);//Gerar um id aleatorio
 
         arq.seek(0);//Acessou o inicio do arquivo
         arq.writeInt(++id);//Reescreveu o inicio
@@ -43,7 +43,7 @@ crud()throws Exception {
                 vet=new byte[arq.readInt()];
                 arq.read(vet);
                 pokemon.fromByteArray(vet);
-                if(id == pokemon.getid()){
+                if(id == pokemon.getId()){
                     return pokemon;
                 }
             }
@@ -73,7 +73,7 @@ crud()throws Exception {
                 arq.read(vet);
                 pokemon.fromByteArray(vet);
 
-                if(poke.getid() == pokemon.getid()){
+                if(poke.getId() == pokemon.getId()){
                     vet2 = poke.toByteArray();
                     if(vet2.length<=vet.length){
                         arq.seek(lapide);
@@ -112,7 +112,7 @@ crud()throws Exception {
                 vet=new byte[arq.readInt()];
                 arq.read(vet);
                 pokemon.fromByteArray(vet);
-                if(id == pokemon.getid()){
+                if(id == pokemon.getId()){
                     arq.seek(ponteiro);
                     arq.writeByte('*');
                 }
