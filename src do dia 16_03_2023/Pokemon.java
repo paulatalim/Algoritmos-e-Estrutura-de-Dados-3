@@ -193,7 +193,7 @@ public class Pokemon {
      public int getvelocidade() {
         return velocidade;
     }
-    public void setvelocidade(int velocidadel) {
+    public void setvelocidade(int velocidade) {
         this.velocidade = velocidade;
     }
 

@@ -563,6 +563,160 @@ public class App {
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
+    public static void escolher_atualizar (Pokemon pokemon) throws Exception{
+
+        Scanner scanner = new Scanner (System.in);
+
+        int op;
+        System.out.println("\nDigite para atualizar: \n1- Nome \n2- Numero da pokedex \n3- Geracao \n4- Especie \n5- Altura \n6- Peso \n7- Tipo1 \n8- Tipo2 \n9- Hp \n10- Ataque \n11- Defesa \n12- Ataque especial \n13 - Defesa Especial \n14- Velocidade \n15- É mistico \n16- É lendario");
+        op = scanner.nextInt();
+
+        switch(op){
+
+            case 1:
+                //nome
+                System.out.println("\nDigite o novo nome: ");
+                if(scanner.hasNextLine()){
+                    scanner.nextLine();
+                }
+                String atualNome = new String (scanner.nextLine());
+    
+                pokemon.setNome(atualNome); 
+                break;
+             
+            case 2:
+                // num_pokedex;
+                System.out.println("\nNumero na Pokedex: ");
+                int atualNum = (scanner.nextInt());
+
+                pokemon.setNumPokedex(atualNum);
+                break;
+
+            case 3:
+                // geracao
+                System.out.println("\nGeração: ");
+                int atualGeracao = (scanner.nextInt());
+
+                pokemon.setGeracao(atualGeracao);
+                break;
+
+            case 4:
+                // especie
+                System.out.println("\nEspecie: ");
+                if(scanner.hasNextLine()){
+                    scanner.nextLine();
+                }
+                String atualEspecie = new String (scanner.nextLine());
+
+                pokemon.setEspecie(atualEspecie);
+                break;
+
+            case 5:
+                // altura
+                System.out.println("\nAltura: ");
+                Float atualAltura = (float) (scanner.nextInt());
+
+                pokemon.setAltura(atualAltura);
+                break;
+
+            case 6:
+                //peso
+                System.out.println("\nPeso: ");
+                Float atualPeso = (float) (scanner.nextInt());
+
+                pokemon.setPeso(atualPeso);
+                break;
+
+            case 7:
+              //tipo 1
+              System.out.println("\nTipo 1: ");
+              if(scanner.hasNextLine()){
+                scanner.nextLine();
+            }
+              String atualTipo1= new String (scanner.nextLine());
+
+              pokemon.setTipo1(atualTipo1);
+              break;
+
+            case 8:
+                //tipo 2
+                System.out.println("\nTipo 2: ");
+                if(scanner.hasNextLine()){
+                    scanner.nextLine();
+                }
+                String atualTipo2 = new String (scanner.nextLine());
+
+                pokemon.setTipo2(atualTipo2);
+                break;
+
+            case 9:
+                //hp
+                System.out.println("\nHp: ");
+                int atualHp = (scanner.nextInt());
+
+                pokemon.setHp(atualHp);
+                break;  
+
+            case 10:
+                //ataque
+                System.out.println("\nAtaque: ");
+                int atualAtaque = (scanner.nextInt());
+
+                pokemon.setAtaque(atualAtaque);
+                break;
+
+            case 11:
+                //defesa
+                System.out.println("\nDefesa: ");
+                int atualDefesa = (scanner.nextInt());
+
+                pokemon.setDefesa(atualDefesa);
+                break;
+
+            case 12:
+                //ataque_especial
+                System.out.println("\nAtaque Especial: ");
+                int atualAtaque_especial= (scanner.nextInt());
+
+                pokemon.setAtaqueEspecial(atualAtaque_especial);
+                break;
+
+            case 13:
+                //defesa_especial
+                System.out.println("\nDefesa Especial: ");
+                int atualDefesa_especial = (scanner.nextInt());
+
+                pokemon.setDefesaEspecial(atualDefesa_especial);
+                break;
+
+            case 14:
+                //velocidade
+                System.out.println("\nVelocidade: ");
+                int atualVelocidade = (scanner.nextInt());
+
+                pokemon.setVelocidade(atualVelocidade);
+                break;
+
+            case 15:
+                //eh_mistico
+                System.out.println("\nÉ mistico: ");
+                Boolean atualEh_mistico = new Boolean (scanner.nextBoolean());
+
+                pokemon.setEhMistico(atualEh_mistico);
+                break;
+
+            case 16:
+                //eh_lendario
+                System.out.println("\nÉ lendario: ");
+                Boolean atualEh_lendario = new Boolean (scanner.nextBoolean());
+
+                
+                pokemon.setEhLendario(atualEh_lendario);
+                break;
+        }
+
+    }
+
     public static void main(String[] args) {
         RandomAccessFile arq;
 
@@ -577,7 +731,7 @@ public class App {
                 passar_arq_csv_para_db(arq);
                 exibir_fim_tela();
             }
-            
+
             ordenacao(arq);
             exibir_fim_tela();
             arq.close();

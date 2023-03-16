@@ -202,7 +202,7 @@ public class Pokemon {
         return ataque_especial;
     }
 
-    public void setAtaqueEpecial(int ataque_especial) {
+    public void setAtaqueEspecial(int ataque_especial) {
         this.ataque_especial = ataque_especial;
     }
 
