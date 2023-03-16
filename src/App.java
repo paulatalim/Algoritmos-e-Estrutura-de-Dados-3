@@ -723,10 +723,11 @@ public class App {
 
         int num;
         Pokemon pokemon = new Pokemon();
-        crud crud = new crud();
+        crud crud;
 
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
+            crud = new crud ("src/pokedex.db");
 
             exibir_tela_inicial_e_info();
             
@@ -748,6 +749,7 @@ public class App {
     
                         //nome
                         System.out.println("Digite o novo: ");
+
                         System.out.println("\nNome: ");
                         if(scanner.hasNextLine()){
                             scanner.nextLine();
@@ -823,22 +825,22 @@ public class App {
                          System.out.println("\nÉ lendario: ");
                          Boolean novoEh_lendario = new Boolean (scanner.nextBoolean());
         
-                        pokemon.setnome(novoNome); 
-                        pokemon.setnum_pokedex(novoNum); 
-                        pokemon.setgeracao(novoGeracao);
-                        pokemon.setespecie(novoEspecie);
-                        pokemon.setaltura(novoAltura);
-                        pokemon.setpeso(novoPeso);
-                        pokemon.settipo1(novoTipo1);
-                        pokemon.settipo2(novoTipo2);
-                        pokemon.sethp(novoHp);
-                        pokemon.setataque(novoAtaque);
-                        pokemon.setdefesa(novoDefesa);
-                        pokemon.setataque_especial(novoAtaque_especial);
-                        pokemon.setdefesa_especial(novoDefesa_especial);
-                        pokemon.setvelocidade(novoVelocidade);
-                        pokemon.seteh_mistico(novoEh_mistico);
-                        pokemon.seteh_lendario(novoEh_lendario);
+                        pokemon.setNome(novoNome); 
+                        pokemon.setNumPokedex(novoNum); 
+                        pokemon.setGeracao(novoGeracao);
+                        pokemon.setEspecie(novoEspecie);
+                        pokemon.setAltura(novoAltura);
+                        pokemon.setPeso(novoPeso);
+                        pokemon.setTipo1(novoTipo1);
+                        pokemon.setTipo2(novoTipo2);
+                        pokemon.setHp(novoHp);
+                        pokemon.setAtaque(novoAtaque);
+                        pokemon.setDefesa(novoDefesa);
+                        pokemon.setAtaqueEspecial(novoAtaque_especial);
+                        pokemon.setDefesaEspecial(novoDefesa_especial);
+                        pokemon.setVelocidade(novoVelocidade);
+                        pokemon.setEhMistico(novoEh_mistico);
+                        pokemon.setEhLendario(novoEh_lendario);
     
                         crud.criar(pokemon);
                         System.out.print("\n"); 
