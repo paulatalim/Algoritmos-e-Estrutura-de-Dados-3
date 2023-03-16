@@ -170,7 +170,7 @@ public class App {
 
                 //Escreve o registro
                 poke_info_byte = pokemon.toByteArray();
-                dos.writeByte('*');
+                dos.writeByte(' ');
                 dos.writeInt(poke_info_byte.length);
                 dos.write(poke_info_byte);
 
@@ -550,7 +550,6 @@ public class App {
                 passar_arq_csv_para_db(arq);
                 exibir_fim_tela();
             }
-            
             ordenacao(arq);
             exibir_fim_tela();
             arq.close();
