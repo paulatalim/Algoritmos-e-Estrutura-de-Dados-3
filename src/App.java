@@ -577,7 +577,7 @@ public class App {
                 passar_arq_csv_para_db(arq);
                 exibir_fim_tela();
             }
-
+            
             ordenacao(arq);
             exibir_fim_tela();
             arq.close();
