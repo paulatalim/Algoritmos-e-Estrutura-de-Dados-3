@@ -870,6 +870,7 @@ public class App {
                         break;
     
                     case 2:
+                        crud.listar_registros();
                         System.out.print("Digite O id do pokemon procurado: "); 
                         id = scanner.nextInt();
                         limpar_console();
@@ -906,7 +907,6 @@ public class App {
                         } else {
                             System.out.println("Pokemon nao encontrado");
                         }
-                        
                         break;
     
                     case 4:
@@ -918,9 +918,8 @@ public class App {
                         } else {
                             System.out.println("Pokemon nao encontrado");
                         }
-                        
-                        break; 
-    
+                        break;
+
                     case 5:
                         ordenacao(arq);
                         break;
