@@ -569,24 +569,27 @@ public class App {
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
-    public static void escolher_atualizar (Pokemon pokemon) throws Exception{
+    public static void info_poke_atualizadas (Pokemon pokemon) throws Exception{
 
         Scanner scanner = new Scanner (System.in);
 
         int op;
-        System.out.println("\nDigite para atualizar: \n1- Nome \n2- Numero da pokedex \n3- Geracao \n4- Especie \n5- Altura \n6- Peso \n7- Tipo1 \n8- Tipo2 \n9- Hp \n10- Ataque \n11- Defesa \n12- Ataque especial \n13 - Defesa Especial \n14- Velocidade \n15- É mistico \n16- É lendario");
+        System.out.println ("\nDigite para atualizar: \n"
+                            + "1- Nome" + "\t\t\t"          + "5- Altura" + "\t" + "9- Hp" + "\t\t\t"           + "13 - Defesa Especial" + "\n"
+                            + "2- Numero da pokedex" + "\t" + "6- Peso" + "\t\t" + "10- Ataque" + " \t\t"       + "14- Velocidade" + "\n"
+                            + "3- Geracao" + "\t\t"         + "7- Tipo1" + "\t"  + "11- Defesa" + "\t\t"        + "15- É mistico" + "\n"
+                            + "4- Especie" + "\t\t"         + "8- Tipo2" + "\t"  + "12- Ataque especial" + "\t" + "16- É lendario");
+
+        System.out.print("Sua opcao: ");
         op = scanner.nextInt();
+        limpar_buffer(scanner);
 
         switch(op){
 
             case 1:
                 //nome
                 System.out.println("\nDigite o novo nome: ");
-                if(scanner.hasNextLine()){
-                    scanner.nextLine();
-                }
                 String atualNome = new String (scanner.nextLine());
-    
                 pokemon.setNome(atualNome); 
                 break;
              
@@ -721,6 +724,7 @@ public class App {
                 break;
         }
 
+        scanner.close();
     }
 
     public static Pokemon info_poke_novo () {
@@ -775,7 +779,6 @@ public class App {
         //Entrada tipo 2
         System.out.print("Tipo 2: ");
         entrada_string = new String (scanner.nextLine());
-        limpar_buffer(scanner);
         pokemon.setTipo2(entrada_string);
 
         //Entrada hp
@@ -821,6 +824,7 @@ public class App {
             pokemon.setEhLendario(entrada_bool);
         }
 
+        scanner.close();
         return pokemon;
     }
 
@@ -890,7 +894,7 @@ public class App {
                         pokemon.exibir_pokemon();
     
                         //Funções para atualizar o pokemon
-                        escolher_atualizar(pokemon); //Escolhe o atributo e atualiza
+                        info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
                         
                         //Atualiza o pokemon no arquivo e retorna um boolean
                         if (crud.atualizar(pokemon)){
