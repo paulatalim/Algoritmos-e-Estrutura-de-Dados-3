@@ -748,8 +748,8 @@ public class App {
 
         //Entrada especie
         System.out.print("Especie: ");
-        entrada_string = new String (scanner.nextLine());
         limpar_buffer(scanner);
+        entrada_string = new String (scanner.nextLine());
         pokemon.setEspecie(entrada_string);
 
         //Entrada altura
@@ -764,8 +764,8 @@ public class App {
 
         //Entrada tipo 1
         System.out.print("Tipo 1: ");
-        entrada_string= new String (scanner.nextLine());
         limpar_buffer(scanner);
+        entrada_string= new String (scanner.nextLine());
         pokemon.setTipo1(entrada_string);
 
         //Entrada tipo 2
