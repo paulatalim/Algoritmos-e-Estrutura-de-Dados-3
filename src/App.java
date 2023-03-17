@@ -847,17 +847,17 @@ public class App {
                 //Validacao da entrada do usuario
                 do {
                     //Exibe o menu das opcoes
-                    System.out.println (  "\t" + "Digite: \n\n"
-                                        + "\t" + "1 - Para CRIAR\n"
-                                        + "\t" + "2 - Para LER\n "
-                                        + "\t" + "3 - Para ATUALIZAR\n"
-                                        + "\t" + "4 - Para DELETAR\n"
-                                        + "\t" + "5 - para ORDENAR\n"
-                                        + "\t" + "0 - Para FECHAR" + "\n");
+                    System.out.println ("\n\t\t\t\t\t" + "*** POKE-MENU ***" + "\n\n\n"
+                                        + "\t" + "Opcoes da Pokedex:" + "\n\n"
+                                        + "\t" + "1 - CRIAR pokemon" + "\n"
+                                        + "\t" + "2 - LER pokemon" + "\n "
+                                        + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
+                                        + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
+                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n"
+                                        + "\t" + "0 - SAIR" + "\n");
 
-                    System.out.print("\t" + "Sua opcao: ");
+                    System.out.print("\t" + "Insira o numero da opcao: ");
                     opcao = scanner.nextInt();
-                    //limpar_buffer(scanner);
                     limpar_console();
                 } while (opcao < 0 || opcao > 5);
     
