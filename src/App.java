@@ -723,20 +723,118 @@ public class App {
 
     }
 
+    public static Pokemon info_poke_novo () {
+        int entrada_int;
+        float entrada_float;
+        boolean entrada_bool;
+        String entrada_string;
+
+        Scanner scanner = new Scanner(System.in);
+        Pokemon pokemon = new Pokemon();
+
+        //Entrada nome
+        System.out.println("Digite o novo: ");
+
+        System.out.print("\nNome: ");
+        entrada_string = new String (scanner.nextLine());
+        limpar_buffer(scanner);
+        pokemon.setNome(entrada_string); 
+
+        //Entrada num_pokedex;
+        System.out.print("Numero na Pokedex: ");
+        entrada_int = (scanner.nextInt());
+        pokemon.setNumPokedex(entrada_int); 
+
+        //Entrada geracao
+        System.out.print("Geração: ");
+        entrada_int = (scanner.nextInt());
+        pokemon.setGeracao(entrada_int);
+
+        //Entrada especie
+        System.out.print("Especie: ");
+        entrada_string = new String (scanner.nextLine());
+        limpar_buffer(scanner);
+        pokemon.setEspecie(entrada_string);
+
+        //Entrada altura
+        System.out.print("Altura: ");
+        entrada_float = scanner.nextFloat();
+        pokemon.setAltura(entrada_float);
+
+        //Entradapeso
+        System.out.print("Peso: ");
+        entrada_float = scanner.nextFloat();
+        pokemon.setPeso(entrada_float);
+
+        //Entrada tipo 1
+        System.out.print("Tipo 1: ");
+        entrada_string= new String (scanner.nextLine());
+        limpar_buffer(scanner);
+        pokemon.setTipo1(entrada_string);
+
+        //Entrada tipo 2
+        System.out.print("Tipo 2: ");
+        entrada_string = new String (scanner.nextLine());
+        limpar_buffer(scanner);
+        pokemon.setTipo2(entrada_string);
+
+        //Entrada hp
+        System.out.print("Hp: ");
+        entrada_int = (scanner.nextInt());
+        pokemon.setHp(entrada_int);
+
+        //Entrada ataque
+        System.out.print("Ataque: ");
+        entrada_int = (scanner.nextInt());
+        pokemon.setAtaque(entrada_int);
+
+        //Entrada defesa
+        System.out.print("Defesa: ");
+        entrada_int = (scanner.nextInt());
+        pokemon.setDefesa(entrada_int);
+
+        //Entrada ataque especial
+        System.out.print("Ataque Especial: ");
+        entrada_int= (scanner.nextInt());
+        pokemon.setAtaqueEspecial(entrada_int);
+
+        //Entrada defesa especial
+        System.out.print("Defesa Especial: ");
+        entrada_int= (scanner.nextInt());
+        pokemon.setDefesaEspecial(entrada_int);
+
+        //Entrada velocidade
+        System.out.print("Velocidade: ");
+        entrada_int = (scanner.nextInt());
+        pokemon.setVelocidade(entrada_int);
+        
+        //Entrada se eh mistico
+        System.out.print("Eh mistico: ");
+        entrada_bool = new Boolean (scanner.nextBoolean());
+        pokemon.setEhMistico(entrada_bool);
+
+        //Caso o novo pokemon nao ser mistico
+        if (!entrada_bool) {
+            //Entrada se eh lendario
+            System.out.print("Eh lendario: ");
+            entrada_bool = new Boolean (scanner.nextBoolean());
+            pokemon.setEhLendario(entrada_bool);
+        }
+
+        return pokemon;
+    }
+
     public static void main(String[] args) {
         RandomAccessFile arq;
         Scanner scanner = new Scanner (System.in);
 
-        int opcao, id, entrada_int;
-        float entrada_float;
-        boolean entrada_bool;
+        int opcao, id;
         Pokemon pokemon = new Pokemon();
-        String entrada_string;
-        crud crud;
+        CRUD crud;
 
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
-            crud = new crud ("src/pokedex.db");
+            crud = new CRUD ("src/pokedex.db");
 
             exibir_tela_inicial_e_info();
             
@@ -768,100 +866,11 @@ public class App {
                 } while (opcao < 0 || opcao > 5);
     
                 switch (opcao) {
-                    case 1:    
-                        //Entrada nome
-                        System.out.println("Digite o novo: ");
-
-                        System.out.print("\nNome: ");
-                        entrada_string = new String (scanner.nextLine());
-                        limpar_buffer(scanner);
-                        pokemon.setNome(entrada_string); 
-    
-                        //Entrada num_pokedex;
-                        System.out.print("Numero na Pokedex: ");
-                        entrada_int = (scanner.nextInt());
-                        pokemon.setNumPokedex(entrada_int); 
-    
-                        //Entrada geracao
-                        System.out.print("Geração: ");
-                        entrada_int = (scanner.nextInt());
-                        pokemon.setGeracao(entrada_int);
-    
-                        //Entrada especie
-                        System.out.print("Especie: ");
-                        entrada_string = new String (scanner.nextLine());
-                        limpar_buffer(scanner);
-                        pokemon.setEspecie(entrada_string);
-    
-                        //Entrada altura
-                        System.out.print("Altura: ");
-                        entrada_float = scanner.nextFloat();
-                        pokemon.setAltura(entrada_float);
-                        
-                        //Entradapeso
-                        System.out.print("Peso: ");
-                        entrada_float = scanner.nextFloat();
-                        pokemon.setPeso(entrada_float);
-                        
-                        //Entrada tipo 1
-                        System.out.print("Tipo 1: ");
-                        entrada_string= new String (scanner.nextLine());
-                        limpar_buffer(scanner);
-                        pokemon.setTipo1(entrada_string);
-                        
-                        //Entrada tipo 2
-                        System.out.print("Tipo 2: ");
-                        entrada_string = new String (scanner.nextLine());
-                        limpar_buffer(scanner);
-                        pokemon.setTipo2(entrada_string);
-
-                        //Entrada hp
-                        System.out.print("Hp: ");
-                        entrada_int = (scanner.nextInt());
-                        pokemon.setHp(entrada_int);
-                        
-                        //Entrada ataque
-                        System.out.print("Ataque: ");
-                        entrada_int = (scanner.nextInt());
-                        pokemon.setAtaque(entrada_int);
-                        
-                        //defesa
-                        System.out.print("Defesa: ");
-                        entrada_int = (scanner.nextInt());
-                        pokemon.setDefesa(entrada_int);
-                        
-                        //Entrada ataque especial
-                        System.out.print("Ataque Especial: ");
-                        entrada_int= (scanner.nextInt());
-                        pokemon.setAtaqueEspecial(entrada_int);
-                        
-                        //Entrada defesa especial
-                        System.out.print("Defesa Especial: ");
-                        entrada_int= (scanner.nextInt());
-                        pokemon.setDefesaEspecial(entrada_int);
-                        
-                        //Entrada velocidade
-                        System.out.print("Velocidade: ");
-                        entrada_int = (scanner.nextInt());
-                        pokemon.setVelocidade(entrada_int);
-                         
-                        //Entrada se eh mistico
-                        System.out.print("Eh mistico: ");
-                        entrada_bool = new Boolean (scanner.nextBoolean());
-                        pokemon.setEhMistico(entrada_bool);
-                        
-                        //Caso o novo pokemon nao ser mistico
-                        if (!entrada_bool) {
-                            //Entrada se eh lendario
-                            System.out.print("Eh lendario: ");
-                            entrada_bool = new Boolean (scanner.nextBoolean());
-                            pokemon.setEhLendario(entrada_bool);
-                        }
-    
+                    case 1:
                         //Cria novo pokemon
+                        pokemon = info_poke_novo();
                         crud.criar(pokemon);
                         pokemon.exibir_pokemon();
-    
                         break;
     
                     case 2:    ;

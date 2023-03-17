@@ -1,12 +1,12 @@
 import java.io.RandomAccessFile;
 
 
-public class crud{
+public class CRUD {
 
     //Acessar o arquivo
     private RandomAccessFile arq;
 
-    crud (String caminho_arq) throws Exception {
+    CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
     }
 
