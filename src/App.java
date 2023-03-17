@@ -891,22 +891,34 @@ public class App {
                         id = scanner.nextInt();
                         
                         pokemon = crud.ler(id); 
-    
-                        //Funções para atualizar o pokemon
-                        pokemon = info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
                         
-                        //Atualiza o pokemon no arquivo e retorna um boolean
-                        if (crud.atualizar(pokemon)){
-                            System.out.println("\nO pokemon foi atualizado com sucesso!");
+                        //Caso o id existir
+                        if (pokemon != null) {
+                            //Funções para atualizar o pokemon
+                            pokemon = info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
+                            
+                            //Atualiza o pokemon no arquivo e retorna um boolean
+                            if (crud.atualizar(pokemon)){
+                                System.out.println("\nPokemon atualizado com sucesso!");
+                            } else {
+                                System.out.println("\nPokemon nao encontrado");
+                            }
                         } else {
-                            System.out.println("\nPokemon não encontrado");
+                            System.out.println("Pokemon nao encontrado");
                         }
+                        
                         break;
     
                     case 4:
                         System.out.print("Digite O id do pokemon procurado: "); 
                         id = scanner.nextInt();
-                        crud.excluir(id);
+
+                        if (crud.excluir(id)) {
+                            System.out.println("Pokemon deletado com sucesso!");
+                        } else {
+                            System.out.println("Pokemon nao encontrado");
+                        }
+                        
                         break; 
     
                     case 5:

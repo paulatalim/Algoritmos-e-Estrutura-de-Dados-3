@@ -103,7 +103,7 @@ public class CRUD {
     }
     
     //DELETE
-    public void excluir(int id) throws Exception{
+    public boolean excluir(int id) throws Exception{
         Pokemon pokemon = new Pokemon();
         byte[]poke_vet_antigo;
         
@@ -121,6 +121,7 @@ public class CRUD {
                 if(id == pokemon.getId()){
                     arq.seek(ponteiro);
                     arq.writeByte('*');
+                    return true;
                 }
             } else{
                 //Pula o registro
@@ -128,6 +129,6 @@ public class CRUD {
             }
         }
 
-        System.out.println("Pokemon excluido com sucesso");
+        return false;
     }
 }
