@@ -569,12 +569,15 @@ public class App {
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
-    public static void info_poke_atualizadas (Pokemon pokemon) throws Exception{
+    public static Pokemon info_poke_atualizadas (Pokemon pokemon) throws Exception{
         int entrada_int;
         float entrada_float;
         boolean entrada_bool;
         String entrada_string;
         Scanner scanner = new Scanner (System.in);
+
+        //Exibe o pokemon
+        pokemon.exibir_pokemon();
 
         int opcao;
         System.out.println ("\n\n\t\t\t\t\t\t" + "*** POKE-ATUALIZAR ***" + "\n"
@@ -587,9 +590,12 @@ public class App {
         System.out.print("\n\t" + "Sua opcao: ");
         opcao = scanner.nextInt();
         limpar_buffer(scanner);
+        limpar_console();
+
+        //Exibe o titulo da pagina
+        System.out.println("\n\n\t\t\t\t\t\t" + "*** POKE-ATUALIZAR ***" + "\n");
 
         switch(opcao){
-
             case 1:
                 //nome
                 System.out.print("Digite o novo nome: ");
@@ -614,7 +620,7 @@ public class App {
             case 4:
                 // especie
                 System.out.print("Especie: ");
-                limpar_buffer(scanner);
+                //limpar_buffer(scanner);
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setEspecie(entrada_string);
                 break;
@@ -634,9 +640,8 @@ public class App {
                 break;
 
             case 7:
-              //tipo 1
+                //tipo 1
                 System.out.print("Tipo 1: ");
-                limpar_buffer(scanner);
                 entrada_string= new String (scanner.nextLine());
                 pokemon.setTipo1(entrada_string);
                 break;
@@ -644,7 +649,6 @@ public class App {
             case 8:
                 //tipo 2
                 System.out.print("Tipo 2: ");
-                limpar_buffer(scanner);
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setTipo2(entrada_string);
                 break;
@@ -709,7 +713,10 @@ public class App {
                 System.out.println("Opcao invalida");
         }
 
-        scanner.close();
+        // limpar_buffer(scanner);
+        // scanner.close();
+
+        return pokemon;
     }
 
     public static Pokemon info_poke_novo () {
@@ -726,7 +733,7 @@ public class App {
 
         System.out.print("\nNome: ");
         entrada_string = new String (scanner.nextLine());
-        limpar_buffer(scanner);
+        //limpar_buffer(scanner);
         pokemon.setNome(entrada_string); 
 
         //Entrada num_pokedex;
@@ -809,7 +816,7 @@ public class App {
             pokemon.setEhLendario(entrada_bool);
         }
 
-        scanner.close();
+        
         return pokemon;
     }
 
@@ -850,7 +857,7 @@ public class App {
 
                     System.out.print("\t" + "Sua opcao: ");
                     opcao = scanner.nextInt();
-                    limpar_buffer(scanner);
+                    //limpar_buffer(scanner);
                     limpar_console();
                 } while (opcao < 0 || opcao > 5);
     
@@ -862,7 +869,7 @@ public class App {
                         pokemon.exibir_pokemon();
                         break;
     
-                    case 2:    ;
+                    case 2:
                         System.out.print("Digite O id do pokemon procurado: "); 
                         id = scanner.nextInt();
                         limpar_console();
@@ -872,14 +879,15 @@ public class App {
                         break;
     
                     case 3:
-                        System.out.print("Digite O id do pokemon a ser atualizado: ");
+                        //Exibe o titulo da pagina
+                        System.out.print ( "\n\n\t\t\t\t\t\t" + "*** POKE-ATUALIZAR ***" + "\n\n"
+                                            + "Digite O id do pokemon a ser atualizado: ");
                         id = scanner.nextInt();
                         
                         pokemon = crud.ler(id); 
-                        pokemon.exibir_pokemon();
     
                         //Funções para atualizar o pokemon
-                        info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
+                        pokemon = info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
                         
                         //Atualiza o pokemon no arquivo e retorna um boolean
                         if (crud.atualizar(pokemon)){
