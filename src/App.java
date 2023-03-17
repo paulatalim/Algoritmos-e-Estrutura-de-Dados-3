@@ -66,16 +66,15 @@ public class App {
         exibir_fim_tela();
 
         System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                         + "\n\n\n"
-                            + "\t"           + "Esse sistema eh um trabalho de Algoritmos e Estrutura de Dados 3"        + "\n"
-                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Posto isso"    + "\n"
-                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemon."          + "\n\n"
+                            + "\t"           + "Esse sistema eh um trabalho de Algoritmos e Estrutura de Dados 3"       + "\n"
+                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Como exemplo," + "\n"
+                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemons."         + "\n\n"
 
-                            + "\t"           + "Se a base de dados .db nao for encontrada ou estiver vazia, "           + "\n"
-                            + "\t"           + "as informacoes serao importadas do arquivo .csv para preenche-la "      + "\n"
-                            + "\t"           + "automaticamente. Apos o processo de importacao, ou caso o arquivo .db " + "\n"
-                            + "\t"           + "exista, sera direcionado para o menu de opcoes de manipulacao da base " + "\n"
-                            + "\t"           + "de dados, onde podera executar as acoes desejadas."                     + "\n\n\n"
-                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                             + "\n");
+                            + "\t"           + "A seguir, as informacoes do arquivo .csv serao importadas para preencher"    + "\n"
+                            + "\t"           + "a base de dados .db. Apos o processo de importacao, sera redirecionado "     + "\n"
+                            + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
+                            + "\t"           + "as acoes desejadas."                                                         + "\n\n\n"
+                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n");
         
         exibir_fim_tela();
     }
@@ -265,7 +264,7 @@ public class App {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
-        while (i > 0 && (chave[i] < chave[indice] || (chave[i] >= chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
+        while (i > 0 && (chave[i] < chave[indice] || bloco[i].getId() < bloco[indice].getId())) {
             swap_pokemon(bloco, i, indice);
             swap_int(chave, indice, i);
             
@@ -850,15 +849,13 @@ public class App {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
             crud = new CRUD ("src/pokedex.db");
 
+            //Exibe o inicio do programa
             exibir_tela_inicial_e_info();
             
-            //Verifica se o arquivo esta vazio, acabou de ser criado
-            if (arq.length() == 0) {
-                //Importa arquivo .csv automatico
-                passar_arq_csv_para_db(arq);
-                exibir_fim_tela();
-            }
-
+            //Importa arquivo .csv automatico
+            passar_arq_csv_para_db(arq);
+            exibir_fim_tela();
+            
             //Repete o programa
             do {
 
