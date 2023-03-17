@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 
 public class Pokemon {
     private int id;
-    //private float id_secundario;
     private int num_pokedex;
     private String nome;
     private int geracao;
@@ -30,7 +29,6 @@ public class Pokemon {
     // CONSTRUTOR
     Pokemon () {
         id = -1;
-        //id_secundario = 0;
         num_pokedex = -1;
         nome = "null";
         geracao = -1;
@@ -121,7 +119,6 @@ public class Pokemon {
 
         //Le o arquivo
         id = dis.readInt();
-        //id_secundario = id * 0.00001f;
         num_pokedex = dis.readInt();
         nome = dis.readUTF();
         
