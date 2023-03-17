@@ -576,18 +576,19 @@ public class App {
         String entrada_string;
         Scanner scanner = new Scanner (System.in);
 
-        int op;
-        System.out.println ("\nDigite para atualizar: \n"
-                            + "1- Nome" + "\t\t\t"          + "5- Altura" + "\t" + "9- Hp" + "\t\t\t"           + "13 - Defesa Especial" + "\n"
-                            + "2- Numero da pokedex" + "\t" + "6- Peso" + "\t\t" + "10- Ataque" + " \t\t"       + "14- Velocidade" + "\n"
-                            + "3- Geracao" + "\t\t"         + "7- Tipo1" + "\t"  + "11- Defesa" + "\t\t"        + "15- É mistico" + "\n"
-                            + "4- Especie" + "\t\t"         + "8- Tipo2" + "\t"  + "12- Ataque especial" + "\t" + "16- É lendario");
+        int opcao;
+        System.out.println ("\n\n\t\t\t\t\t\t" + "*** POKE-ATUALIZAR ***" + "\n"
+                            +"\n\t" + "Digite para atualizar:" + "\n\n"
+                            + "\t" + "1- Nome" + "\t\t\t"          + "5- Altura" + "\t" + "9- Hp" + "\t\t\t"           + "13 - Defesa Especial" + "\n"
+                            + "\t" + "2- Numero da pokedex" + "\t" + "6- Peso" + "\t\t" + "10- Ataque" + " \t\t"       + "14- Velocidade" + "\n"
+                            + "\t" + "3- Geracao" + "\t\t"         + "7- Tipo1" + "\t"  + "11- Defesa" + "\t\t"        + "15- É mistico" + "\n"
+                            + "\t" + "4- Especie" + "\t\t"         + "8- Tipo2" + "\t"  + "12- Ataque especial" + "\t" + "16- É lendario");
 
         System.out.print("\n\t" + "Sua opcao: ");
-        op = scanner.nextInt();
+        opcao = scanner.nextInt();
         limpar_buffer(scanner);
 
-        switch(op){
+        switch(opcao){
 
             case 1:
                 //nome
@@ -703,6 +704,9 @@ public class App {
                 entrada_bool = scanner.nextBoolean();
                 pokemon.setEhLendario(entrada_bool);
                 break;
+            
+            default:
+                System.out.println("Opcao invalida");
         }
 
         scanner.close();
