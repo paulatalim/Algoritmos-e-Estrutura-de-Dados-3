@@ -228,8 +228,14 @@ public class App {
     * elementos trocados) e dois pokemons (indice dos 
     * dois elementos a serem trocados)
     */
-    public static void swap (Pokemon[] vet, int i, int j) {
+    public static void swap_pokemon (Pokemon[] vet, int i, int j) {
         Pokemon aux = vet[i];
+        vet[i] = vet[j];
+        vet[j] = aux;
+    }
+
+    public static void swap_int (int[] vet, int i, int j) {
+        int aux = vet[i];
         vet[i] = vet[j];
         vet[j] = aux;
     }
@@ -255,13 +261,14 @@ public class App {
     * Parametros: um vetor de pokemons (vetor a ser construido 
     * a arvore heap) e um pokemon (tamanho valido do vetor)
     */
-    public static void construir_heap (Pokemon[] bloco, int tam) {
+    public static void construir_heap (Pokemon[] bloco, int[]chave, int tam) {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
-        while (i > 0 && bloco[i].getIdSecundario() < bloco[indice].getIdSecundario()) {
-            swap (bloco, i, indice);
-
+        while (i > 0 && (chave[i] < chave[indice] || (chave[i] >= chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
+            swap_pokemon(bloco, i, indice);
+            swap_int(chave, indice, i);
+            
             i = calcular_indice_pai(i);
 
             if (indice % 2 == 0) {
@@ -276,12 +283,10 @@ public class App {
     * Descricao: ordena um vetor de pokemons com o heap min
     * Parametro: um vetor de pokemons (vetor a ser ordenado)
     */
-    public static void fazer_heapmin (Pokemon[] bloco) {
-        int tam;
-
+    public static void fazer_heapmin (Pokemon[] bloco, int[] chaves) {
         //Construcao do heap
-        for (tam = 1; tam < bloco.length; tam++) {
-            construir_heap(bloco, tam);
+        for (int tam = 1; tam < bloco.length; tam++) {
+            construir_heap(bloco, chaves, tam);
         }
     }
     
@@ -357,58 +362,71 @@ public class App {
                 i--;
             }
         }
+
+        int[] chaves = new int [10];
         
-        //Verifica se ha mais pokemons para se ler
-        if (arq.getFilePointer() < arq.length()) {
-            //Ordena o vetor com o heap minimo
-            fazer_heapmin(bloco);
+        //Inicializa o vetor 
+        for (i = 0; i < chaves.length; i++) {
+            chaves[i] = 0;
+        }
 
-            //Mensagem para o usuario
-            limpar_console();
-            System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
-                                + "\t" + "Distribuindo pokemons ...");
+        int nova_chave = 0;
+        int chave_antiga = 0;
 
-            int ajuste_id = 0;
-            
-            //Leitura do proximo registro
-            while (arq.getFilePointer() < arq.length()) {
-                //Verifica se o registro existe
-                if (arq.readByte() == ' ') {
-                    //Le o arquivo
-                    poke_vet_byte = new byte [arq.readInt()];
-                    arq.read(poke_vet_byte);
-                    novo_pokemon.fromByteArray(poke_vet_byte);
+        //Ordena o vetor com o heap minimo
+        fazer_heapmin(bloco, chaves);            
 
-                    //Verifica se o novo registro pode entrar no antigo segmento
-                    if (novo_pokemon.getIdSecundario() < bloco[0].getIdSecundario()) {
-                        ajuste_id ++;
-                    }
+        //Mensagem para o usuario
+        limpar_console();
+        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+                            + "\t" + "Distribuindo pokemons ...");
 
-                    novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + ajuste_id);
+        int ajuste_id = 0;
+        
+        //Leitura do proximo registro
+        while (arq.getFilePointer() < arq.length()) {
+            //Verifica se o registro existe
+            if (arq.readByte() == ' ') {
+                //Le o arquivo
+                poke_vet_byte = new byte [arq.readInt()];
+                arq.read(poke_vet_byte);
+                novo_pokemon.fromByteArray(poke_vet_byte);
+                //nova_chave = chave_antiga;
 
-                    //Verificando se ha a troca de arquivo
-                    if ((int)bloco[0].getIdSecundario() != (int)antigo_pokemon.getIdSecundario()) {
-                        indice = (indice == 0) ? 1 : 0;
-                    }
-
-                    //Escreve o pokemon no arquivo
-                    antigo_pokemon = bloco[0];
-                    poke_vet_byte = bloco[0].toByteArray();
-
-                    out[indice].writeInt(poke_vet_byte.length);
-                    out[indice].write(poke_vet_byte);
-                    
-                    //Inclui novo pokemon do vetor
-                    bloco[0] = novo_pokemon;
-
-                    //Ordena o vetor com heap
-                    fazer_heapmin(bloco);
-                } else {
-                    //Pula o arquivo
-                    arq.seek(arq.readInt() + arq.getFilePointer());
+                //Verifica se o novo registro pode entrar no antigo segmento
+                if (novo_pokemon.getId() < bloco[0].getId()) {
+                    ajuste_id ++;
                 }
+
+                nova_chave = ajuste_id;
+
+                // novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + ajuste_id);
+
+                //Verificando se ha a troca de arquivo
+                if (chaves[0] != chave_antiga) {
+                    indice = (indice == 0) ? 1 : 0;
+                }
+
+                //Escreve o pokemon no arquivo
+                antigo_pokemon = bloco[0];
+                chave_antiga = chaves[0];
+                poke_vet_byte = bloco[0].toByteArray();
+
+                out[indice].writeInt(poke_vet_byte.length);
+                out[indice].write(poke_vet_byte);
+                
+                //Inclui novo pokemon do vetor
+                bloco[0] = novo_pokemon;
+                chaves[0] = nova_chave;
+
+                //Ordena o vetor com heap
+                fazer_heapmin(bloco, chaves);
+            } else {
+                //Pula o arquivo
+                arq.seek(arq.readInt() + arq.getFilePointer());
             }
         }
+        
 
         //Fecha os arquivos temporarios
         for (i = 0; i < vet_tam; i ++) {

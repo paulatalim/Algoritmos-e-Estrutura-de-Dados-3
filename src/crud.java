@@ -14,10 +14,10 @@ public class CRUD {
     public void criar (Pokemon pokemon) throws Exception {
         arq.seek(0);
         int id = arq.readInt();
-        pokemon.setId(id);//Gerar um id aleatorio
+        pokemon.setId(++id);//Gerar um id aleatorio
 
         arq.seek(0);//Acessou o inicio do arquivo
-        arq.writeInt(++id);//Reescreveu o inicio
+        arq.writeInt(id);//Reescreveu o inicio
         arq.seek(arq.length());//Apontando pro ultimo espaço do arquivo
         arq.writeByte(' ');//Lapde
 
@@ -66,7 +66,7 @@ public class CRUD {
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
 
-                System.out.print(pokemon.getId() + " - " + pokemon.getNome());
+                System.out.print(pokemon.getId() + " - " +pokemon.getNumPokedex() + pokemon.getNome());
                 
                 if (cont < 2) {
                     System.out.print("\t\t\t\t");

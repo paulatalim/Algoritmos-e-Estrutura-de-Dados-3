@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 
 public class Pokemon {
     private int id;
-    private float id_secundario;
+    //private float id_secundario;
     private int num_pokedex;
     private String nome;
     private int geracao;
@@ -30,7 +30,7 @@ public class Pokemon {
     // CONSTRUTOR
     Pokemon () {
         id = -1;
-        id_secundario = 0;
+        //id_secundario = 0;
         num_pokedex = -1;
         nome = "null";
         geracao = -1;
@@ -55,8 +55,9 @@ public class Pokemon {
             String tipo2, int hp, int ataque, int defesa, int ataque_especial,
             int defesa_especial, int velocidade, boolean eh_mistico, boolean eh_lendario) 
     {
+        
         this.id = id;
-        id_secundario = id * 0.00001f;
+        this.num_pokedex = num_pokedex;
         this.nome = nome;
         this.geracao = geracao;
         this.especie = especie;
@@ -74,6 +75,124 @@ public class Pokemon {
         this.eh_lendario = eh_lendario;        
         data_de_registro = new Date();
     }
+    
+    /*** OUTROS METODOS ***/
+    /*
+     * Descricao: essa funcao elabora um vetor de bytes com 
+     * seus atributos para a insercao no arquivo
+     * Retorno: vetor de bytes
+     */
+    public byte[] toByteArray () throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+        
+        dos.writeInt(id);
+        dos.writeInt(num_pokedex);
+        dos.writeUTF(nome);
+        dos.writeInt(geracao);
+        dos.writeUTF(especie);
+        dos.writeFloat(altura);
+        dos.writeFloat(peso);
+        dos.writeUTF(tipo1 + "-" + tipo2);
+        dos.writeInt(hp);
+        dos.writeInt(ataque);
+        dos.writeInt(defesa);
+        dos.writeInt(ataque_especial);
+        dos.writeInt(defesa_especial);
+        dos.writeInt(velocidade);
+        dos.writeBoolean(eh_mistico);
+        dos.writeBoolean(eh_lendario);
+        dos.writeLong(data_de_registro.getTime());
+
+		//Retorno do vetor de bytes para escrever no arquivo
+        return baos.toByteArray();
+    }
+
+    /*
+     * Descricao: essa funcao, a partir de um vetor de 
+     * bytes, preenche os atributos da classe
+     * Parametro: vetor de bytes
+     */
+    public void fromByteArray (byte[] ba) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+        DataInputStream dis = new DataInputStream(bais);
+        String[] types;
+        String type;
+
+        //Le o arquivo
+        id = dis.readInt();
+        //id_secundario = id * 0.00001f;
+        num_pokedex = dis.readInt();
+        nome = dis.readUTF();
+        
+        geracao= dis.readInt();
+        especie = dis.readUTF();
+        altura = dis.readFloat();
+        peso = dis.readFloat();
+        type = dis.readUTF();
+        
+        hp = dis.readInt();
+        ataque = dis.readInt();
+        defesa = dis.readInt();
+        ataque_especial = dis.readInt();
+        defesa_especial = dis.readInt();
+        velocidade = dis.readInt();
+        eh_mistico = dis.readBoolean();
+        eh_lendario = dis.readBoolean();
+
+        data_de_registro = new Date(dis.readLong());
+
+        //Atribui os valores do tipo
+        types = type.split("-");
+        tipo1 = types[0];
+
+        //Verifica se o pokemon possui tipo 2
+        if (types.length > 1)
+            tipo2 = types[1];
+    }
+
+    /*
+     * Descricao: esse metodo escreve na tela do 
+     * console os atributos do pokemon
+     */
+    public void exibir_pokemon () {
+
+        System.out.println ("\n\t\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
+
+        System.out.println ("\n\t" + "Informacoes basicas".toUpperCase() + "\n"
+                            + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
+                            + "\t" + "Geracao: " + geracao + "\n"
+                            + "\t" + "Especie: " + especie + "\n"
+                            + "\t" + "Altura: " + altura + "\n"
+                            + "\t" + "Peso: " + peso + "\n"
+                            + "\t" + "Tipo 1: " + tipo1);
+
+        if (tipo2.compareTo("null") != 0) {
+            System.out.println("\t" + "Tipo 2: " + tipo2);
+        }
+
+        System.out.println ("\n\t" + "Estatisticas basicas".toUpperCase()+ "\n"
+                            + "\t" + "HP: " + hp + "\n"
+                            + "\t" + "Ataque: " + ataque + "\n"
+                            + "\t" + "Defesa: " + defesa + "\n"
+                            + "\t" + "Ataque Especial: " + ataque_especial + "\n"
+                            + "\t" + "Defesa Especial: " + defesa_especial + "\n"
+                            + "\t" + "Velocidade: " + velocidade);
+
+        if(eh_mistico){
+            System.out.println("\n\t" + "Esse pokemon e mistico !!!");
+        } else if (eh_lendario){
+            System.out.println("\n\t" + "Esse pokemon e lendario !!!");
+        }
+
+        //Escreve a data
+        SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
+
+        System.out.println ("\n\t" + "Criacao do registro".toUpperCase() + "\n"
+                            + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
+                            + "\t" + "Horario: " + formatar_horario.format(data_de_registro));
+    }
 
     /*** METODOS GET E SET***/
     //id
@@ -90,13 +209,13 @@ public class Pokemon {
     }
 
     //id_secundario
-    public float getIdSecundario () {
-        return id_secundario;
-    }
+    // public float getIdSecundario () {
+    //     return id_secundario;
+    // }
 
-    public void setIdSecundario (float id_secundario) {
-        this.id_secundario = id_secundario;
-    }
+    // public void setIdSecundario (float id_secundario) {
+    //     this.id_secundario = id_secundario;
+    // }
 
     //num_pokedex
     public int getNumPokedex() {
@@ -250,123 +369,4 @@ public class Pokemon {
     public void setDataDeRegistro(Date data_de_registro) {
         this.data_de_registro = data_de_registro;
     }
-    
-    /*** OUTROS METODOS ***/
-    /*
-     * Descricao: essa funcao elabora um vetor de bytes com 
-     * seus atributos para a insercao no arquivo
-     * Retorno: vetor de bytes
-     */
-    public byte[] toByteArray () throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        
-        dos.writeInt(id);
-        dos.writeInt(num_pokedex);
-        dos.writeUTF(nome);
-        dos.writeInt(geracao);
-        dos.writeUTF(especie);
-        dos.writeFloat(altura);
-        dos.writeFloat(peso);
-        dos.writeUTF(tipo1 + "-" + tipo2);
-        dos.writeInt(hp);
-        dos.writeInt(ataque);
-        dos.writeInt(defesa);
-        dos.writeInt(ataque_especial);
-        dos.writeInt(defesa_especial);
-        dos.writeInt(velocidade);
-        dos.writeBoolean(eh_mistico);
-        dos.writeBoolean(eh_lendario);
-        dos.writeLong(data_de_registro.getTime());
-
-		//Retorno do vetor de bytes para escrever no arquivo
-        return baos.toByteArray();
-    }
-
-    /*
-     * Descricao: essa funcao, a partir de um vetor de 
-     * bytes, preenche os atributos da classe
-     * Parametro: vetor de bytes
-     */
-    public void fromByteArray (byte[] ba) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
-        DataInputStream dis = new DataInputStream(bais);
-        String[] types;
-        String type;
-
-        //Le o arquivo
-        id = dis.readInt();
-        id_secundario = id * 0.00001f;
-        num_pokedex = dis.readInt();
-        nome = dis.readUTF();
-        
-        geracao= dis.readInt();
-        especie = dis.readUTF();
-        altura = dis.readFloat();
-        peso = dis.readFloat();
-        type = dis.readUTF();
-        
-        hp = dis.readInt();
-        ataque = dis.readInt();
-        defesa = dis.readInt();
-        ataque_especial = dis.readInt();
-        defesa_especial = dis.readInt();
-        velocidade = dis.readInt();
-        eh_mistico = dis.readBoolean();
-        eh_lendario = dis.readBoolean();
-
-        data_de_registro = new Date(dis.readLong());
-
-        //Atribui os valores do tipo
-        types = type.split("-");
-        tipo1 = types[0];
-
-        //Verifica se o pokemon possui tipo 2
-        if (types.length > 1)
-            tipo2 = types[1];
-    }
-
-    /*
-     * Descricao: esse metodo escreve na tela do 
-     * console os atributos do pokemon
-     */
-    public void exibir_pokemon () {
-
-        System.out.println ("\n\t\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
-
-        System.out.println ("\n\t" + "Informacoes basicas".toUpperCase() + "\n"
-                            + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
-                            + "\t" + "Geracao: " + geracao + "\n"
-                            + "\t" + "Especie: " + especie + "\n"
-                            + "\t" + "Altura: " + altura + "\n"
-                            + "\t" + "Peso: " + peso + "\n"
-                            + "\t" + "Tipo 1: " + tipo1);
-
-        if (tipo2.compareTo("null") != 0) {
-            System.out.println("\t" + "Tipo 2: " + tipo2);
-        }
-
-        System.out.println ("\n\t" + "Estatisticas basicas".toUpperCase()+ "\n"
-                            + "\t" + "HP: " + hp + "\n"
-                            + "\t" + "Ataque: " + ataque + "\n"
-                            + "\t" + "Defesa: " + defesa + "\n"
-                            + "\t" + "Ataque Especial: " + ataque_especial + "\n"
-                            + "\t" + "Defesa Especial: " + defesa_especial + "\n"
-                            + "\t" + "Velocidade: " + velocidade);
-
-        if(eh_mistico){
-            System.out.println("\n\t" + "Esse pokemon e mistico !!!");
-        } else if (eh_lendario){
-            System.out.println("\n\t" + "Esse pokemon e lendario !!!");
-        }
-
-        //Escreve a data
-        SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
-
-        System.out.println ("\n\t" + "Criacao do registro".toUpperCase() + "\n"
-                            + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
-                            + "\t" + "Horario: " + formatar_horario.format(data_de_registro));
-    }
-
 }
