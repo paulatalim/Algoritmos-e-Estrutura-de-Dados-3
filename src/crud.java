@@ -49,7 +49,7 @@ public class CRUD {
                 arq.seek(arq.readInt() + arq.getFilePointer());
             }
         }
-        return pokemon;
+        return null;
     }
 
  

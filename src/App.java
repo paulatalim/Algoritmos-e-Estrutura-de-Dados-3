@@ -874,8 +874,14 @@ public class App {
                         id = scanner.nextInt();
                         limpar_console();
     
-                        pokemon = crud.ler(id); 
-                        pokemon.exibir_pokemon(); 
+                        pokemon = crud.ler(id);
+
+                        if (pokemon != null) {
+                            pokemon.exibir_pokemon();
+                        } else {
+                            System.out.println("Pokemon nao encontrado");
+                        }
+
                         break;
     
                     case 3:
