@@ -33,8 +33,13 @@ function IntercalacaoBalanceada3(chaves, tamBloco, caminhos) {
       kAnterior = k;
       i++;
     }
+
+    //Enquanto arq n terminar
     while(heap.size()>0) {
+      //Leitura registro
       k = heap.remove();
+
+      //Verifica 
       if(k<kAnterior) 
         if (++destino == caminhos) destino = 0;
       destinos[destino].push(k);

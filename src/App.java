@@ -426,8 +426,30 @@ public class App {
             }
         }
         
+        //Registra o resto do vetor
+        // for (i = 0; i < bloco.length; i++) {
+            
+        //     //Verificando se ha a troca de arquivo
+        //     if (chaves[0] != chave_antiga) {
+        //         indice = (indice == 0) ? 1 : 0;
+        //     }
+
+        //     //Registra novo pokemon
+        //     poke_vet_byte = bloco[0].toByteArray();
+
+        //     out[indice].writeInt(poke_vet_byte.length);
+        //     out[indice].write(poke_vet_byte);
+
+        //     //Inserir sentinela
+        //     bloco[0] = new Pokemon();
+        //     chaves[0] = 0x7FFFFFFF;
+
+        //     //heap
+        //     fazer_heapmin(bloco, chaves);
+        // }
 
         //Fecha os arquivos temporarios
+
         for (i = 0; i < vet_tam; i ++) {
             arq_out[i].close();
             out[i].close();

@@ -66,7 +66,7 @@ public class CRUD {
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
 
-                System.out.print(pokemon.getId() + " - " +pokemon.getNumPokedex() + pokemon.getNome());
+                System.out.print(pokemon.getId() + " - " + pokemon.getNome());
                 
                 if (cont < 2) {
                     System.out.print("\t\t\t\t");
