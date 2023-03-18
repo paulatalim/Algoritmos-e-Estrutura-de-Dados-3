@@ -615,7 +615,7 @@ public class App {
         Scanner scanner = new Scanner (System.in);
 
         //Exibe o pokemon
-        pokemon.exibir_pokemon();
+        System.out.print(pokemon.toString());
 
         int opcao;
         System.out.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n"
@@ -692,7 +692,7 @@ public class App {
 
             case 9:
                 //Entrada hp
-                System.out.print("\t" + "Hp: ");
+                System.out.print("\t" + "HP: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setHp(entrada_int);
                 break;  
@@ -822,7 +822,7 @@ public class App {
 
         //Entrada hp
         System.out.print("\n\t" + "ESTATISTICAS BASICAS" + "\n"
-                        + "\t" + "Hp: ");
+                        + "\t" + "HP: ");
         entrada_int = scanner.nextInt();
         pokemon.setHp(entrada_int);
 
@@ -928,7 +928,7 @@ public class App {
                         limpar_console();
 
                         //Exibe o pokemon criado
-                        pokemon.exibir_pokemon();
+                        System.out.print(pokemon.toString());
                         System.out.println("\n\t\t\t\t\t" + "Pokemon registrado com sucesso!");
                         break;
     
@@ -945,7 +945,7 @@ public class App {
 
                         //Exibe o novo registro
                         if (pokemon != null) {
-                            pokemon.exibir_pokemon();
+                            System.out.print(pokemon.toString());
                         } else {
                             System.out.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
                                                 + "\t" + "Pokemon nao encontrado");

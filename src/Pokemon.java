@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 
 public class Pokemon {
     private int id;
@@ -148,47 +149,45 @@ public class Pokemon {
             tipo2 = types[1];
     }
 
-    /*
-     * Descricao: esse metodo escreve na tela do 
-     * console os atributos do pokemon
-     */
-    public void exibir_pokemon () {
-
-        System.out.println ("\n\t\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***");
-
-        System.out.println ("\n\t" + "Informacoes basicas".toUpperCase() + "\n"
-                            + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
-                            + "\t" + "Geracao: " + geracao + "\n"
-                            + "\t" + "Especie: " + especie + "\n"
-                            + "\t" + "Altura: " + altura + "\n"
-                            + "\t" + "Peso: " + peso + "\n"
-                            + "\t" + "Tipo 1: " + tipo1);
-
-        if (tipo2.compareTo("null") != 0) {
-            System.out.println("\t" + "Tipo 2: " + tipo2);
-        }
-
-        System.out.println ("\n\t" + "Estatisticas basicas".toUpperCase()+ "\n"
-                            + "\t" + "HP: " + hp + "\n"
-                            + "\t" + "Ataque: " + ataque + "\n"
-                            + "\t" + "Defesa: " + defesa + "\n"
-                            + "\t" + "Ataque Especial: " + ataque_especial + "\n"
-                            + "\t" + "Defesa Especial: " + defesa_especial + "\n"
-                            + "\t" + "Velocidade: " + velocidade);
-
-        if(eh_mistico){
-            System.out.println("\n\t" + "Esse pokemon e mistico !!!");
-        } else if (eh_lendario){
-            System.out.println("\n\t" + "Esse pokemon e lendario !!!");
-        }
-
-        //Escreve a data
+    public String toString () {
+        DecimalFormat df_peso = new DecimalFormat("###0.0");
+        DecimalFormat df_altura = new DecimalFormat("###0.00");
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
 
-        System.out.println ("\n\t" + "Criacao do registro".toUpperCase() + "\n"
-                            + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
-                            + "\t" + "Horario: " + formatar_horario.format(data_de_registro));
+        String str = "\n\t\t\t\t\t\t" + "*** " + nome.toUpperCase()   +   " ***" + "\n"
+                    + "\n\t" + "Informacoes basicas".toUpperCase() + "\n"
+                    + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
+                    + "\t" + "Geracao: " + geracao + "\n"
+                    + "\t" + "Especie: " + especie + "\n"
+                    + "\t" + "Altura: " + df_altura.format(altura) + " m" + "\n"
+                    + "\t" + "Peso: " + df_peso.format(peso) + " kg" + "\n"
+                    + "\t" + "Tipo 1: " + tipo1 + "\n";
+
+        //Verifica se ha tipo 2
+        if (tipo2.compareTo("null") != 0) {
+            str += "\t" + "Tipo 2: " + tipo2 + "\n";
+        }
+
+        str += "\n\t" + "Estatisticas basicas".toUpperCase()+ "\n"
+            + "\t" + "HP: " + hp + "\n"
+            + "\t" + "Ataque: " + ataque + "\n"
+            + "\t" + "Defesa: " + defesa + "\n"
+            + "\t" + "Ataque Especial: " + ataque_especial + "\n"
+            + "\t" + "Defesa Especial: " + defesa_especial + "\n"
+            + "\t" + "Velocidade: " + velocidade + "\n";
+
+        if(eh_mistico){
+            str += "\n\t" + "Esse pokemon e mistico !!!" + "\n";
+        } else if (eh_lendario){
+            str += "\n\t" + "Esse pokemon e lendario !!!" + "\n";
+        }
+        
+        str += "\n\t" + "Criacao do registro".toUpperCase() + "\n"
+        + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
+        + "\t" + "Horario: " + formatar_horario.format(data_de_registro) + "\n";
+
+        return str;
     }
 
     /*** METODOS GET E SET***/
@@ -204,15 +203,6 @@ public class Pokemon {
     public void setNome(int id) {
         this.id = id;
     }
-
-    //id_secundario
-    // public float getIdSecundario () {
-    //     return id_secundario;
-    // }
-
-    // public void setIdSecundario (float id_secundario) {
-    //     this.id_secundario = id_secundario;
-    // }
 
     //num_pokedex
     public int getNumPokedex() {
