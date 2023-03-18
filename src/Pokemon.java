@@ -184,8 +184,8 @@ public class Pokemon {
         }
         
         str += "\n\t" + "Criacao do registro".toUpperCase() + "\n"
-        + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
-        + "\t" + "Horario: " + formatar_horario.format(data_de_registro) + "\n";
+            + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
+            + "\t" + "Horario: " + formatar_horario.format(data_de_registro) + "\n";
 
         return str;
     }
