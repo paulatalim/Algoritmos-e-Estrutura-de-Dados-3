@@ -75,6 +75,29 @@ public class Pokemon {
         data_de_registro = new Date();
     }
     
+    Pokemon (Pokemon poke) 
+    {
+        
+        this.id = poke.getId();
+        this.num_pokedex = poke.getNumPokedex();
+        this.nome = poke.getNome();
+        this.geracao = poke.getGeracao();
+        this.especie = poke.getEspecie();
+        this.altura = poke.getAltura();
+        this.peso = poke.getPeso();
+        this.tipo1 = poke.getTipo1();
+        this.tipo2 = poke.getTipo2();
+        this.hp = poke.getHp();
+        this.ataque = poke.getAtaque();
+        this.defesa = poke.getDefesa();
+        this.ataque_especial = poke.getAtaqueEspecial();
+        this.defesa_especial = poke.getDefesaEspecial();
+        this.velocidade = poke.getVelocidade();
+        this.eh_mistico = poke.getEhMistico();
+        this.eh_lendario = poke.getEhLendario();
+        data_de_registro = new Date();
+    }
+
     /*** OUTROS METODOS ***/
     /*
      * Descricao: essa funcao elabora um vetor de bytes com 

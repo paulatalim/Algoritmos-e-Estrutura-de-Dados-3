@@ -144,7 +144,7 @@ public class App {
         FileOutputStream arq_db;
 	    DataOutputStream dos;
 
-        File arq_csv = new File("src/pokedex.csv");
+        File arq_csv = new File("src/pokedex_1.csv");
         Scanner scanner = null;
 
         //Exibe mensagem para o usuario
@@ -415,7 +415,7 @@ public class App {
                 out[indice].write(poke_vet_byte);
                 
                 //Inclui novo pokemon do vetor
-                bloco[0] = novo_pokemon;
+                bloco[0] = new Pokemon(novo_pokemon);
                 chaves[0] = nova_chave;
 
                 //Ordena o vetor com heap
@@ -427,26 +427,27 @@ public class App {
         }
         
         //Registra o resto do vetor
-        // for (i = 0; i < bloco.length; i++) {
+        for (i = 0; i < bloco.length; i++) {
             
-        //     //Verificando se ha a troca de arquivo
-        //     if (chaves[0] != chave_antiga) {
-        //         indice = (indice == 0) ? 1 : 0;
-        //     }
+            //Verificando se ha a troca de arquivo
+            if (chaves[0] != chave_antiga) {
+                indice = (indice == 0) ? 1 : 0;
+            }
 
-        //     //Registra novo pokemon
-        //     poke_vet_byte = bloco[0].toByteArray();
+            //Registra novo pokemon
+            poke_vet_byte = bloco[0].toByteArray();
 
-        //     out[indice].writeInt(poke_vet_byte.length);
-        //     out[indice].write(poke_vet_byte);
+            out[indice].writeInt(poke_vet_byte.length);
+            out[indice].write(poke_vet_byte);
 
-        //     //Inserir sentinela
-        //     bloco[0] = new Pokemon();
-        //     chaves[0] = 0x7FFFFFFF;
+            //Inserir sentinela
+            bloco[0] = new Pokemon();
+            bloco[0].setId(0x7FFFFFF);
+            chaves[0] = ajuste_id;
 
-        //     //heap
-        //     fazer_heapmin(bloco, chaves);
-        // }
+            //heap
+            fazer_heapmin(bloco, chaves);
+        }
 
         //Fecha os arquivos temporarios
 
@@ -911,12 +912,13 @@ public class App {
                                         + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
                                         + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n"
+                                        + "\t" + "6 - Ver" + "\n"
                                         + "\t" + "0 - SAIR" + "\n");
 
                     System.out.print("\t" + "Insira o numero da opcao: ");
                     opcao = scanner.nextInt();
                     limpar_console();
-                } while (opcao < 0 || opcao > 5);
+                } while (opcao < 0 || opcao > 6);
     
                 switch (opcao) {
                     case 1:
@@ -999,6 +1001,9 @@ public class App {
 
                     case 5:
                         ordenacao(arq);
+                        break;
+                    case 6:
+                        crud.listar_registros();
                         break;
                 }
 
