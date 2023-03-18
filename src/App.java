@@ -761,100 +761,112 @@ public class App {
     public static Pokemon info_poke_novo () {
         int entrada_int;
         float entrada_float;
-        boolean entrada_bool;
         String entrada_string;
 
         Scanner scanner = new Scanner(System.in);
         Pokemon pokemon = new Pokemon();
 
         //Entrada nome
-        System.out.println("Digite o novo: ");
+        System.out.println();
 
-        System.out.print("\nNome: ");
+        System.out.print( "\t" + "INFORMACOES BASICAS" + "\n"
+                        + "\t" + "Nome: ");
         entrada_string = new String (scanner.nextLine());
         //limpar_buffer(scanner);
         pokemon.setNome(entrada_string); 
 
         //Entrada num_pokedex;
-        System.out.print("Numero na Pokedex: ");
+        System.out.print("\t" + "Numero na Pokedex: ");
         entrada_int = scanner.nextInt();
         pokemon.setNumPokedex(entrada_int); 
 
         //Entrada geracao
-        System.out.print("Geração: ");
+        System.out.print("\t" + "Geração: ");
         entrada_int = scanner.nextInt();
         pokemon.setGeracao(entrada_int);
 
         //Entrada especie
-        System.out.print("Especie: ");
+        System.out.print("\t" + "Especie: ");
         limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
         pokemon.setEspecie(entrada_string);
 
         //Entrada altura
-        System.out.print("Altura: ");
+        System.out.print("\t" +"Altura: ");
         entrada_float = scanner.nextFloat();
         pokemon.setAltura(entrada_float);
 
         //Entradapeso
-        System.out.print("Peso: ");
+        System.out.print("\t" + "Peso: ");
         entrada_float = scanner.nextFloat();
         pokemon.setPeso(entrada_float);
 
         //Entrada tipo 1
-        System.out.print("Tipo 1: ");
+        System.out.print("\t" + "Tipo 1: ");
         limpar_buffer(scanner);
-        entrada_string= new String (scanner.nextLine());
+        entrada_string = new String (scanner.nextLine());
         pokemon.setTipo1(entrada_string);
 
         //Entrada tipo 2
-        System.out.print("Tipo 2: ");
+        System.out.print("\t" + "Tipo 2: ");
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo2(entrada_string);
 
         //Entrada hp
-        System.out.print("Hp: ");
+        System.out.print("\n\t" + "ESTATISTICAS BASICAS" + "\n"
+                        + "\t" + "Hp: ");
         entrada_int = scanner.nextInt();
         pokemon.setHp(entrada_int);
 
         //Entrada ataque
-        System.out.print("Ataque: ");
+        System.out.print("\t" + "Ataque: ");
         entrada_int = scanner.nextInt();
         pokemon.setAtaque(entrada_int);
 
         //Entrada defesa
-        System.out.print("Defesa: ");
+        System.out.print("\t" + "Defesa: ");
         entrada_int = scanner.nextInt();
         pokemon.setDefesa(entrada_int);
 
         //Entrada ataque especial
-        System.out.print("Ataque Especial: ");
+        System.out.print("\t" + "Ataque Especial: ");
         entrada_int= scanner.nextInt();
         pokemon.setAtaqueEspecial(entrada_int);
 
         //Entrada defesa especial
-        System.out.print("Defesa Especial: ");
+        System.out.print("\t" + "Defesa Especial: ");
         entrada_int= scanner.nextInt();
         pokemon.setDefesaEspecial(entrada_int);
 
         //Entrada velocidade
-        System.out.print("Velocidade: ");
+        System.out.print("\t" + "Velocidade: ");
         entrada_int = scanner.nextInt();
         pokemon.setVelocidade(entrada_int);
         
         //Entrada se eh mistico
-        System.out.print("Eh mistico: ");
-        entrada_bool = new Boolean (scanner.nextBoolean());
-        pokemon.setEhMistico(entrada_bool);
+        System.out.print("\n\t" + "POKE-ESPECIAL" + "\n"
+                        + "\t" + "(responda sim ou nao)" + "\n\n"
+                        + "\t" + "Eh mistico: ");
+                        limpar_buffer(scanner);
+        entrada_string = new String (scanner.nextLine());
 
-        //Caso o novo pokemon nao ser mistico
-        if (!entrada_bool) {
+        //Verifica a entrada
+        if (entrada_string.toLowerCase().compareTo("sim") == 0) {
+            pokemon.setEhMistico(true);
+        } else {
+            pokemon.setEhMistico(false);
+
             //Entrada se eh lendario
-            System.out.print("Eh lendario: ");
-            entrada_bool = new Boolean (scanner.nextBoolean());
-            pokemon.setEhLendario(entrada_bool);
+            System.out.print("\t" + "Eh lendario: ");
+            entrada_string = new String (scanner.nextLine());
+            
+            //Verifica a entrada
+            if (entrada_string.toLowerCase().compareTo("sim") == 0) {
+                pokemon.setEhLendario(true);
+            } else {
+                pokemon.setEhLendario(false);
+            }
         }
-
         
         return pokemon;
     }
@@ -900,7 +912,8 @@ public class App {
     
                 switch (opcao) {
                     case 1:
-                        System.out.print("\n\t\t\t\t\t" + "*** POKE-CRIACAO ***" + "\n\n\n");
+                        System.out.print("\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
+                                        + "\t\t\t\t\t"  + "Insira as novas informacoes" + "\n");
                         //Cria novo pokemon
                         pokemon = info_poke_novo();
                         crud.criar(pokemon);
