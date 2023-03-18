@@ -139,7 +139,7 @@ public class App {
         String[] atributos_csv;
         byte[] poke_info_byte;
         String linha;
-        int id_metadados = 0;
+        int id_metadados = 1;
         
         FileOutputStream arq_db;
 	    DataOutputStream dos;
@@ -965,7 +965,7 @@ public class App {
                         
                         //Caso o id existir
                         if (pokemon != null) {
-                            
+
                             //Funções para atualizar o pokemon
                             pokemon = info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
                             
