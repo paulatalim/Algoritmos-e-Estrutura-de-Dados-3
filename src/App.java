@@ -900,34 +900,46 @@ public class App {
     
                 switch (opcao) {
                     case 1:
+                        System.out.print("\n\t\t\t\t\t" + "*** POKE-CRIACAO ***" + "\n\n\n");
                         //Cria novo pokemon
                         pokemon = info_poke_novo();
                         crud.criar(pokemon);
+                        limpar_console();
+
+                        //Exibe o pokemon criado
                         pokemon.exibir_pokemon();
+                        System.out.println("\n\t\t\t\t\t" + "Pokemon registrado com sucesso!");
                         break;
     
                     case 2:
-                        crud.listar_registros();
-                        System.out.print("Digite O id do pokemon procurado: "); 
+                        //crud.listar_registros();
+
+                        System.out.print("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
+                                        + "\t" + "Insira o id do pokemon procurado: ");
+
                         id = scanner.nextInt();
                         limpar_console();
     
                         pokemon = crud.ler(id);
 
+                        //Exibe o novo registro
                         if (pokemon != null) {
                             pokemon.exibir_pokemon();
                         } else {
-                            System.out.println("Pokemon nao encontrado");
+                            System.out.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
+                                                + "\t" + "Pokemon nao encontrado");
                         }
 
                         break;
     
                     case 3:
-                        //Exibe o titulo da pagina
-                        System.out.print ( "\n\n\t\t\t\t\t\t" + "*** POKE-ATUALIZAR ***" + "\n\n"
-                                            + "Digite O id do pokemon a ser atualizado: ");
+                        //Exibe o titulo da pagina e entrada de id
+                        System.out.print ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n"
+                                            + "\t" + "Insira o id do pokemon a ter um update: ");
                         id = scanner.nextInt();
-                        
+                        limpar_console();
+
+                        //Le o pokemon a ser atualizado
                         pokemon = crud.ler(id); 
                         
                         //Caso o id existir
@@ -937,23 +949,26 @@ public class App {
                             
                             //Atualiza o pokemon no arquivo e retorna um boolean
                             if (crud.atualizar(pokemon)){
-                                System.out.println("\nPokemon atualizado com sucesso!");
+                                System.out.println("\n\t" + "Pokemon atualizado com sucesso!");
                             } else {
-                                System.out.println("\nPokemon nao encontrado");
+                                System.out.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
+                                                    + "\t" + "Pokemon nao encontrado");
                             }
                         } else {
-                            System.out.println("Pokemon nao encontrado");
+                            System.out.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
+                                                + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 4:
-                        System.out.print("Digite O id do pokemon procurado: "); 
+                        System.out.print("\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
+                                        + "\t"+ "Insira o id do pokemon a ser deletado: "); 
                         id = scanner.nextInt();
 
                         if (crud.excluir(id)) {
-                            System.out.println("Pokemon deletado com sucesso!");
+                            System.out.println("\n\t" + "Pokemon deletado da pokedex com sucesso!");
                         } else {
-                            System.out.println("Pokemon nao encontrado");
+                            System.out.println("\n\t" + "Pokemon nao encontrado");
                         }
                         break;
 
