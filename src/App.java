@@ -621,7 +621,7 @@ public class App {
         int opcao;
         System.out.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n"
                             +"\n\t" + "Digite para atualizar:" + "\n\n"
-                            + "\t" + "1- Nome" + "\t\t\t"          + "5- Altura" + "\t" + "9- Hp" + "\t\t\t"           + "13 - Defesa Especial" + "\n"
+                            + "\t" + "1- Nome" + "\t\t\t"          + "5- Altura" + "\t" + "9- HP" + "\t\t\t"           + "13 - Defesa Especial" + "\n"
                             + "\t" + "2- Numero da pokedex" + "\t" + "6- Peso" + "\t\t" + "10- Ataque" + " \t\t"       + "14- Velocidade" + "\n"
                             + "\t" + "3- Geracao" + "\t\t"         + "7- Tipo1" + "\t"  + "11- Defesa" + "\t\t"        + "15- Eh mistico" + "\n"
                             + "\t" + "4- Especie" + "\t\t"         + "8- Tipo2" + "\t"  + "12- Ataque especial" + "\t" + "16- Eh lendario");

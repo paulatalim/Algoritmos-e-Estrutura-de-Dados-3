@@ -184,8 +184,17 @@ public class Pokemon {
                     + "\t" + "Geracao: " + geracao + "\n"
                     + "\t" + "Especie: " + especie + "\n"
                     + "\t" + "Altura: " + df_altura.format(altura) + " m" + "\n"
-                    + "\t" + "Peso: " + df_peso.format(peso) + " kg" + "\n"
-                    + "\t" + "Tipo 1: " + tipo1 + "\n";
+                    + "\t" + "Peso: ";
+        
+        //Verifica se o pokemon possui peso
+        if (peso != -1) {
+            str += df_peso.format(peso) + " kg";
+        } else {
+            //Peso desconhecido
+            str += "???";
+        }
+
+        str += "\n\t" + "Tipo 1: " + tipo1 + "\n";
 
         //Verifica se ha tipo 2
         if (tipo2.compareTo("null") != 0) {
