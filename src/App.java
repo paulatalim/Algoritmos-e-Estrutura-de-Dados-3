@@ -264,7 +264,7 @@ public class App {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
-        while (i > 0 && (chave[i] < chave[indice] || (chave[i] >= chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
+        while (i > 0 && (chave[i] < chave[indice] || (chave[i] == chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
             swap_pokemon(bloco, i, indice);
             swap_int(chave, indice, i);
             
@@ -339,7 +339,7 @@ public class App {
 
         int nova_chave = 0;
         int chave_antiga = 0;
-        int ajuste_id = 0;
+        //int ajuste_id = 0;
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
@@ -370,13 +370,6 @@ public class App {
                 //Cria e registra o pokemon
                 bloco[i] = new Pokemon();
                 bloco[i].fromByteArray(poke_vet_byte);
-
-                // //Verifica se o novo registro pode entrar no antigo segmento
-                // if (i > 0 && bloco[i].getId() < bloco[i-1].getId()) {
-                //     ajuste_id ++;
-                // }
-
-                // chaves[i] = ajuste_id;
             } else {
                 //Pula o registro
                 arq.seek(arq.readInt() + arq.getFilePointer());
