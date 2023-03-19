@@ -264,7 +264,7 @@ public class App {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
-        while (i > 0 && (chave[i] < chave[indice] || bloco[i].getId() < bloco[indice].getId())) {
+        while (i > 0 && (chave[i] < chave[indice] || (chave[i] >= chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
             swap_pokemon(bloco, i, indice);
             swap_int(chave, indice, i);
             
@@ -300,11 +300,15 @@ public class App {
         out[indice].writeInt(vet.length);
         out[indice].write(vet);
         
-        vet = new byte [in.readInt()];
-        in.read(vet);
-        pokemon.fromByteArray(vet);
+        if (in.available() > 0) {
+            vet = new byte [in.readInt()];
+            in.read(vet);
+            pokemon.fromByteArray(vet);
+            return pokemon;
+        } 
 
-        return pokemon;
+        //Retorno de objeto zerado
+        return new Pokemon();
     }
 
     /* 
@@ -325,6 +329,17 @@ public class App {
         //Criacao de arquivos temporarios
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
+
+        int[] chaves = new int [10];
+        
+        //Inicializa o vetor 
+        for (i = 0; i < chaves.length; i++) {
+            chaves[i] = 0;
+        }
+
+        int nova_chave = 0;
+        int chave_antiga = 0;
+        int ajuste_id = 0;
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
@@ -355,22 +370,19 @@ public class App {
                 //Cria e registra o pokemon
                 bloco[i] = new Pokemon();
                 bloco[i].fromByteArray(poke_vet_byte);
+
+                // //Verifica se o novo registro pode entrar no antigo segmento
+                // if (i > 0 && bloco[i].getId() < bloco[i-1].getId()) {
+                //     ajuste_id ++;
+                // }
+
+                // chaves[i] = ajuste_id;
             } else {
                 //Pula o registro
                 arq.seek(arq.readInt() + arq.getFilePointer());
                 i--;
             }
         }
-
-        int[] chaves = new int [10];
-        
-        //Inicializa o vetor 
-        for (i = 0; i < chaves.length; i++) {
-            chaves[i] = 0;
-        }
-
-        int nova_chave = 0;
-        int chave_antiga = 0;
 
         //Ordena o vetor com o heap minimo
         fazer_heapmin(bloco, chaves);            
@@ -379,8 +391,6 @@ public class App {
         limpar_console();
         System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Distribuindo pokemons ...");
-
-        int ajuste_id = 0;
         
         //Leitura do proximo registro
         while (arq.getFilePointer() < arq.length()) {
@@ -390,16 +400,11 @@ public class App {
                 poke_vet_byte = new byte [arq.readInt()];
                 arq.read(poke_vet_byte);
                 novo_pokemon.fromByteArray(poke_vet_byte);
-                //nova_chave = chave_antiga;
 
                 //Verifica se o novo registro pode entrar no antigo segmento
                 if (novo_pokemon.getId() < bloco[0].getId()) {
-                    ajuste_id ++;
+                    nova_chave = chaves[0] + 1;
                 }
-
-                nova_chave = ajuste_id;
-
-                // novo_pokemon.setIdSecundario(novo_pokemon.getIdSecundario() + ajuste_id);
 
                 //Verificando se ha a troca de arquivo
                 if (chaves[0] != chave_antiga) {
@@ -407,7 +412,7 @@ public class App {
                 }
 
                 //Escreve o pokemon no arquivo
-                antigo_pokemon = bloco[0];
+                antigo_pokemon = new Pokemon(bloco[0]);
                 chave_antiga = chaves[0];
                 poke_vet_byte = bloco[0].toByteArray();
 
@@ -443,7 +448,7 @@ public class App {
             //Inserir sentinela
             bloco[0] = new Pokemon();
             bloco[0].setId(0x7FFFFFF);
-            chaves[0] = ajuste_id;
+            chaves[0] = nova_chave;
 
             //heap
             fazer_heapmin(bloco, chaves);
@@ -507,8 +512,8 @@ public class App {
                 indice = (poke[0].getId() < poke[1].getId()) ? 0 : 1;
                 
                 //Registra o novo pokemon
-                antigo_pokemon = poke[indice];
-                poke[indice] = escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1);
+                antigo_pokemon = new Pokemon(poke[indice]);
+                poke[indice] = new Pokemon (escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1));
 
                 //Verifica se o segmento acabou
                 if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
@@ -519,8 +524,18 @@ public class App {
 
                     //Escreve o resto do segmento do outro arquivo
                     while (antigo_pokemon.getId() < poke[indice].getId() || in[indice].available() > 0) {
-                        antigo_pokemon = poke[indice];
-                        poke[indice] = escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1);
+                        antigo_pokemon = new Pokemon(poke[indice]);
+                        poke[indice] = new Pokemon (escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1));
+
+                        //Caso o arquivo terminar
+                        if (poke[indice].getId() == -1) {
+                            indice = indice == 0 ? 1 : 0;
+
+                            while (in[indice].available() > 0) {
+                                antigo_pokemon = new Pokemon(poke[indice]);
+                                poke[indice] = new Pokemon (escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1));
+                            }
+                        }
                     }
                 }
 
