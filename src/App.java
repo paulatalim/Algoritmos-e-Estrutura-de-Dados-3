@@ -905,6 +905,7 @@ public class App {
         int opcao, id;
         Pokemon pokemon = new Pokemon();
         CRUD crud;
+        boolean opcao_invalida;
 
         try {
             arq = new RandomAccessFile("src/pokedex.db", "rw");
@@ -920,6 +921,9 @@ public class App {
             //Repete o programa
             do {
 
+                //Reinicia a variavel
+                opcao_invalida = false;
+
                 //Validacao da entrada do usuario
                 do {
                     //Exibe o menu das opcoes
@@ -932,10 +936,16 @@ public class App {
                                         + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n"
                                         + "\t" + "6 - Ver" + "\n"
                                         + "\t" + "0 - SAIR" + "\n");
+                    
+                    if (opcao_invalida) {
+                        System.out.println("\t" + "Opcao invalida. Tente novavemente." + "\n");
+                    }
 
                     System.out.print("\t" + "Insira o numero da operacao: ");
                     opcao = scanner.nextInt();
                     limpar_console();
+
+                    opcao_invalida = true;
                 } while (opcao < 0 || opcao > 6);
     
                 switch (opcao) {
