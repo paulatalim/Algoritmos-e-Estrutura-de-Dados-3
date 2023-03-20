@@ -499,7 +499,7 @@ public class App {
             }
         
             //Intercala de arquivos
-            while (in[0].available() > 0 && in[1].available() > 0) {
+            while (in[0].available() > 0 || in[1].available() > 0) {
 
                 //Verifica o proximo registro a ser registrado
                 indice = (poke[0].getId() < poke[1].getId()) ? 0 : 1;
@@ -513,10 +513,12 @@ public class App {
                     terminou_segmento = true;
 
                     //Escreve o ultimo registro do segmento
-                    poke_vet_byte = poke[indice].toByteArray();
-                    out[indice].writeInt(poke_vet_byte.length);
-                    out[indice].write(poke_vet_byte);
-
+                    if (in[indice].available() > 0) {
+                        poke_vet_byte = poke[indice].toByteArray();
+                        out[indice].writeInt(poke_vet_byte.length);
+                        out[indice].write(poke_vet_byte);
+                    }
+                    
                     //If ternario para inverter o indice
                     indice = indice == 0 ? 1 : 0;
 
@@ -587,7 +589,7 @@ public class App {
             out[i].close();
         }
 
-        for (i = 1; i < 4; i ++) {
+        for (i = 1; i <= 4; i ++) {
             //Verifica em qual arquivo q possui dados
             arq_in[indice] = new FileInputStream("src/arqTemp" + i + ".db");
             in[indice] = new DataInputStream(arq_in[indice]);
