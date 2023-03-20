@@ -144,7 +144,7 @@ public class App {
         FileOutputStream arq_db;
 	    DataOutputStream dos;
 
-        File arq_csv = new File("src/pokedex_1.csv");
+        File arq_csv = new File("src/pokedex.csv");
         Scanner scanner = null;
 
         //Exibe mensagem para o usuario
@@ -924,7 +924,7 @@ public class App {
                 do {
                     //Exibe o menu das opcoes
                     System.out.println ("\n\t\t\t\t\t" + "*** POKE-MENU ***" + "\n\n\n"
-                                        + "\t" + "Opcoes da Pokedex:" + "\n\n"
+                                        + "\t" + "O que deseja fazer em sua Pokedex:" + "\n\n"
                                         + "\t" + "1 - CRIAR pokemon" + "\n"
                                         + "\t" + "2 - LER pokemon" + "\n "
                                         + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
@@ -933,7 +933,7 @@ public class App {
                                         + "\t" + "6 - Ver" + "\n"
                                         + "\t" + "0 - SAIR" + "\n");
 
-                    System.out.print("\t" + "Insira o numero da opcao: ");
+                    System.out.print("\t" + "Insira o numero da operacao: ");
                     opcao = scanner.nextInt();
                     limpar_console();
                 } while (opcao < 0 || opcao > 6);
