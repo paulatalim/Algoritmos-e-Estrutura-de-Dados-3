@@ -473,7 +473,7 @@ public class App {
         boolean inverter_arq = false;
 
         //Reinicia variaveis
-        escrever_arq1 = true;
+        escrever_arq1 = false;
         
         //Abre objetos de leitura e escrita
         for (i = 0; i < vet_tam; i++) {
@@ -491,10 +491,6 @@ public class App {
 
         //Verifica se ha registros para intercalar
         while (in[0].available() > 0 && in[1].available() > 0) {
-
-            //Reajuste na variavel
-            inverter_arq = !inverter_arq;
-
             //Le o primeiro registro dos arquivos
             for (i = 0; i < vet_tam; i ++) {
                 poke_vet_byte = new byte [in[i].readInt()];
@@ -515,6 +511,11 @@ public class App {
                 //Verifica se o segmento acabou
                 if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
                     terminou_segmento = true;
+
+                    //Escreve o ultimo registro do segmento
+                    poke_vet_byte = poke[indice].toByteArray();
+                    out[indice].writeInt(poke_vet_byte.length);
+                    out[indice].write(poke_vet_byte);
 
                     //If ternario para inverter o indice
                     indice = indice == 0 ? 1 : 0;
@@ -552,6 +553,9 @@ public class App {
                 in[i].close();
                 out[i].close();
             }
+
+            //Reajuste na variavel
+            inverter_arq = !inverter_arq;
 
             //Troca de arquivos
             for (i = 0; i < vet_tam; i++) {
