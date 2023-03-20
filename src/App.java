@@ -394,9 +394,12 @@ public class App {
                 arq.read(poke_vet_byte);
                 novo_pokemon.fromByteArray(poke_vet_byte);
 
+                //calculo da chave do novo pokemon
+                nova_chave = chaves[0];
+
                 //Verifica se o novo registro pode entrar no antigo segmento
                 if (novo_pokemon.getId() < bloco[0].getId()) {
-                    nova_chave = chaves[0] + 1;
+                    nova_chave ++;
                 }
 
                 //Verificando se ha a troca de arquivo
@@ -441,7 +444,8 @@ public class App {
             //Inserir sentinela
             bloco[0] = new Pokemon();
             bloco[0].setId(0x7FFFFFF);
-            chaves[0] = nova_chave;
+            chave_antiga = chaves[0];
+            chaves[0] = 0x7FFFFFF;
 
             //heap
             fazer_heapmin(bloco, chaves);
