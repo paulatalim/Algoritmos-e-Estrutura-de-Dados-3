@@ -528,11 +528,14 @@ public class App {
                         //Caso o arquivo terminar
                         if (poke[indice].getId() == -1) {
                             indice = indice == 0 ? 1 : 0;
+                            escrever_arq1 = !escrever_arq1;
 
                             while (in[indice].available() > 0) {
                                 antigo_pokemon = (Pokemon)poke[indice].clone();
                                 poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
                             }
+
+                            break;
                         }
                     }
                 }
