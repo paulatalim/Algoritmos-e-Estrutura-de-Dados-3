@@ -27,7 +27,7 @@ public class Pokemon extends Object implements Cloneable {
     private boolean eh_lendario;
     private Date data_de_registro;
 
-    // CONSTRUTOR
+    /*** CONSTRUTORES ***/
     Pokemon () {
         id = -1;
         num_pokedex = -1;
@@ -72,29 +72,6 @@ public class Pokemon extends Object implements Cloneable {
         this.velocidade = velocidade;
         this.eh_mistico = eh_mistico;
         this.eh_lendario = eh_lendario;        
-        data_de_registro = new Date();
-    }
-    
-    Pokemon (Pokemon poke) 
-    {
-        
-        this.id = poke.getId();
-        this.num_pokedex = poke.getNumPokedex();
-        this.nome = poke.getNome();
-        this.geracao = poke.getGeracao();
-        this.especie = poke.getEspecie();
-        this.altura = poke.getAltura();
-        this.peso = poke.getPeso();
-        this.tipo1 = poke.getTipo1();
-        this.tipo2 = poke.getTipo2();
-        this.hp = poke.getHp();
-        this.ataque = poke.getAtaque();
-        this.defesa = poke.getDefesa();
-        this.ataque_especial = poke.getAtaqueEspecial();
-        this.defesa_especial = poke.getDefesaEspecial();
-        this.velocidade = poke.getVelocidade();
-        this.eh_mistico = poke.getEhMistico();
-        this.eh_lendario = poke.getEhLendario();
         data_de_registro = new Date();
     }
 
@@ -222,7 +199,12 @@ public class Pokemon extends Object implements Cloneable {
         return str;
     }
 
-    /*** METODOS GET E SET***/
+    @Override
+	public Object clone () throws CloneNotSupportedException{  
+	    return super.clone();  
+	}
+
+    /*** METODOS GET E SET ***/
     //id
     public int getId() {
         return id;
@@ -232,11 +214,7 @@ public class Pokemon extends Object implements Cloneable {
         this. id = id;
     }
 
-    public void setNome(int id) {
-        this.id = id;
-    }
-
-    //num_pokedex
+    //Numero da Pokedex
     public int getNumPokedex() {
         return num_pokedex;
     }
@@ -245,7 +223,7 @@ public class Pokemon extends Object implements Cloneable {
         this.num_pokedex = num_pokedex;
     }
 
-    //nome
+    //Nome
     public String getNome() {
         return nome;
     }
@@ -254,7 +232,7 @@ public class Pokemon extends Object implements Cloneable {
         this.nome = nome;
     }
 
-    //geracao
+    //Geracao
     public int getGeracao() {
         return geracao;
     }
@@ -263,7 +241,7 @@ public class Pokemon extends Object implements Cloneable {
         this.geracao = geracao;
     }
 
-    //especie
+    //Especie
     public String getEspecie() {
         return especie;
     }
@@ -272,7 +250,7 @@ public class Pokemon extends Object implements Cloneable {
         this.especie = especie;
     }
 
-    //altura
+    //Altura
     public float getAltura() {
         return altura;
     }
@@ -281,16 +259,16 @@ public class Pokemon extends Object implements Cloneable {
         this.altura = altura;
     }
 
-    //peso
+    //Peso
     public float getPeso() {
         return peso;
     }
 
     public void setPeso(float peso) {
-        this.peso= peso;
+        this.peso = peso;
     }
 
-    //tipo1
+    //Tipo 1
     public String getTipo1() {
         return tipo1;
     }
@@ -299,7 +277,7 @@ public class Pokemon extends Object implements Cloneable {
         this.tipo1 = tipo1;
     }
 
-    //tipo2
+    //Tipo 2
     public String getTipo2() {
         return tipo2;
     }
@@ -308,16 +286,16 @@ public class Pokemon extends Object implements Cloneable {
         this.tipo2 = tipo2;
     }
 
-    //hp
+    //HP
     public int getHp() {
         return hp;
     }
 
-    public void setHp(int  hp) {
-        this. hp = hp;
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
-    //ataque
+    //Ataque
     public int getAtaque() {
         return ataque;
     }
@@ -326,7 +304,7 @@ public class Pokemon extends Object implements Cloneable {
         this.ataque = ataque;
     }
 
-    //defesa
+    //Defesa
     public int getDefesa() {
         return defesa;
     }
@@ -335,7 +313,7 @@ public class Pokemon extends Object implements Cloneable {
         this.defesa = defesa;
     }
 
-    //ataque_especial
+    //Ataque Especial
     public int getAtaqueEspecial() {
         return ataque_especial;
     }
@@ -344,7 +322,7 @@ public class Pokemon extends Object implements Cloneable {
         this.ataque_especial = ataque_especial;
     }
 
-    //defesa_especial
+    //Defesa Especial
     public int getDefesaEspecial() {
         return defesa_especial;
     }
@@ -353,7 +331,7 @@ public class Pokemon extends Object implements Cloneable {
         this.defesa_especial = defesa_especial;
     }
 
-    //velocidade
+    //Velocidade
     public int getVelocidade() {
         return velocidade;
     }
@@ -362,7 +340,7 @@ public class Pokemon extends Object implements Cloneable {
         this.velocidade = velocidade;
     }
 
-    //eh_mistico
+    //Eh Mistico
     public boolean getEhMistico() {
         return eh_mistico;
     }
@@ -371,7 +349,7 @@ public class Pokemon extends Object implements Cloneable {
         this.eh_mistico = eh_mistico;
     }
 
-     //eh_lendario
+     //Eh lendario
     public boolean getEhLendario() {
         return eh_lendario;
     }
@@ -380,7 +358,7 @@ public class Pokemon extends Object implements Cloneable {
         this.eh_lendario = eh_lendario;
     }
 
-    //data_de_registro
+    //Data de registro
     public Date getDataDeRegistro() {
         return data_de_registro;
     }
@@ -388,9 +366,4 @@ public class Pokemon extends Object implements Cloneable {
     public void setDataDeRegistro(Date data_de_registro) {
         this.data_de_registro = data_de_registro;
     }
-
-    @Override
-	public Object clone () throws CloneNotSupportedException{  
-	    return super.clone();  
-	}
 }
