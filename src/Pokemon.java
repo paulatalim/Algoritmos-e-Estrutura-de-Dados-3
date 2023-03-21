@@ -7,7 +7,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
 
-public class Pokemon {
+public class Pokemon extends Object implements Cloneable {
     private int id;
     private int num_pokedex;
     private String nome;
@@ -388,4 +388,9 @@ public class Pokemon {
     public void setDataDeRegistro(Date data_de_registro) {
         this.data_de_registro = data_de_registro;
     }
+
+    @Override
+	public Object clone () throws CloneNotSupportedException{  
+	    return super.clone();  
+	}
 }

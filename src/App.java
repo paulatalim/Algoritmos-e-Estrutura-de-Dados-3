@@ -318,6 +318,7 @@ public class App {
     public static void ordenacao (RandomAccessFile arq) throws Exception {
         Pokemon[] bloco = new Pokemon [10];
         byte[] poke_vet_byte;
+        int[] chaves = new int [10];
         int i, metadados;
         boolean escrever_arq1 = true;
         int indice = 0;
@@ -329,8 +330,6 @@ public class App {
         //Criacao de arquivos temporarios
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
-
-        int[] chaves = new int [10];
         
         //Inicializa o vetor 
         for (i = 0; i < chaves.length; i++) {
@@ -339,7 +338,6 @@ public class App {
 
         int nova_chave = 0;
         int chave_antiga = 0;
-        //int ajuste_id = 0;
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
@@ -408,7 +406,7 @@ public class App {
                 }
 
                 //Escreve o pokemon no arquivo
-                antigo_pokemon = new Pokemon(bloco[0]);
+                antigo_pokemon = (Pokemon)bloco[0].clone();
                 chave_antiga = chaves[0];
                 poke_vet_byte = bloco[0].toByteArray();
 
@@ -416,7 +414,7 @@ public class App {
                 out[indice].write(poke_vet_byte);
                 
                 //Inclui novo pokemon do vetor
-                bloco[0] = new Pokemon(novo_pokemon);
+                bloco[0] = (Pokemon)novo_pokemon.clone();
                 chaves[0] = nova_chave;
 
                 //Ordena o vetor com heap
@@ -505,8 +503,8 @@ public class App {
                 indice = (poke[0].getId() < poke[1].getId()) ? 0 : 1;
                 
                 //Registra o novo pokemon
-                antigo_pokemon = new Pokemon(poke[indice]);
-                poke[indice] = new Pokemon (escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1));
+                antigo_pokemon = (Pokemon)poke[indice].clone();
+                poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
 
                 //Verifica se o segmento acabou
                 if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
@@ -524,16 +522,16 @@ public class App {
 
                     //Escreve o resto do segmento do outro arquivo
                     while (antigo_pokemon.getId() < poke[indice].getId() || in[indice].available() > 0) {
-                        antigo_pokemon = new Pokemon(poke[indice]);
-                        poke[indice] = new Pokemon (escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1));
+                        antigo_pokemon = (Pokemon)poke[indice].clone();
+                        poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
 
                         //Caso o arquivo terminar
                         if (poke[indice].getId() == -1) {
                             indice = indice == 0 ? 1 : 0;
 
                             while (in[indice].available() > 0) {
-                                antigo_pokemon = new Pokemon(poke[indice]);
-                                poke[indice] = new Pokemon (escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1));
+                                antigo_pokemon = (Pokemon)poke[indice].clone();
+                                poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
                             }
                         }
                     }
