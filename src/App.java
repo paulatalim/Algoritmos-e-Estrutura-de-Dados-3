@@ -134,17 +134,14 @@ public class App {
      * Descricao: essa funcao importa um arquivo csv e passa sua informacoes para a database
      * Parametro: um arquivo RandomAccessFile (arquivo database a ser preenchido)
      */
-    public static void passar_arq_csv_para_db (RandomAccessFile arq_atual)  {
+    public static void passar_arq_csv_para_db (RandomAccessFile arq_db, String caminho_arq_csv)  {
         Pokemon pokemon;
         String[] atributos_csv;
         byte[] poke_info_byte;
         String linha;
         int id_metadados = 1;
-        
-        FileOutputStream arq_db;
-	    DataOutputStream dos;
 
-        File arq_csv = new File("src/pokedex.csv");
+        File arq_csv = new File(caminho_arq_csv);
         Scanner scanner = null;
 
         //Exibe mensagem para o usuario
@@ -152,10 +149,6 @@ public class App {
                             + "\t" + "Iniciando importacao ..." + "\n");
         
         try {
-            //Abre os objetos do arquivos db
-            arq_db = new FileOutputStream("src/pokedex.db");
-            dos = new DataOutputStream(arq_db);
-
             //Le arquivos csv
             scanner = new Scanner (arq_csv);
 
@@ -163,7 +156,8 @@ public class App {
             linha = new String(scanner.nextLine());
 
             //Escreve os metadados no arquivo
-            dos.writeInt(id_metadados);
+            arq_db.seek(0);
+            arq_db.writeInt(id_metadados);
 
             //Exibe mensagem para o usuario
             limpar_console();
@@ -189,18 +183,17 @@ public class App {
 
                 //Escreve o registro
                 poke_info_byte = pokemon.toByteArray();
-                dos.writeByte(' ');
-                dos.writeInt(poke_info_byte.length);
-                dos.write(poke_info_byte);
+                arq_db.writeByte(' ');
+                arq_db.writeInt(poke_info_byte.length);
+                arq_db.write(poke_info_byte);
 
                 //Atualiza o id
                 id_metadados++;
             }
-
-            arq_db.close();
-            dos.close();
             
-            arq_atual.writeInt(id_metadados-1);
+            //Atualiza metadados de arquivo
+            arq_db.seek(0);
+            arq_db.writeInt(id_metadados-1);
 
             //Exibe mensagem para o usuario
             limpar_console();
@@ -904,6 +897,9 @@ public class App {
     }
 
     public static void main(String[] args) {
+        String caminho_arq_csv = "src/pokedex.csv";
+        String caminho_arq_db = "src/pokedex.db";
+
         RandomAccessFile arq;
         Scanner scanner = new Scanner (System.in);
 
@@ -911,16 +907,16 @@ public class App {
         Pokemon pokemon = new Pokemon();
         CRUD crud;
         boolean opcao_invalida;
-
+        
         try {
-            arq = new RandomAccessFile("src/pokedex.db", "rw");
-            crud = new CRUD ("src/pokedex.db");
+            arq = new RandomAccessFile(caminho_arq_db, "rw");
+            crud = new CRUD (caminho_arq_db);
 
             //Exibe o inicio do programa
             exibir_tela_inicial_e_info();
             
             //Importa arquivo .csv automatico
-            passar_arq_csv_para_db(arq);
+            passar_arq_csv_para_db(arq, caminho_arq_csv);
             exibir_fim_tela();
             
             //Repete o programa
@@ -968,8 +964,6 @@ public class App {
                         break;
     
                     case 2:
-                        //crud.listar_registros();
-
                         System.out.print("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
                                         + "\t" + "Insira o id do pokemon procurado: ");
 
@@ -985,7 +979,6 @@ public class App {
                             System.out.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
                                                 + "\t" + "Pokemon nao encontrado");
                         }
-
                         break;
     
                     case 3:
@@ -1035,8 +1028,13 @@ public class App {
                     case 5:
                         ordenacao(arq);
                         break;
+                    
                     case 6:
                         crud.listar_registros();
+                        break;
+                    
+                    case 0:
+                        exibir_tela_agradecimentos();
                         break;
                 }
 
@@ -1047,10 +1045,10 @@ public class App {
                 
             } while(opcao != 0);
 
+            //Fecha os objetos
             scanner.close();
             arq.close();
 
-            exibir_tela_agradecimentos();
         } catch (Exception e) {
             e.printStackTrace();
         }
