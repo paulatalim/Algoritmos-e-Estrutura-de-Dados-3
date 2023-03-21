@@ -2,14 +2,14 @@ import java.io.RandomAccessFile;
 
 
 public class CRUD {
-
-    //Acessar o arquivo
     private RandomAccessFile arq;
 
+    /*** CONSTRUTOR ***/
     CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
     }
 
+    /*** OUTROS METODOS ***/
     //CREATE
     public void criar (Pokemon pokemon) throws Exception {
         arq.seek(0);
@@ -29,7 +29,7 @@ public class CRUD {
     //READ
     public Pokemon ler (int id) throws Exception {
         Pokemon pokemon = new Pokemon();
-        byte[]poke_vet_antigo;
+        byte[] poke_vet_antigo;
 
         arq.seek(0);//Inicializa o ponteiro
         arq.readInt();
@@ -37,7 +37,7 @@ public class CRUD {
         while(arq.getFilePointer() < arq.length()){
             
             if(arq.readByte() == ' '){
-                poke_vet_antigo=new byte[arq.readInt()];
+                poke_vet_antigo = new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
                 
@@ -54,7 +54,7 @@ public class CRUD {
 
     public void listar_registros () throws Exception {
         Pokemon pokemon = new Pokemon();
-        byte[]poke_vet_antigo;
+        byte[] poke_vet_antigo;
         int cont = 0;
 
         arq.seek(0);
@@ -62,7 +62,7 @@ public class CRUD {
 
         while (arq.getFilePointer() < arq.length()) {
             if (arq.readByte() == ' ') {
-                poke_vet_antigo=new byte[arq.readInt()];
+                poke_vet_antigo = new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
 
@@ -142,7 +142,7 @@ public class CRUD {
 
             long ponteiro = arq.getFilePointer();
             if(arq.readByte() == ' '){
-                poke_vet_antigo=new byte[arq.readInt()];
+                poke_vet_antigo = new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
                 pokemon.fromByteArray(poke_vet_antigo);
 
@@ -153,7 +153,7 @@ public class CRUD {
                 }
             } else{
                 //Pula o registro
-                arq.seek(arq.readInt()+arq.getFilePointer());
+                arq.seek(arq.readInt() + arq.getFilePointer());
             }
         }
 
