@@ -628,6 +628,10 @@ public class App {
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
+    /******************************
+     * ENTRADA DE DADOS PARA CRUD *
+     ******************************/
+
     public static Pokemon info_poke_atualizadas (Pokemon pokemon) throws Exception {
         int entrada_int;
         float entrada_float;
@@ -651,110 +655,110 @@ public class App {
         limpar_console();
 
         //Exibe o titulo da pagina
-        System.out.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n");
+        System.out.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\t");
 
         switch(opcao){
             case 1:
                 //Entrada nome
-                System.out.print("\t" + "Novo nome: ");
+                System.out.print("Novo nome: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setNome(entrada_string); 
                 break;
              
             case 2:
                 //Entrada numero pokedex
-                System.out.print("\t" + "Numero na Pokedex: ");
+                System.out.print("Numero na Pokedex: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setNumPokedex(entrada_int);
                 break;
 
             case 3:
                 //Entrada geracao
-                System.out.print("\t" + "Geracao: ");
+                System.out.print("Geracao: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setGeracao(entrada_int);
                 break;
 
             case 4:
                 //Entrada especie
-                System.out.print("\t" + "Especie: ");
+                System.out.print("Especie: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setEspecie(entrada_string);
                 break;
 
             case 5:
                 //Entrada altura
-                System.out.print("\t" + "Altura: ");
+                System.out.print("Altura: ");
                 entrada_float = scanner.nextFloat();
                 pokemon.setAltura(entrada_float);
                 break;
 
             case 6:
                 //Entrada peso
-                System.out.print("\t" + "Peso: ");
+                System.out.print("Peso: ");
                 entrada_float = scanner.nextFloat();
                 pokemon.setPeso(entrada_float);
                 break;
 
             case 7:
                 //Entrada tipo 1
-                System.out.print("\t" + "Tipo 1: ");
+                System.out.print("Tipo 1: ");
                 entrada_string= new String (scanner.nextLine());
                 pokemon.setTipo1(entrada_string);
                 break;
 
             case 8:
                 //Entrada tipo 2
-                System.out.print("\t" + "Tipo 2: ");
+                System.out.print("Tipo 2: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setTipo2(entrada_string);
                 break;
 
             case 9:
                 //Entrada hp
-                System.out.print("\t" + "HP: ");
+                System.out.print("HP: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setHp(entrada_int);
                 break;  
 
             case 10:
                 //Entrada ataque
-                System.out.print("\t" + "Ataque: ");
+                System.out.print("Ataque: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setAtaque(entrada_int);
                 break;
 
             case 11:
                 //Entrada defesa
-                System.out.print("\t" + "Defesa: ");
+                System.out.print("Defesa: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setDefesa(entrada_int);
                 break;
 
             case 12:
                 //Entrada ataque especial
-                System.out.print("\t" + "Ataque Especial: ");
+                System.out.print("Ataque Especial: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setAtaqueEspecial(entrada_int);
                 break;
 
             case 13:
                 //Entrada defesa especial
-                System.out.print("\t" + "Defesa Especial: ");
+                System.out.print("Defesa Especial: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setDefesaEspecial(entrada_int);
                 break;
 
             case 14:
                 //Entrada velocidade
-                System.out.print("\t" + "Velocidade: ");
+                System.out.print("Velocidade: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setVelocidade(entrada_int);
                 break;
 
             case 15:
                 //Entrada eh mistico
-                System.out.print("\t" + "(responda sim ou nao)" + "\n"
+                System.out.print("(responda sim ou nao)" + "\n"
                                 + "\t" + "Eh mistico: ");
                 entrada_string = new String (scanner.nextLine());
                 
@@ -767,7 +771,7 @@ public class App {
 
             case 16:
                 //Entrada eh lendario
-                System.out.print("\t" + "(responda sim ou nao)" + "\n"
+                System.out.print("(responda sim ou nao)" + "\n"
                                 + "\t" + "Eh lendario: ");
                 entrada_string = new String (scanner.nextLine());
                 
@@ -779,7 +783,7 @@ public class App {
                 break;
             
             default:
-                System.out.println("\t" + "Opcao invalida");
+                System.out.println("Opcao invalida");
                 return null;
         }
 
