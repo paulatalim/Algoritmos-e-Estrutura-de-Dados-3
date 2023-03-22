@@ -18,8 +18,8 @@ public class App {
         }
     }
 
-    /*
-     * Descricao: essa funcao limpa a tela do console de windows, linux e MacOS
+    /**
+     * Funcao para limpar a tela do console de windows, linux e MacOS
      */
     public static void limpar_console () throws Exception {
         //Limpa a tela no windows, no linux e no MacOS
@@ -29,8 +29,8 @@ public class App {
 		    Runtime.getRuntime().exec("clear");
     }
 
-    /*
-     * Descricao: essa funcao exibe no fim da tela
+    /**
+     * Funcao para exibir no fim da tela
      */
     public static void exibir_fim_tela () throws Exception {
         System.out.print("\n\n\t" + "Pressione 'enter' para continuar");
@@ -39,8 +39,8 @@ public class App {
         limpar_console();
     }
 
-    /*
-     * Descricao: essa funcao exibe a tela inicial, as informacoes 
+    /**
+     * Funcao para exibir a tela inicial, as informacoes 
      * do grupo e instrucoes do sistema
      */
     public static void exibir_tela_inicial_e_info () throws Exception {
@@ -105,10 +105,10 @@ public class App {
      * IMPORTACAO DE CSV *
      *********************/
 
-    /*
-     * Descricao: essa funcao trata a string lida no arquivo csv, retirando as aspas
-     * Parametro: uma string (linha lida do arquivo)
-     * Retorno: uma string (linha do arquivo tratada)
+    /**
+     * Funcao para tratar a string lida no arquivo csv, retirando as aspas
+     * @param linha (linha lida do arquivo)
+     * @return linha do arquivo tratada
      */
     public static String tratar_string (String linha) throws Exception {
         StringBuilder sb = new StringBuilder(linha);
@@ -130,9 +130,10 @@ public class App {
         return sb.toString();
     }
 
-    /*
-     * Descricao: essa funcao importa um arquivo csv e passa sua informacoes para a database
-     * Parametro: um arquivo RandomAccessFile (arquivo database a ser preenchido)
+    /**
+     * Funcao para importar um arquivo csv e passa sua informacoes para o arquivo database
+     * @param arq_db arquivo database a ser preenchido
+     * @param caminho_arq_csv url do arquivo csv a ser importado
      */
     public static void passar_arq_csv_para_db (RandomAccessFile arq_db, String caminho_arq_csv)  {
         Pokemon pokemon;
@@ -146,7 +147,7 @@ public class App {
 
         //Exibe mensagem para o usuario
         System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
-                            + "\t" + "Iniciando importacao ..." + "\n");
+                            + "\t" + "Iniciando importacao ...");
         
         try {
             //Le arquivos csv
@@ -162,7 +163,7 @@ public class App {
             //Exibe mensagem para o usuario
             limpar_console();
             System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
-                                + "\t" + "Importando arquivo ..." + "\n");
+                                + "\t" + "Importando arquivo ...");
 
             //Le o arquivo csv e passa as informacoes para o arquivo db
             while (scanner.hasNextLine()) {
