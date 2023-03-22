@@ -1,11 +1,11 @@
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DecimalFormat;
 
 public class Pokemon extends Object implements Cloneable {
     private int id;

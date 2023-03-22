@@ -1,6 +1,5 @@
-import java.io.File;
-import java.util.Scanner;
 import java.io.RandomAccessFile;
+import java.util.Scanner;
 
 public class Main {
     

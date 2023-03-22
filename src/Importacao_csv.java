@@ -1,6 +1,6 @@
 import java.io.RandomAccessFile;
-import java.io.File;
 import java.util.Scanner;
+import java.io.File;
 
 public class Importacao_csv {
     /**

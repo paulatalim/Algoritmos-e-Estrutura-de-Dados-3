@@ -1,9 +1,9 @@
-import java.io.File;
+import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.DataInputStream;
-import java.io.RandomAccessFile;
+import java.io.File;
 
 public class Ordenacao_externa {
     /**

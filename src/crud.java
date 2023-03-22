@@ -1,6 +1,5 @@
 import java.io.RandomAccessFile;
 
-
 public class CRUD {
     private RandomAccessFile arq;
 
