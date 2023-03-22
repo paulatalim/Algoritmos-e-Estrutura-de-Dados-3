@@ -94,6 +94,11 @@ public class Ordenacao_externa {
         return new Pokemon();
     }
 
+    /**
+     * Essa funcao distribui os registros em arquivos temporarios ordenados
+     * @param arq .db a ser ordenado
+     * @throws Exception
+     */
     private static void distribuir_registros (RandomAccessFile arq) throws Exception {
         final int vet_tam = 2; // Constante inteira
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
@@ -226,7 +231,13 @@ public class Ordenacao_externa {
         }
     }
 
-    private static void intercalar_registros (RandomAccessFile arq, int metadados) throws Exception {
+    /**
+     * Essa funcao intercala os blocos de registros
+     * @param arq .db a ser ordenado
+     * @param metadados do arquivo
+     * @throws Exception
+     */
+    private static void intercalar_registros (RandomAccessFile arq) throws Exception {
         final int vet_tam = 2;
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
@@ -348,13 +359,6 @@ public class Ordenacao_externa {
             }
         }
 
-        //Limpar antigos arquivos de leitura
-        arq.setLength(0);
-        arq.writeInt(metadados);
-
-        //Reajuste de variavel
-        indice = 0;
-
         //Fecha os arquivos e objetos
         for (i = 0 ; i < vet_tam; i++) {
             arq_in[i].close();
@@ -363,24 +367,36 @@ public class Ordenacao_externa {
             out[i].close();
         }
 
+    }
+
+    private static void reescrever_arq_db_ordenado (RandomAccessFile arq, int metadados) throws Exception {
+        FileInputStream arq_in;
+        DataInputStream in;
+        byte[] poke_vet_byte;
+        int i;
+
+        //Limpa arquivo db
+        arq.setLength(0);
+        arq.writeInt(metadados);
+
+        //Verifica em qual arquivo q possui dados
         for (i = 1; i <= 4; i ++) {
-            //Verifica em qual arquivo q possui dados
-            arq_in[indice] = new FileInputStream("src/arqTemp" + i + ".db");
-            in[indice] = new DataInputStream(arq_in[indice]);
+            arq_in = new FileInputStream("src/arqTemp" + i + ".db");
+            in = new DataInputStream(arq_in);
 
             //Transferencia de dados do arquivo temporario para o arquivo .db
-            while (in[indice].available() > 0) {
+            while (in.available() > 0) {
                 //escrever arq
-                poke_vet_byte = new byte [in[indice].readInt()];
-                in[indice].read(poke_vet_byte);
+                poke_vet_byte = new byte [in.readInt()];
+                in.read(poke_vet_byte);
 
                 arq.writeByte(' ');
                 arq.writeInt(poke_vet_byte.length);
                 arq.write(poke_vet_byte);
             }
         
-            arq_in[indice].close();
-            in[indice].close();
+            arq_in.close();
+            in.close();
         }
 
         //Mensagem para o usuario
@@ -412,6 +428,7 @@ public class Ordenacao_externa {
 
         //Ordenacao
         distribuir_registros(arq);
-        intercalar_registros(arq, metadados);
+        intercalar_registros(arq);
+        reescrever_arq_db_ordenado(arq, metadados);
     }    
 }
