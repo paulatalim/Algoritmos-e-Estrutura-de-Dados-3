@@ -1,8 +1,6 @@
 import java.util.Scanner;
 
-public static class Tela {
-
-    
+public class Tela {    
     public static void limpar_buffer (Scanner scanner) {
         if(scanner.hasNextLine()){
             scanner.nextLine();
@@ -93,7 +91,7 @@ public static class Tela {
     }
 
     public static void print(String str){
-        System.out.print("\t" + str);
+        System.out.print(str);
     }
 
     public static void println(String str){
