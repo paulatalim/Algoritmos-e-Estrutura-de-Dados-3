@@ -94,6 +94,10 @@ public class Tela {
         System.out.print(str);
     }
 
+    public static void printlt(String str){
+        System.out.print("\t" + str);
+    }
+
     public static void println(String str){
         System.out.println(str);
     }

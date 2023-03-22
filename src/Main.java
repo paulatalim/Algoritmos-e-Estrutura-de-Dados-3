@@ -142,105 +142,105 @@ public class Main {
         switch(opcao){
             case 1:
                 //Entrada nome
-                Tela.print("Novo nome: ");
+                Tela.printlt("Novo nome: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setNome(entrada_string); 
                 break;
              
             case 2:
                 //Entrada numero pokedex
-                Tela.print("Numero na Pokedex: ");
+                Tela.printlt("Numero na Pokedex: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setNumPokedex(entrada_int);
                 break;
 
             case 3:
                 //Entrada geracao
-                Tela.print("Geracao: ");
+                Tela.printlt("Geracao: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setGeracao(entrada_int);
                 break;
 
             case 4:
                 //Entrada especie
-                Tela.print("Especie: ");
+                Tela.printlt("Especie: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setEspecie(entrada_string);
                 break;
 
             case 5:
                 //Entrada altura
-                Tela.print("Altura: ");
+                Tela.printlt("Altura: ");
                 entrada_float = scanner.nextFloat();
                 pokemon.setAltura(entrada_float);
                 break;
 
             case 6:
                 //Entrada peso
-                Tela.print("Peso: ");
+                Tela.printlt("Peso: ");
                 entrada_float = scanner.nextFloat();
                 pokemon.setPeso(entrada_float);
                 break;
 
             case 7:
                 //Entrada tipo 1
-                Tela.print("Tipo 1: ");
+                Tela.printlt("Tipo 1: ");
                 entrada_string= new String (scanner.nextLine());
                 pokemon.setTipo1(entrada_string);
                 break;
 
             case 8:
                 //Entrada tipo 2
-                Tela.print("Tipo 2: ");
+                Tela.printlt("Tipo 2: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setTipo2(entrada_string);
                 break;
 
             case 9:
                 //Entrada hp
-                Tela.print("HP: ");
+                Tela.printlt("HP: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setHp(entrada_int);
                 break;  
 
             case 10:
                 //Entrada ataque
-                Tela.print("Ataque: ");
+                Tela.printlt("Ataque: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setAtaque(entrada_int);
                 break;
 
             case 11:
                 //Entrada defesa
-                Tela.print("Defesa: ");
+                Tela.printlt("Defesa: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setDefesa(entrada_int);
                 break;
 
             case 12:
                 //Entrada ataque especial
-                Tela.print("Ataque Especial: ");
+                Tela.printlt("Ataque Especial: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setAtaqueEspecial(entrada_int);
                 break;
 
             case 13:
                 //Entrada defesa especial
-                Tela.print("Defesa Especial: ");
+                Tela.printlt("Defesa Especial: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setDefesaEspecial(entrada_int);
                 break;
 
             case 14:
                 //Entrada velocidade
-                Tela.print("Velocidade: ");
+                Tela.printlt("Velocidade: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setVelocidade(entrada_int);
                 break;
 
             case 15:
                 //Entrada eh mistico
-                Tela.print("(responda sim ou nao)" + "\n"
+                Tela.printlt("(responda sim ou nao)" + "\n"
                                 + "\t" + "Eh mistico: ");
                 entrada_string = new String (scanner.nextLine());
                 
@@ -253,7 +253,7 @@ public class Main {
 
             case 16:
                 //Entrada eh lendario
-                Tela.print("(responda sim ou nao)" + "\n"
+                Tela.printlt("(responda sim ou nao)" + "\n"
                                 + "\t" + "Eh lendario: ");
                 entrada_string = new String (scanner.nextLine());
                 
@@ -265,7 +265,7 @@ public class Main {
                 break;
             
             default:
-                Tela.println("Opcao invalida");
+                Tela.println( "\t" + "Opcao invalida");
                 return null;
         }
 
@@ -283,77 +283,77 @@ public class Main {
 
         // toda essa parte pode ser uma unica função con tentradas diferentes
         //Entrada nome
-        Tela.print( "\t" + "INFORMACOES BASICAS" + "\n"
+        Tela.printlt("INFORMACOES BASICAS" + "\n"
                         + "\t" + "Nome: ");
         entrada_string = new String (scanner.nextLine());
         //Tela.limpar_buffer(scanner);
         pokemon.setNome(entrada_string); 
 
         //Entrada num_pokedex;
-        Tela.print("\t" + "Numero na Pokedex: ");
+        Tela.printlt("Numero na Pokedex: ");
         entrada_int = scanner.nextInt();
         pokemon.setNumPokedex(entrada_int); 
 
         //Entrada geracao
-        Tela.print("\t" + "Geracao: ");
+        Tela.printlt("Geracao: ");
         entrada_int = scanner.nextInt();
         pokemon.setGeracao(entrada_int);
 
         //Entrada especie
-        Tela.print("\t" + "Especie: ");
+        Tela.printlt("Especie: ");
         Tela.limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
         pokemon.setEspecie(entrada_string);
 
         //Entrada altura
-        Tela.print("\t" +"Altura: ");
+        Tela.printlt("Altura: ");
         entrada_float = scanner.nextFloat();
         pokemon.setAltura(entrada_float);
 
         //Entradapeso
-        Tela.print("\t" + "Peso: ");
+        Tela.printlt( "Peso: ");
         entrada_float = scanner.nextFloat();
         pokemon.setPeso(entrada_float);
 
         //Entrada tipo 1
-        Tela.print("\t" + "Tipo 1: ");
+        Tela.printlt( "Tipo 1: ");
         Tela.limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo1(entrada_string);
 
         //Entrada tipo 2
-        Tela.print("\t" + "Tipo 2: ");
+        Tela.printlt( "Tipo 2: ");
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo2(entrada_string);
 
         //Entrada hp
-        Tela.print("\n\t" + "ESTATISTICAS BASICAS" + "\n"
+        Tela.printlt("\n\t" + "ESTATISTICAS BASICAS" + "\n"
                         + "\t" + "HP: ");
         entrada_int = scanner.nextInt();
         pokemon.setHp(entrada_int);
 
         //Entrada ataque
-        Tela.print("\t" + "Ataque: ");
+        Tela.printlt("Ataque: ");
         entrada_int = scanner.nextInt();
         pokemon.setAtaque(entrada_int);
 
         //Entrada defesa
-        Tela.print("\t" + "Defesa: ");
+        Tela.printlt("Defesa: ");
         entrada_int = scanner.nextInt();
         pokemon.setDefesa(entrada_int);
 
         //Entrada ataque especial
-        Tela.print("\t" + "Ataque Especial: ");
+        Tela.printlt("Ataque Especial: ");
         entrada_int= scanner.nextInt();
         pokemon.setAtaqueEspecial(entrada_int);
 
         //Entrada defesa especial
-        Tela.print("\t" + "Defesa Especial: ");
+        Tela.printlt("Defesa Especial: ");
         entrada_int= scanner.nextInt();
         pokemon.setDefesaEspecial(entrada_int);
 
         //Entrada velocidade
-        Tela.print("\t" + "Velocidade: ");
+        Tela.printlt("Velocidade: ");
         entrada_int = scanner.nextInt();
         pokemon.setVelocidade(entrada_int);
         
@@ -371,7 +371,7 @@ public class Main {
             pokemon.setEhMistico(false);
 
             //Entrada se eh lendario
-            Tela.print("\t" + "Eh lendario: ");
+            Tela.printlt("Eh lendario: ");
             entrada_string = new String (scanner.nextLine());
             
             //Verifica a entrada

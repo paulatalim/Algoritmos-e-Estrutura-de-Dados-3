@@ -6,24 +6,6 @@ import java.io.DataInputStream;
 import java.io.RandomAccessFile;
 
 public class Ordenacao_externa {
-    /*
-    * Descricao: essa funcao troca dois elementos de um vetor de pokemons
-    * Parametros: um vetor de pokemons (vetor que tera os 
-    * elementos trocados) e dois pokemons (indice dos 
-    * dois elementos a serem trocados)
-    */
-    public static void swap_pokemon (Pokemon[] vet, int i, int j) {
-        Pokemon aux = vet[i];
-        vet[i] = vet[j];
-        vet[j] = aux;
-    }
-
-    public static void swap_int (int[] vet, int i, int j) {
-        int aux = vet[i];
-        vet[i] = vet[j];
-        vet[j] = aux;
-    }
-
     /**
      * Troca os elementos de um array nos índices i e j.
      *
@@ -32,19 +14,18 @@ public class Ordenacao_externa {
      * @param j O índice do segundo elemento a ser trocado.
      * @param <T> O tipo de objeto contido no array.
      */
-    public static <T> void swap(T[] arr, int i, int j) {
+    private static <T> void swap(T[] arr, int i, int j) {
         T temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
-
 
     /* 
     * Descricao: essa funcao calcula o indice o elemento pai no heap
     * Parametro: um inteiro (indice do elemento filho)
     * Retorno: um inteiro (indice do elemento pai)
     */
-    public static int calcular_indice_pai (int filho) {
+    private static int calcular_indice_pai (int filho) {
         int flag = filho;
 
         filho /= 2;
@@ -62,13 +43,13 @@ public class Ordenacao_externa {
      * @param chave vetor de inteiros que representam as chaves de verificacao
      * @param tam tamanho valido do vetor
      */
-    public static void construir_heap (Pokemon[] bloco, int[]chave, int tam) {
+    private static void construir_heap (Pokemon[] bloco, Integer[]chave, int tam) {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
         while (i > 0 && (chave[i] < chave[indice] || (chave[i] == chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
-            swap_pokemon(bloco, i, indice);
-            swap_int(chave, indice, i);
+            swap(bloco, i, indice);
+            swap(chave, indice, i);
             
             i = calcular_indice_pai(i);
 
@@ -84,7 +65,7 @@ public class Ordenacao_externa {
     * Descricao: ordena um vetor de pokemons com o heap min
     * Parametro: um vetor de pokemons (vetor a ser ordenado)
     */
-    private static void fazer_heapmin (Pokemon[] bloco, int[] chaves) {
+    private static void fazer_heapmin (Pokemon[] bloco, Integer[] chaves) {
         //Construcao do heap
         for (int tam = 1; tam < bloco.length; tam++) {
             construir_heap(bloco, chaves, tam);
@@ -120,7 +101,7 @@ public class Ordenacao_externa {
     public static void ordenar_registros (RandomAccessFile arq) throws Exception {
         Pokemon[] bloco = new Pokemon [10];
         byte[] poke_vet_byte;
-        int[] chaves = new int [10];
+        Integer[] chaves = new Integer [10];
         int i, metadados;
         boolean escrever_arq1 = true;
         int indice = 0;
