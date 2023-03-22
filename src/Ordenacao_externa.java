@@ -95,20 +95,15 @@ public class Ordenacao_externa {
     }
 
     private static void distribuir_registros (RandomAccessFile arq) throws Exception {
-        Pokemon[] bloco = new Pokemon [10];
-        byte[] poke_vet_byte;
-        Integer[] chaves = new Integer [10];
-        int i, metadados;
-        boolean escrever_arq1 = true;
-        int indice = 0;
         final int vet_tam = 2; // Constante inteira
-
-        Pokemon novo_pokemon = new Pokemon();
-        Pokemon antigo_pokemon = new Pokemon();
-
-        //Criacao de arquivos temporarios
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
+        Pokemon[] bloco = new Pokemon [10];
+        Integer[] chaves = new Integer [10];
+        byte[] poke_vet_byte;
+        Pokemon pokemon = new Pokemon();
+        int i;
+        int indice = 0;
         
         //Inicializa o vetor 
         for (i = 0; i < chaves.length; i++) {
@@ -166,13 +161,13 @@ public class Ordenacao_externa {
                 //Le o arquivo
                 poke_vet_byte = new byte [arq.readInt()];
                 arq.read(poke_vet_byte);
-                novo_pokemon.fromByteArray(poke_vet_byte);
+                pokemon.fromByteArray(poke_vet_byte);
 
                 //calculo da chave do novo pokemon
                 nova_chave = chaves[0];
 
                 //Verifica se o novo registro pode entrar no antigo segmento
-                if (novo_pokemon.getId() < bloco[0].getId()) {
+                if (pokemon.getId() < bloco[0].getId()) {
                     nova_chave ++;
                 }
 
@@ -182,7 +177,6 @@ public class Ordenacao_externa {
                 }
 
                 //Escreve o pokemon no arquivo
-                antigo_pokemon = (Pokemon)bloco[0].clone();
                 chave_antiga = chaves[0];
                 poke_vet_byte = bloco[0].toByteArray();
 
@@ -190,7 +184,7 @@ public class Ordenacao_externa {
                 out[indice].write(poke_vet_byte);
                 
                 //Inclui novo pokemon do vetor
-                bloco[0] = (Pokemon)novo_pokemon.clone();
+                bloco[0] = (Pokemon)pokemon.clone();
                 chaves[0] = nova_chave;
 
                 //Ordena o vetor com heap
@@ -226,7 +220,6 @@ public class Ordenacao_externa {
         }
 
         //Fecha os arquivos temporarios
-
         for (i = 0; i < vet_tam; i ++) {
             arq_out[i].close();
             out[i].close();
@@ -239,9 +232,9 @@ public class Ordenacao_externa {
         DataOutputStream[] out = new DataOutputStream [vet_tam];
         FileInputStream[] arq_in = new FileInputStream [vet_tam];
         DataInputStream[] in = new DataInputStream [vet_tam];
-        Pokemon[] poke = new Pokemon [vet_tam];
+        Pokemon[] pokemons = new Pokemon [vet_tam];
         byte[] poke_vet_byte;
-        Pokemon antigo_pokemon = new Pokemon();
+        Pokemon pokemon_antigo = new Pokemon();
         boolean terminou_segmento = false;
         boolean inverter_arq = false;
         boolean escrever_arq1 = false;
@@ -259,7 +252,7 @@ public class Ordenacao_externa {
             arq_out[i] = new FileOutputStream("src/arqTemp" + (i+3) + ".db");
             in[i] = new DataInputStream(arq_in[i]);
             out[i] = new DataOutputStream(arq_out[i]);
-            poke[i] = new Pokemon();
+            pokemons[i] = new Pokemon();
         }
 
         //Mensagem para o usuario
@@ -273,26 +266,26 @@ public class Ordenacao_externa {
             for (i = 0; i < vet_tam; i ++) {
                 poke_vet_byte = new byte [in[i].readInt()];
                 in[i].read(poke_vet_byte);
-                poke[i].fromByteArray(poke_vet_byte);
+                pokemons[i].fromByteArray(poke_vet_byte);
             }
         
             //Intercala de arquivos
             while (in[0].available() > 0 || in[1].available() > 0) {
 
                 //Verifica o proximo registro a ser registrado
-                indice = (poke[0].getId() < poke[1].getId()) ? 0 : 1;
+                indice = (pokemons[0].getId() < pokemons[1].getId()) ? 0 : 1;
                 
                 //Registra o novo pokemon
-                antigo_pokemon = (Pokemon)poke[indice].clone();
-                poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
+                pokemon_antigo = (Pokemon)pokemons[indice].clone();
+                pokemons[indice] = (Pokemon)escrever_pokemon_e_ler_prox(pokemons[indice], in[indice], out, escrever_arq1).clone();
 
                 //Verifica se o segmento acabou
-                if (antigo_pokemon.getId() > poke[indice].getId() || in[indice].available() <= 0) {
+                if (pokemon_antigo.getId() > pokemons[indice].getId() || in[indice].available() <= 0) {
                     terminou_segmento = true;
 
                     //Escreve o ultimo registro do segmento
                     if (in[indice].available() > 0) {
-                        poke_vet_byte = poke[indice].toByteArray();
+                        poke_vet_byte = pokemons[indice].toByteArray();
                         out[indice].writeInt(poke_vet_byte.length);
                         out[indice].write(poke_vet_byte);
                     }
@@ -301,18 +294,18 @@ public class Ordenacao_externa {
                     indice = indice == 0 ? 1 : 0;
 
                     //Escreve o resto do segmento do outro arquivo
-                    while (antigo_pokemon.getId() < poke[indice].getId() || in[indice].available() > 0) {
-                        antigo_pokemon = (Pokemon)poke[indice].clone();
-                        poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
+                    while (pokemon_antigo.getId() < pokemons[indice].getId() || in[indice].available() > 0) {
+                        pokemon_antigo = (Pokemon)pokemons[indice].clone();
+                        pokemons[indice] = (Pokemon)escrever_pokemon_e_ler_prox(pokemons[indice], in[indice], out, escrever_arq1).clone();
 
                         //Caso o arquivo terminar
-                        if (poke[indice].getId() == -1) {
+                        if (pokemons[indice].getId() == -1) {
                             indice = indice == 0 ? 1 : 0;
                             escrever_arq1 = !escrever_arq1;
 
                             while (in[indice].available() > 0) {
-                                antigo_pokemon = (Pokemon)poke[indice].clone();
-                                poke[indice] = (Pokemon)escrever_pokemon_e_ler_prox(poke[indice], in[indice], out, escrever_arq1).clone();
+                                pokemon_antigo = (Pokemon)pokemons[indice].clone();
+                                pokemons[indice] = (Pokemon)escrever_pokemon_e_ler_prox(pokemons[indice], in[indice], out, escrever_arq1).clone();
                             }
 
                             break;
@@ -337,13 +330,10 @@ public class Ordenacao_externa {
                 out[i].close();
             }
 
-            // Vejo muitos comentarios desse tipo isso pode indicar uma falaha na logica e/ou na estrutura
             //Reajuste na variavel
             inverter_arq = !inverter_arq;
 
-
-            // nao entendi essa parte
-            //Troca de arquivos
+            //Troca de arquivos de leitura para escrita e vice versa
             for (i = 0; i < vet_tam; i++) {
                 if (inverter_arq) {
                     arq_in[i] = new FileInputStream("src/arqTemp" + (i+1) + ".db");
@@ -411,15 +401,16 @@ public class Ordenacao_externa {
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
-    /* 
-    * Descricao: ordena os registros do arquivo com a ordenacao externa
-    * Parametro: arquivo RandomAccessFile (arquivo a ser ordenado)
-    */
+    /**
+     * Descricao: ordena os registros do arquivo com a ordenacao externa
+     * @param arq arquivo arquivo a ser ordenado
+     */
     public static void ordenar_registros (RandomAccessFile arq) throws Exception {
         //Leitura de metadados
         arq.seek(0);
         int metadados = arq.readInt();
 
+        //Ordenacao
         distribuir_registros(arq);
         intercalar_registros(arq, metadados);
     }    
