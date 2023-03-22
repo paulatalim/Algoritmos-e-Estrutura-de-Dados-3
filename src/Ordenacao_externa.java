@@ -94,11 +94,7 @@ public class Ordenacao_externa {
         return new Pokemon();
     }
 
-    /* 
-    * Descricao: ordena os registros do arquivo com a ordenacao externa
-    * Parametro: arquivo RandomAccessFile (arquivo a ser ordenado)
-    */
-    public static void ordenar_registros (RandomAccessFile arq) throws Exception {
+    private static void distribuir_registros (RandomAccessFile arq) throws Exception {
         Pokemon[] bloco = new Pokemon [10];
         byte[] poke_vet_byte;
         Integer[] chaves = new Integer [10];
@@ -135,9 +131,6 @@ public class Ordenacao_externa {
 
         //Reinicia o ponteiro
         arq.seek(0);
-
-        //Leitura de metadados
-        metadados = arq.readInt();
 
         //Preenche o vetor com os registros
         for (i = 0; i < bloco.length && arq.getFilePointer() < arq.length(); i++) {
@@ -238,27 +231,27 @@ public class Ordenacao_externa {
             arq_out[i].close();
             out[i].close();
         }
-            
-        /* INTERCALACAO */
+    }
+
+    private static void intercalar_registros (RandomAccessFile arq, int metadados) throws Exception {
+        final int vet_tam = 2;
+        FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
+        DataOutputStream[] out = new DataOutputStream [vet_tam];
+        FileInputStream[] arq_in = new FileInputStream [vet_tam];
+        DataInputStream[] in = new DataInputStream [vet_tam];
+        Pokemon[] poke = new Pokemon [vet_tam];
+        byte[] poke_vet_byte;
+        Pokemon antigo_pokemon = new Pokemon();
+        boolean terminou_segmento = false;
+        boolean inverter_arq = false;
+        boolean escrever_arq1 = false;
+        int i;
+        int indice = 0;
 
         //Mensagem para o usuario
         Tela.limpar_console();
         Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de intercalacao ...");
-        
-
-
-        //isso indica que vc ta precisando de uma função no seu codigo
-        FileInputStream[] arq_in = new FileInputStream [vet_tam];
-        DataInputStream[] in = new DataInputStream [vet_tam];
-        Pokemon[] poke = new Pokemon [vet_tam];
-
-        boolean terminou_segmento = false;
-        boolean inverter_arq = false;
-
-
-        //Reinicia variaveis
-        escrever_arq1 = false;
         
         //Abre objetos de leitura e escrita
         for (i = 0; i < vet_tam; i++) {
@@ -417,4 +410,17 @@ public class Ordenacao_externa {
         Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
+
+    /* 
+    * Descricao: ordena os registros do arquivo com a ordenacao externa
+    * Parametro: arquivo RandomAccessFile (arquivo a ser ordenado)
+    */
+    public static void ordenar_registros (RandomAccessFile arq) throws Exception {
+        //Leitura de metadados
+        arq.seek(0);
+        int metadados = arq.readInt();
+
+        distribuir_registros(arq);
+        intercalar_registros(arq, metadados);
+    }    
 }
