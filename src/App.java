@@ -6,100 +6,12 @@ import java.io.FileInputStream;
 import java.io.DataInputStream;
 import java.io.RandomAccessFile;
 
+
+
+
+
 public class App {
 
-    /************************
-     * MANIPULACAO DE TELAS *
-     ************************/
-
-    public static void limpar_buffer (Scanner scanner) {
-        if(scanner.hasNextLine()){
-            scanner.nextLine();
-        }
-    }
-
-    /*
-     * Descricao: essa funcao limpa a tela do console de windows, linux e MacOS
-     */
-    public static void limpar_console () throws Exception {
-        //Limpa a tela no windows, no linux e no MacOS
-        if (System.getProperty("os.name").contains("Windows"))
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        else
-		    Runtime.getRuntime().exec("clear");
-    }
-
-    /*
-     * Descricao: essa funcao exibe no fim da tela
-     */
-    public static void exibir_fim_tela () throws Exception {
-        System.out.print("\n\n\t" + "Pressione 'enter' para continuar");
-        System.in.read();
-        System.in.read(new byte[System.in.available()]);
-        limpar_console();
-    }
-
-    /*
-     * Descricao: essa funcao exibe a tela inicial, as informacoes 
-     * do grupo e instrucoes do sistema
-     */
-    public static void exibir_tela_inicial_e_info () throws Exception {
-        //Capa do trab
-        System.out.println (  "\n\t"       + "Mariana, Paula e Yago apresentam:"  + "\n\n\n" 
-                            + "\t\t\t\t\t" + "      *** POKE-TRABALHO ***"       + "\n" 
-                            + "\t\t\t\t\t" + "Algoritmos e Estrutura de Dados 3" + "\n\n");
-
-        System.out.println (  "\t\t\t\t\t" + "         \\:.             .:/" + "\n"
-                            + "\t\t\t\t\t" + "          \\``._________.''/"  + "\n"
-                            + "\t\t\t\t\t" + "           \\             /"   + "\n"
-                            + "\t\t\t\t\t" + "   .--.--, / .':.   .':. \\"   + "\n"
-                            + "\t\t\t\t\t" + "  /__:  /  | '::' . '::' |"    + "\n"
-                            + "\t\t\t\t\t" + "     / /   |`.   ._.   .'|"    + "\n"
-                            + "\t\t\t\t\t" + "    / /    |.'         '.|"    + "\n"
-                            + "\t\t\t\t\t" + "   /___-_-,|.\\  \\   /  /.|"  + "\n"
-                            + "\t\t\t\t\t" + "        // |''\\.;   ;,/ '|"   + "\n"
-                            + "\t\t\t\t\t" + "        `==|:=         =:|"    + "\n"
-                            + "\t\t\t\t\t" + "           `.          .'"     + "\n"
-                            + "\t\t\t\t\t" + "             :-._____.-:"      + "\n"
-                            + "\t\t\t\t\t" + "            `''       `''"     + "\n\n\n");
-
-        exibir_fim_tela();
-
-        System.out.println (  "\n\t\t\t\t\t" +                        "*** POKE-INSTRUCOES ***"                         + "\n\n\n"
-                            + "\t"           + "Esse sistema eh um trabalho de Algoritmos e Estrutura de Dados 3"       + "\n"
-                            + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Como exemplo," + "\n"
-                            + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemons."         + "\n\n"
-
-                            + "\t"           + "A seguir, as informacoes do arquivo .csv serao importadas para preencher"    + "\n"
-                            + "\t"           + "a base de dados .db. Apos o processo de importacao, sera redirecionado "     + "\n"
-                            + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
-                            + "\t"           + "as acoes desejadas."                                                         + "\n\n\n"
-                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n");
-        
-        exibir_fim_tela();
-    }
-
-    /*
-     * Descricao: essa funcao exibe a tela fnal, tela de agradecimentos
-     */
-    public static void exibir_tela_agradecimentos () {
-        System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
-                            + "\t\t\t\t\t" + "*** Poke-obrigado e ate logo ***" + "\n\n");
-            
-        System.out.println (  "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
-                            + "\t\t\t\t\t" + "        \\``._________.''/ "  + "\n"
-                            + "\t\t\t\t\t" + "         \\             / "   + "\n"
-                            + "\t\t\t\t\t" + " .--.--, / .':.   .':. \\"    + "\n"
-                            + "\t\t\t\t\t" + "/__:  /  | '::' . '::' |"     + "\n"
-                            + "\t\t\t\t\t" + "   / /   |`.   ._.   ;'\"/"   + "\n"
-                            + "\t\t\t\t\t" + "  / /    |.'        /  /"     + "\n"
-                            + "\t\t\t\t\t" + " /___-_-,|.\\  \\       .|"   + "\n"
-                            + "\t\t\t\t\t" + "      // |''\\.;       '|"    + "\n"
-                            + "\t\t\t\t\t" + "      `==|:=         =:|"     + "\n"
-                            + "\t\t\t\t\t" + "         `.          .'"      + "\n"
-                            + "\t\t\t\t\t" + "           :-._____.-:"       + "\n"
-                            + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n");
-    }
 
     /*********************
      * IMPORTACAO DE CSV *
@@ -110,6 +22,14 @@ public class App {
      * Parametro: uma string (linha lida do arquivo)
      * Retorno: uma string (linha do arquivo tratada)
      */
+
+
+    /**
+    * Essa funcao trata a string lida no arquivo csv, retirando as aspas
+    * @param linha linha lida do arquivo
+    * @return linha do arquivo tratada
+    */
+
     public static String tratar_string (String linha) throws Exception {
         StringBuilder sb = new StringBuilder(linha);
                 
@@ -145,7 +65,7 @@ public class App {
         Scanner scanner = null;
 
         //Exibe mensagem para o usuario
-        System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
+        Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
                             + "\t" + "Iniciando importacao ..." + "\n");
         
         try {
@@ -160,8 +80,8 @@ public class App {
             arq_db.writeInt(id_metadados);
 
             //Exibe mensagem para o usuario
-            limpar_console();
-            System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
+            Tela.limpar_console();
+            Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
                                 + "\t" + "Importando arquivo ..." + "\n");
 
             //Le o arquivo csv e passa as informacoes para o arquivo db
@@ -196,8 +116,8 @@ public class App {
             arq_db.writeInt(id_metadados-1);
 
             //Exibe mensagem para o usuario
-            limpar_console();
-            System.out.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
+            Tela.limpar_console();
+            Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
                                 + "\t" + "Importacao concluida com sucesso !!!" + "\n");
 
         } catch (NumberFormatException e) {
@@ -231,6 +151,21 @@ public class App {
         vet[i] = vet[j];
         vet[j] = aux;
     }
+
+    /**
+     * Troca os elementos de um array nos índices i e j.
+     *
+     * @param arr O array a ser modificado.
+     * @param i O índice do primeiro elemento a ser trocado.
+     * @param j O índice do segundo elemento a ser trocado.
+     * @param <T> O tipo de objeto contido no array.
+     */
+    public static <T> void swap(T[] arr, int i, int j) {
+        T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
 
     /* 
     * Descricao: essa funcao calcula o indice o elemento pai no heap
@@ -334,7 +269,7 @@ public class App {
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
-        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de distribuicao ...");
 
         //Abre os objetos
@@ -372,8 +307,8 @@ public class App {
         fazer_heapmin(bloco, chaves);            
 
         //Mensagem para o usuario
-        limpar_console();
-        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Distribuindo pokemons ...");
         
         //Leitura do proximo registro
@@ -452,16 +387,20 @@ public class App {
         /* INTERCALACAO */
 
         //Mensagem para o usuario
-        limpar_console();
-        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de intercalacao ...");
         
+
+
+        //isso indica que vc ta precisando de uma função no seu codigo
         FileInputStream[] arq_in = new FileInputStream [vet_tam];
         DataInputStream[] in = new DataInputStream [vet_tam];
         Pokemon[] poke = new Pokemon [vet_tam];
 
         boolean terminou_segmento = false;
         boolean inverter_arq = false;
+
 
         //Reinicia variaveis
         escrever_arq1 = false;
@@ -476,8 +415,8 @@ public class App {
         }
 
         //Mensagem para o usuario
-        limpar_console();
-        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Intercalando pokemons ...");
 
         //Verifica se ha registros para intercalar
@@ -550,9 +489,12 @@ public class App {
                 out[i].close();
             }
 
+            // Vejo muitos comentarios desse tipo isso pode indicar uma falaha na logica e/ou na estrutura
             //Reajuste na variavel
             inverter_arq = !inverter_arq;
 
+
+            // nao entendi essa parte
             //Troca de arquivos
             for (i = 0; i < vet_tam; i++) {
                 if (inverter_arq) {
@@ -604,8 +546,8 @@ public class App {
         }
 
         //Mensagem para o usuario
-        limpar_console();
-        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Finalizando Intercalacao ...");
 
         //Deleta os arquivos temporarios
@@ -616,8 +558,8 @@ public class App {
         }
 
         //Mensagem para o usuario
-        limpar_console();
-        System.out.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Ordenacao concluida com sucesso !!!" + "\n");
     }
 
@@ -632,126 +574,126 @@ public class App {
         Scanner scanner = new Scanner (System.in);
 
         //Exibe o pokemon
-        System.out.print(pokemon.toString());
+        Tela.print(pokemon.toString());
 
         int opcao;
-        System.out.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n"
+        Tela.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n"
                             +"\n\t" + "Digite para atualizar:" + "\n\n"
                             + "\t" + "1- Nome" + "\t\t\t"          + "5- Altura" + "\t" + "9- HP" + "\t\t\t"           + "13 - Defesa Especial" + "\n"
                             + "\t" + "2- Numero da pokedex" + "\t" + "6- Peso" + "\t\t" + "10- Ataque" + " \t\t"       + "14- Velocidade" + "\n"
                             + "\t" + "3- Geracao" + "\t\t"         + "7- Tipo1" + "\t"  + "11- Defesa" + "\t\t"        + "15- Eh mistico" + "\n"
                             + "\t" + "4- Especie" + "\t\t"         + "8- Tipo2" + "\t"  + "12- Ataque especial" + "\t" + "16- Eh lendario");
 
-        System.out.print("\n\t" + "Sua opcao: ");
+        Tela.print("\n\t" + "Sua opcao: ");
         opcao = scanner.nextInt();
-        limpar_buffer(scanner);
-        limpar_console();
+        Tela.limpar_buffer(scanner);
+        Tela.limpar_console();
 
         //Exibe o titulo da pagina
-        System.out.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\t");
+        Tela.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\t");
 
         switch(opcao){
             case 1:
                 //Entrada nome
-                System.out.print("Novo nome: ");
+                Tela.print("Novo nome: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setNome(entrada_string); 
                 break;
              
             case 2:
                 //Entrada numero pokedex
-                System.out.print("Numero na Pokedex: ");
+                Tela.print("Numero na Pokedex: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setNumPokedex(entrada_int);
                 break;
 
             case 3:
                 //Entrada geracao
-                System.out.print("Geracao: ");
+                Tela.print("Geracao: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setGeracao(entrada_int);
                 break;
 
             case 4:
                 //Entrada especie
-                System.out.print("Especie: ");
+                Tela.print("Especie: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setEspecie(entrada_string);
                 break;
 
             case 5:
                 //Entrada altura
-                System.out.print("Altura: ");
+                Tela.print("Altura: ");
                 entrada_float = scanner.nextFloat();
                 pokemon.setAltura(entrada_float);
                 break;
 
             case 6:
                 //Entrada peso
-                System.out.print("Peso: ");
+                Tela.print("Peso: ");
                 entrada_float = scanner.nextFloat();
                 pokemon.setPeso(entrada_float);
                 break;
 
             case 7:
                 //Entrada tipo 1
-                System.out.print("Tipo 1: ");
+                Tela.print("Tipo 1: ");
                 entrada_string= new String (scanner.nextLine());
                 pokemon.setTipo1(entrada_string);
                 break;
 
             case 8:
                 //Entrada tipo 2
-                System.out.print("Tipo 2: ");
+                Tela.print("Tipo 2: ");
                 entrada_string = new String (scanner.nextLine());
                 pokemon.setTipo2(entrada_string);
                 break;
 
             case 9:
                 //Entrada hp
-                System.out.print("HP: ");
+                Tela.print("HP: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setHp(entrada_int);
                 break;  
 
             case 10:
                 //Entrada ataque
-                System.out.print("Ataque: ");
+                Tela.print("Ataque: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setAtaque(entrada_int);
                 break;
 
             case 11:
                 //Entrada defesa
-                System.out.print("Defesa: ");
+                Tela.print("Defesa: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setDefesa(entrada_int);
                 break;
 
             case 12:
                 //Entrada ataque especial
-                System.out.print("Ataque Especial: ");
+                Tela.print("Ataque Especial: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setAtaqueEspecial(entrada_int);
                 break;
 
             case 13:
                 //Entrada defesa especial
-                System.out.print("Defesa Especial: ");
+                Tela.print("Defesa Especial: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setDefesaEspecial(entrada_int);
                 break;
 
             case 14:
                 //Entrada velocidade
-                System.out.print("Velocidade: ");
+                Tela.print("Velocidade: ");
                 entrada_int = scanner.nextInt();
                 pokemon.setVelocidade(entrada_int);
                 break;
 
             case 15:
                 //Entrada eh mistico
-                System.out.print("(responda sim ou nao)" + "\n"
+                Tela.print("(responda sim ou nao)" + "\n"
                                 + "\t" + "Eh mistico: ");
                 entrada_string = new String (scanner.nextLine());
                 
@@ -764,7 +706,7 @@ public class App {
 
             case 16:
                 //Entrada eh lendario
-                System.out.print("(responda sim ou nao)" + "\n"
+                Tela.print("(responda sim ou nao)" + "\n"
                                 + "\t" + "Eh lendario: ");
                 entrada_string = new String (scanner.nextLine());
                 
@@ -776,7 +718,7 @@ public class App {
                 break;
             
             default:
-                System.out.println("Opcao invalida");
+                Tela.println("Opcao invalida");
                 return null;
         }
 
@@ -791,88 +733,90 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Pokemon pokemon = new Pokemon();
 
-        //Entrada nome
-        System.out.println();
 
-        System.out.print( "\t" + "INFORMACOES BASICAS" + "\n"
+        // toda essa parte pode ser uma unica função con tentradas diferentes
+        //Entrada nome
+        Tela.println();
+
+        Tela.print( "\t" + "INFORMACOES BASICAS" + "\n"
                         + "\t" + "Nome: ");
         entrada_string = new String (scanner.nextLine());
-        //limpar_buffer(scanner);
+        //Tela.limpar_buffer(scanner);
         pokemon.setNome(entrada_string); 
 
         //Entrada num_pokedex;
-        System.out.print("\t" + "Numero na Pokedex: ");
+        Tela.print("\t" + "Numero na Pokedex: ");
         entrada_int = scanner.nextInt();
         pokemon.setNumPokedex(entrada_int); 
 
         //Entrada geracao
-        System.out.print("\t" + "Geracao: ");
+        Tela.print("\t" + "Geracao: ");
         entrada_int = scanner.nextInt();
         pokemon.setGeracao(entrada_int);
 
         //Entrada especie
-        System.out.print("\t" + "Especie: ");
-        limpar_buffer(scanner);
+        Tela.print("\t" + "Especie: ");
+        Tela.limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
         pokemon.setEspecie(entrada_string);
 
         //Entrada altura
-        System.out.print("\t" +"Altura: ");
+        Tela.print("\t" +"Altura: ");
         entrada_float = scanner.nextFloat();
         pokemon.setAltura(entrada_float);
 
         //Entradapeso
-        System.out.print("\t" + "Peso: ");
+        Tela.print("\t" + "Peso: ");
         entrada_float = scanner.nextFloat();
         pokemon.setPeso(entrada_float);
 
         //Entrada tipo 1
-        System.out.print("\t" + "Tipo 1: ");
-        limpar_buffer(scanner);
+        Tela.print("\t" + "Tipo 1: ");
+        Tela.limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo1(entrada_string);
 
         //Entrada tipo 2
-        System.out.print("\t" + "Tipo 2: ");
+        Tela.print("\t" + "Tipo 2: ");
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo2(entrada_string);
 
         //Entrada hp
-        System.out.print("\n\t" + "ESTATISTICAS BASICAS" + "\n"
+        Tela.print("\n\t" + "ESTATISTICAS BASICAS" + "\n"
                         + "\t" + "HP: ");
         entrada_int = scanner.nextInt();
         pokemon.setHp(entrada_int);
 
         //Entrada ataque
-        System.out.print("\t" + "Ataque: ");
+        Tela.print("\t" + "Ataque: ");
         entrada_int = scanner.nextInt();
         pokemon.setAtaque(entrada_int);
 
         //Entrada defesa
-        System.out.print("\t" + "Defesa: ");
+        Tela.print("\t" + "Defesa: ");
         entrada_int = scanner.nextInt();
         pokemon.setDefesa(entrada_int);
 
         //Entrada ataque especial
-        System.out.print("\t" + "Ataque Especial: ");
+        Tela.print("\t" + "Ataque Especial: ");
         entrada_int= scanner.nextInt();
         pokemon.setAtaqueEspecial(entrada_int);
 
         //Entrada defesa especial
-        System.out.print("\t" + "Defesa Especial: ");
+        Tela.print("\t" + "Defesa Especial: ");
         entrada_int= scanner.nextInt();
         pokemon.setDefesaEspecial(entrada_int);
 
         //Entrada velocidade
-        System.out.print("\t" + "Velocidade: ");
+        Tela.print("\t" + "Velocidade: ");
         entrada_int = scanner.nextInt();
         pokemon.setVelocidade(entrada_int);
         
         //Entrada se eh mistico
-        System.out.print("\n\t" + "POKE-ESPECIAL" + "\n"
+        Tela.print("\n\t" + "POKE-ESPECIAL" + "\n"
                         + "\t" + "(responda sim ou nao)" + "\n\n"
                         + "\t" + "Eh mistico: ");
-                        limpar_buffer(scanner);
+                        Tela.limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
 
         //Verifica a entrada
@@ -882,7 +826,7 @@ public class App {
             pokemon.setEhMistico(false);
 
             //Entrada se eh lendario
-            System.out.print("\t" + "Eh lendario: ");
+            Tela.print("\t" + "Eh lendario: ");
             entrada_string = new String (scanner.nextLine());
             
             //Verifica a entrada
@@ -913,11 +857,11 @@ public class App {
             crud = new CRUD (caminho_arq_db);
 
             //Exibe o inicio do programa
-            exibir_tela_inicial_e_info();
+            Tela.exibir_tela_inicial_e_info ();
             
             //Importa arquivo .csv automatico
             passar_arq_csv_para_db(arq, caminho_arq_csv);
-            exibir_fim_tela();
+            Tela.exibir_fim_tela();
             
             //Repete o programa
             do {
@@ -928,7 +872,7 @@ public class App {
                 //Validacao da entrada do usuario
                 do {
                     //Exibe o menu das opcoes
-                    System.out.println ("\n\t\t\t\t\t" + "*** POKE-MENU ***" + "\n\n\n"
+                    Tela.println ("\n\t\t\t\t\t" + "*** POKE-MENU ***" + "\n\n\n"
                                         + "\t" + "O que deseja fazer em sua Pokedex:" + "\n\n"
                                         + "\t" + "1 - CRIAR pokemon" + "\n"
                                         + "\t" + "2 - LER pokemon" + "\n "
@@ -939,54 +883,54 @@ public class App {
                                         + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
-                        System.out.println("\t" + "Opcao invalida. Tente novavemente." + "\n");
+                        Tela.println("\t" + "Opcao invalida. Tente novavemente." + "\n");
                     }
 
-                    System.out.print("\t" + "Insira o numero da operacao: ");
+                    Tela.print("\t" + "Insira o numero da operacao: ");
                     opcao = scanner.nextInt();
-                    limpar_console();
+                    Tela.limpar_console();
 
                     opcao_invalida = true;
                 } while (opcao < 0 || opcao > 6);
     
                 switch (opcao) {
                     case 1:
-                        System.out.print("\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
+                        Tela.print("\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
                                         + "\t\t\t\t\t"  + "Insira as novas informacoes" + "\n");
                         //Cria novo pokemon
                         pokemon = info_poke_novo();
                         crud.criar(pokemon);
-                        limpar_console();
+                        Tela.limpar_console();
 
                         //Exibe o pokemon criado
-                        System.out.print(pokemon.toString());
-                        System.out.println("\n\t\t\t\t\t" + "Pokemon registrado com sucesso!");
+                        Tela.print(pokemon.toString());
+                        Tela.println("\n\t\t\t\t\t" + "Pokemon registrado com sucesso!");
                         break;
     
                     case 2:
-                        System.out.print("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
+                        Tela.print("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
                                         + "\t" + "Insira o id do pokemon procurado: ");
 
                         id = scanner.nextInt();
-                        limpar_console();
+                        Tela.limpar_console();
     
                         pokemon = crud.ler(id);
 
                         //Exibe o novo registro
                         if (pokemon != null) {
-                            System.out.print(pokemon.toString());
+                            Tela.print(pokemon.toString());
                         } else {
-                            System.out.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
+                            Tela.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
                                                 + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 3:
                         //Exibe o titulo da pagina e entrada de id
-                        System.out.print ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n"
+                        Tela.print ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n"
                                             + "\t" + "Insira o id do pokemon a ter um update: ");
                         id = scanner.nextInt();
-                        limpar_console();
+                        Tela.limpar_console();
 
                         //Le o pokemon a ser atualizado
                         pokemon = crud.ler(id); 
@@ -1001,27 +945,27 @@ public class App {
                             if (pokemon != null) {
                                 //Atualiza o pokemon no arquivo e retorna um boolean
                                 if (crud.atualizar(pokemon)){
-                                    System.out.println("\n\t" + "Pokemon atualizado com sucesso!");
+                                    Tela.println("\n\t" + "Pokemon atualizado com sucesso!");
                                 } else {
-                                    System.out.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
+                                    Tela.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
                                                         + "\t" + "Pokemon nao encontrado");
                                 }
                             }
                         } else {
-                            System.out.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
+                            Tela.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
                                                 + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 4:
-                        System.out.print("\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
+                        Tela.print("\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
                                         + "\t"+ "Insira o id do pokemon a ser deletado: "); 
                         id = scanner.nextInt();
 
                         if (crud.excluir(id)) {
-                            System.out.println("\n\t" + "Pokemon deletado da pokedex com sucesso!");
+                            Tela.println("\n\t" + "Pokemon deletado da pokedex com sucesso!");
                         } else {
-                            System.out.println("\n\t" + "Pokemon nao encontrado");
+                            Tela.println("\n\t" + "Pokemon nao encontrado");
                         }
                         break;
 
@@ -1034,13 +978,13 @@ public class App {
                         break;
                     
                     case 0:
-                        exibir_tela_agradecimentos();
+                        Tela.exibir_tela_agradecimentos();
                         break;
                 }
 
                 //Preparo para reiniciar programa
                 if (opcao != 0) {
-                    exibir_fim_tela();
+                    Tela.exibir_fim_tela();
                 }
                 
             } while(opcao != 0);
