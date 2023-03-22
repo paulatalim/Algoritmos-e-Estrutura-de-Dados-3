@@ -311,18 +311,18 @@ public class Main {
         pokemon.setAltura(entrada_float);
 
         //Entradapeso
-        Tela.printlt( "Peso: ");
+        Tela.printlt("Peso: ");
         entrada_float = scanner.nextFloat();
         pokemon.setPeso(entrada_float);
 
         //Entrada tipo 1
-        Tela.printlt( "Tipo 1: ");
+        Tela.printlt("Tipo 1: ");
         Tela.limpar_buffer(scanner);
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo1(entrada_string);
 
         //Entrada tipo 2
-        Tela.printlt( "Tipo 2: ");
+        Tela.printlt("Tipo 2: ");
         entrada_string = new String (scanner.nextLine());
         pokemon.setTipo2(entrada_string);
 

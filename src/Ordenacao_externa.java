@@ -26,7 +26,6 @@ public class Ordenacao_externa {
         arr[j] = temp;
     }
 
-
     /**
      * Calcula o indice o elemento pai no heap
      * 
@@ -92,7 +91,7 @@ public class Ordenacao_externa {
      * @return proximo pokemon lido do arquivo ou null, caso o arquivo terminar
      * @throws Exception
      */
-    private static Pokemon escrever_pokemon_e_ler_prox ( Pokemon pokemon, 
+    private static Pokemon escrever_pokemon_e_ler_prox (Pokemon pokemon, 
                                                         DataInputStream in, 
                                                         DataOutputStream[] out,
                                                         boolean escolha_out) throws Exception 
@@ -132,15 +131,14 @@ public class Ordenacao_externa {
         int nova_chave = 0;
         int chave_antiga = 0;
 
-        //Reseta o ponteiro
-        arq.seek(0);
+        //Reseta o ponteiro para depois dos metadados
+        arq.seek(4);
         
         //Inicializa o vetor 
         for (i = 0; i < chaves.length; i++) {
             chaves[i] = 0;
         }
 
-        /* DISTRIBUICAO */
         //Mensagem para o usuario
         Tela.println (  "\n\t\t\t\t\t\t" + "*** ORDENACAO EXTERNA ***" + "\n\n\n" 
                             + "\t" + "Iniciando etapa de distribuicao ...");
