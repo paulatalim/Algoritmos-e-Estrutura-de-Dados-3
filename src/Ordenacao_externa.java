@@ -20,11 +20,19 @@ public class Ordenacao_externa {
         arr[j] = temp;
     }
 
-    /* 
-    * Descricao: essa funcao calcula o indice o elemento pai no heap
-    * Parametro: um inteiro (indice do elemento filho)
-    * Retorno: um inteiro (indice do elemento pai)
-    */
+    private static void swap_int(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+
+    /**
+     * Calcula o indice o elemento pai no heap
+     * 
+     * @param filho indice do elemento filho
+     * @return indice do elemento pai
+     */
     private static int calcular_indice_pai (int filho) {
         int flag = filho;
 
@@ -37,19 +45,19 @@ public class Ordenacao_externa {
     }
 
     /** 
-     * Essa funcao constroi o heap de um vetor de pokemons
-     * @param bloco um vetor de pokemons (vetor a ser construido 
-     * a arvore heap) 
+     * Constroi o heap de um vetor de pokemons
+     * 
+     * @param bloco um vetor de pokemons (vetor a ser construido a arvore heap) 
      * @param chave vetor de inteiros que representam as chaves de verificacao
      * @param tam tamanho valido do vetor
      */
-    private static void construir_heap (Pokemon[] bloco, Integer[]chave, int tam) {
+    private static void construir_heap (Pokemon[] bloco, int[]chave, int tam) {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
         while (i > 0 && (chave[i] < chave[indice] || (chave[i] == chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
             swap(bloco, i, indice);
-            swap(chave, indice, i);
+            swap_int(chave, indice, i);
             
             i = calcular_indice_pai(i);
 
@@ -61,17 +69,29 @@ public class Ordenacao_externa {
         }
     }
 
-    /* 
-    * Descricao: ordena um vetor de pokemons com o heap min
-    * Parametro: um vetor de pokemons (vetor a ser ordenado)
-    */
-    private static void fazer_heapmin (Pokemon[] bloco, Integer[] chaves) {
+    /**
+     * Ordena um vetor com o heap min
+     *
+     * @param bloco um vetor de pokemons (vetor a ser ordenado)
+     * @param chaves vetor interger com chaves de verificacao
+     */
+    private static void fazer_heapmin (Pokemon[] bloco, int[] chaves) {
         //Construcao do heap
         for (int tam = 1; tam < bloco.length; tam++) {
             construir_heap(bloco, chaves, tam);
         }
     }
     
+    /**
+     *  Escreve um pokemon no arquivo desejado e le o proximo registro do arquivo
+     * 
+     * @param pokemon registro a ser escrito
+     * @param in objeto para ler do arquivo
+     * @param out vetor do objeto DataOutputStream
+     * @param escolha_out indicador de qual objeto out usar
+     * @return proximo pokemon lido do arquivo ou null, caso o arquivo terminar
+     * @throws Exception
+     */
     private static Pokemon escrever_pokemon_e_ler_prox ( Pokemon pokemon, 
                                                         DataInputStream in, 
                                                         DataOutputStream[] out,
@@ -104,19 +124,21 @@ public class Ordenacao_externa {
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
         Pokemon[] bloco = new Pokemon [10];
-        Integer[] chaves = new Integer [10];
+        int[] chaves = new int [10];
         byte[] poke_vet_byte;
         Pokemon pokemon = new Pokemon();
         int i;
         int indice = 0;
+        int nova_chave = 0;
+        int chave_antiga = 0;
+
+        //Reseta o ponteiro
+        arq.seek(0);
         
         //Inicializa o vetor 
         for (i = 0; i < chaves.length; i++) {
             chaves[i] = 0;
         }
-
-        int nova_chave = 0;
-        int chave_antiga = 0;
 
         /* DISTRIBUICAO */
         //Mensagem para o usuario
@@ -128,9 +150,6 @@ public class Ordenacao_externa {
             arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");
             out[i] = new DataOutputStream (arq_out[i]);
         }
-
-        //Reinicia o ponteiro
-        arq.seek(0);
 
         //Preenche o vetor com os registros
         for (i = 0; i < bloco.length && arq.getFilePointer() < arq.length(); i++) {
@@ -366,9 +385,15 @@ public class Ordenacao_externa {
             in[i].close();
             out[i].close();
         }
-
     }
 
+    /**
+     * Escreve os registros no arquivo ordenados
+     * 
+     * @param arq .db a ser escrito
+     * @param metadados do arquivo a ser escrito
+     * @throws Exception
+     */
     private static void reescrever_arq_db_ordenado (RandomAccessFile arq, int metadados) throws Exception {
         FileInputStream arq_in;
         DataInputStream in;
