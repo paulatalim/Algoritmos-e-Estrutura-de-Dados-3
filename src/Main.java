@@ -3,6 +3,24 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static String entrada_string (String campo) {
+        Scanner scanner = new Scanner(System.in);
+        Tela.printlt(campo + ": ");
+        return scanner.nextLine();
+    }
+
+    public static int entrada_int (String campo) {
+        Scanner scanner = new Scanner(System.in);
+        Tela.printlt(campo + ": ");
+        return scanner.nextInt();
+    }
+
+    public static float entrada_float (String campo) {
+        Scanner scanner = new Scanner(System.in);
+        Tela.printlt(campo + ": ");
+        return scanner.nextFloat();
+    }
+
     /**
      *  Entrada de dados para atualizar pokemon
      * 
@@ -11,9 +29,6 @@ public class Main {
      * @throws Exception
      */
     public static Pokemon info_poke_atualizadas (Pokemon pokemon) throws Exception {
-        int entrada_int;
-        float entrada_float;
-        String entrada_string;
         Scanner scanner = new Scanner (System.in);
 
         //Exibe o pokemon
@@ -38,109 +53,79 @@ public class Main {
         switch(opcao){
             case 1:
                 //Entrada nome
-                Tela.printlt("Novo nome: ");
-                entrada_string = new String (scanner.nextLine());
-                pokemon.setNome(entrada_string); 
+                pokemon.setNome(entrada_string("Nome")); 
                 break;
              
             case 2:
                 //Entrada numero pokedex
-                Tela.printlt("Numero na Pokedex: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setNumPokedex(entrada_int);
+                pokemon.setNumPokedex(entrada_int("Numero na Pokedex"));
                 break;
 
             case 3:
                 //Entrada geracao
-                Tela.printlt("Geracao: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setGeracao(entrada_int);
+                pokemon.setGeracao(entrada_int("Geracao"));
                 break;
 
             case 4:
                 //Entrada especie
-                Tela.printlt("Especie: ");
-                entrada_string = new String (scanner.nextLine());
-                pokemon.setEspecie(entrada_string);
+                pokemon.setEspecie(entrada_string("Especie"));
                 break;
 
             case 5:
                 //Entrada altura
-                Tela.printlt("Altura: ");
-                entrada_float = scanner.nextFloat();
-                pokemon.setAltura(entrada_float);
+                pokemon.setAltura(entrada_float("Altura"));
                 break;
 
             case 6:
                 //Entrada peso
-                Tela.printlt("Peso: ");
-                entrada_float = scanner.nextFloat();
-                pokemon.setPeso(entrada_float);
+                pokemon.setPeso(entrada_float("Peso"));
                 break;
 
             case 7:
                 //Entrada tipo 1
-                Tela.printlt("Tipo 1: ");
-                entrada_string= new String (scanner.nextLine());
-                pokemon.setTipo1(entrada_string);
+                pokemon.setTipo1(entrada_string("Tipo 1"));
                 break;
 
             case 8:
                 //Entrada tipo 2
-                Tela.printlt("Tipo 2: ");
-                entrada_string = new String (scanner.nextLine());
-                pokemon.setTipo2(entrada_string);
+                pokemon.setTipo2(entrada_string("Tipo 2"));
                 break;
 
             case 9:
                 //Entrada hp
-                Tela.printlt("HP: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setHp(entrada_int);
+                pokemon.setHp(entrada_int("HP"));
                 break;  
 
             case 10:
                 //Entrada ataque
-                Tela.printlt("Ataque: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setAtaque(entrada_int);
+                pokemon.setAtaque(entrada_int("Ataque"));
                 break;
 
             case 11:
                 //Entrada defesa
-                Tela.printlt("Defesa: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setDefesa(entrada_int);
+                pokemon.setDefesa(entrada_int("Defesa"));
                 break;
 
             case 12:
                 //Entrada ataque especial
-                Tela.printlt("Ataque Especial: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setAtaqueEspecial(entrada_int);
+                pokemon.setAtaqueEspecial(entrada_int("Ataque Especial"));
                 break;
 
             case 13:
                 //Entrada defesa especial
-                Tela.printlt("Defesa Especial: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setDefesaEspecial(entrada_int);
+                pokemon.setDefesaEspecial(entrada_int("Defesa Especial"));
                 break;
 
             case 14:
                 //Entrada velocidade
-                Tela.printlt("Velocidade: ");
-                entrada_int = scanner.nextInt();
-                pokemon.setVelocidade(entrada_int);
+                pokemon.setVelocidade(entrada_int("Velocidade"));
                 break;
 
             case 15:
                 //Entrada eh mistico
-                Tela.printlt("(responda sim ou nao)" + "\n"
-                                + "\t" + "Eh mistico: ");
-                entrada_string = new String (scanner.nextLine());
+                Tela.printlt("(responda sim ou nao)" + "\n");
                 
-                if (entrada_string.toLowerCase().compareTo("sim") == 0) {
+                if (entrada_string("Eh mistico").toLowerCase().compareTo("sim") == 0) {
                     pokemon.setEhMistico(true);
                 } else {
                     pokemon.setEhMistico(false);
@@ -149,11 +134,9 @@ public class Main {
 
             case 16:
                 //Entrada eh lendario
-                Tela.printlt("(responda sim ou nao)" + "\n"
-                                + "\t" + "Eh lendario: ");
-                entrada_string = new String (scanner.nextLine());
+                Tela.printlt("(responda sim ou nao)" + "\n");
                 
-                if (entrada_string.toLowerCase().compareTo("sim") == 0) {
+                if (entrada_string("Eh lendario").toLowerCase().compareTo("sim") == 0) {
                     pokemon.setEhLendario(true);
                 } else {
                     pokemon.setEhLendario(false);
@@ -166,24 +149,6 @@ public class Main {
         }
 
         return pokemon;
-    }
-
-    public static <T> String entrada_string (String campo) {
-        Scanner scanner = new Scanner(System.in);
-        Tela.printlt(campo + ": ");
-        return scanner.nextLine();
-    }
-
-    public static int entrada_int (String campo) {
-        Scanner scanner = new Scanner(System.in);
-        Tela.printlt(campo + ": ");
-        return scanner.nextInt();
-    }
-
-    public static float entrada_float (String campo) {
-        Scanner scanner = new Scanner(System.in);
-        Tela.printlt(campo + ": ");
-        return scanner.nextFloat();
     }
 
     /**
