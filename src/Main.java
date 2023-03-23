@@ -2,13 +2,14 @@ import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 public class Main {
-    
-    
 
-    /******************************
-     * ENTRADA DE DADOS PARA CRUD *
-     ******************************/
-
+    /**
+     *  Entrada de dados para atualizar pokemon
+     * 
+     * @param pokemon a ser atualizado
+     * @return pokemon com informacoes atualizadas
+     * @throws Exception
+     */
     public static Pokemon info_poke_atualizadas (Pokemon pokemon) throws Exception {
         int entrada_int;
         float entrada_float;
@@ -167,116 +168,64 @@ public class Main {
         return pokemon;
     }
 
-    public static String entrada_string (String campo) {
+    public static <T> String entrada_string (String campo) {
         Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
         return scanner.nextLine();
-    } 
+    }
 
-    public static Pokemon info_poke_novo () {
-        int entrada_int;
-        float entrada_float;
-        String entrada_string;
-
+    public static int entrada_int (String campo) {
         Scanner scanner = new Scanner(System.in);
+        Tela.printlt(campo + ": ");
+        return scanner.nextInt();
+    }
+
+    public static float entrada_float (String campo) {
+        Scanner scanner = new Scanner(System.in);
+        Tela.printlt(campo + ": ");
+        return scanner.nextFloat();
+    }
+
+    /**
+     * Entrada de dados para criar novo Pokemon
+     * 
+     * @return pokemon com dados novos
+     */
+    public static Pokemon info_poke_novo () {
         Pokemon pokemon = new Pokemon();
 
-
-        // toda essa parte pode ser uma unica função con tentradas diferentes
-        //Entrada nome
-        Tela.printlt("INFORMACOES BASICAS" + "\n"
-                        + "\t" + "Nome: ");
-        entrada_string = new String (scanner.nextLine());
-        //Tela.limpar_buffer(scanner);
+        //Entrada informacoes basicas
+        Tela.printlt("INFORMACOES BASICAS" + "\n");
         pokemon.setNome(entrada_string("Nome")); 
+        pokemon.setNumPokedex(entrada_int("Numero na Pokedex")); 
+        pokemon.setGeracao(entrada_int("Geracao"));
+        pokemon.setEspecie(entrada_string("Especie"));
+        pokemon.setAltura(entrada_float("Altura"));
+        pokemon.setPeso(entrada_float("Peso"));
+        pokemon.setTipo1(entrada_string("Tipo 1"));
+        pokemon.setTipo2(entrada_string("Tipo 2"));
 
-        //Entrada num_pokedex;
-        Tela.printlt("Numero na Pokedex: ");
-        entrada_int = scanner.nextInt();
-        pokemon.setNumPokedex(entrada_int); 
+        //Entrada das estatisticas basicas
+        Tela.printlt("\n\t" + "ESTATISTICAS BASICAS" + "\n");
+        pokemon.setHp(entrada_int("HP"));
+        pokemon.setAtaque(entrada_int("Ataque"));
+        pokemon.setDefesa(entrada_int("Defesa"));
+        pokemon.setAtaqueEspecial(entrada_int("Defesa Especial"));
+        pokemon.setDefesaEspecial(entrada_int("Defesa Especial"));
+        pokemon.setVelocidade(entrada_int("Velocidade"));
 
-        //Entrada geracao
-        Tela.printlt("Geracao: ");
-        entrada_int = scanner.nextInt();
-        pokemon.setGeracao(entrada_int);
-
-        //Entrada especie
-        Tela.printlt("Especie: ");
-        Tela.limpar_buffer(scanner);
-        entrada_string = new String (scanner.nextLine());
-        pokemon.setEspecie(entrada_string);
-
-        //Entrada altura
-        Tela.printlt("Altura: ");
-        entrada_float = scanner.nextFloat();
-        pokemon.setAltura(entrada_float);
-
-        //Entradapeso
-        Tela.printlt("Peso: ");
-        entrada_float = scanner.nextFloat();
-        pokemon.setPeso(entrada_float);
-
-        //Entrada tipo 1
-        Tela.printlt("Tipo 1: ");
-        Tela.limpar_buffer(scanner);
-        entrada_string = new String (scanner.nextLine());
-        pokemon.setTipo1(entrada_string);
-
-        //Entrada tipo 2
-        Tela.printlt("Tipo 2: ");
-        entrada_string = new String (scanner.nextLine());
-        pokemon.setTipo2(entrada_string);
-
-        //Entrada hp
-        Tela.printlt("\n\t" + "ESTATISTICAS BASICAS" + "\n"
-                        + "\t" + "HP: ");
-        entrada_int = scanner.nextInt();
-        pokemon.setHp(entrada_int);
-
-        //Entrada ataque
-        Tela.printlt("Ataque: ");
-        entrada_int = scanner.nextInt();
-        pokemon.setAtaque(entrada_int);
-
-        //Entrada defesa
-        Tela.printlt("Defesa: ");
-        entrada_int = scanner.nextInt();
-        pokemon.setDefesa(entrada_int);
-
-        //Entrada ataque especial
-        Tela.printlt("Ataque Especial: ");
-        entrada_int= scanner.nextInt();
-        pokemon.setAtaqueEspecial(entrada_int);
-
-        //Entrada defesa especial
-        Tela.printlt("Defesa Especial: ");
-        entrada_int= scanner.nextInt();
-        pokemon.setDefesaEspecial(entrada_int);
-
-        //Entrada velocidade
-        Tela.printlt("Velocidade: ");
-        entrada_int = scanner.nextInt();
-        pokemon.setVelocidade(entrada_int);
-        
-        //Entrada se eh mistico
+        //Entrada de pokemon especial
         Tela.print("\n\t" + "POKE-ESPECIAL" + "\n"
-                        + "\t" + "(responda sim ou nao)" + "\n\n"
-                        + "\t" + "Eh mistico: ");
-                        Tela.limpar_buffer(scanner);
-        entrada_string = new String (scanner.nextLine());
+                    + "\t" + "(responda sim ou nao)" + "\n\n");
 
         //Verifica a entrada
-        if (entrada_string.toLowerCase().compareTo("sim") == 0) {
+        if (entrada_string("Eh mistico").toLowerCase().compareTo("sim") == 0) {
             pokemon.setEhMistico(true);
         } else {
             pokemon.setEhMistico(false);
-
-            //Entrada se eh lendario
-            Tela.printlt("Eh lendario: ");
-            entrada_string = new String (scanner.nextLine());
             
             //Verifica a entrada
-            if (entrada_string.toLowerCase().compareTo("sim") == 0) {
+            if (entrada_string("Eh lendario").toLowerCase().compareTo("sim") == 0) {
                 pokemon.setEhLendario(true);
             } else {
                 pokemon.setEhLendario(false);

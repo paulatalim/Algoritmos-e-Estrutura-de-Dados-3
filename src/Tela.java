@@ -7,7 +7,7 @@ public class Tela {
         }
     }
 
-    /*
+    /**
      * Descricao: essa funcao limpa a tela do console de windows, linux e MacOS
      */
     public static void limpar_console () throws Exception {
@@ -18,7 +18,7 @@ public class Tela {
 		    Runtime.getRuntime().exec("clear");
     }
 
-    /*
+    /**
      * Descricao: essa funcao exibe no fim da tela
      */
     public static void exibir_fim_tela () throws Exception {
@@ -28,7 +28,7 @@ public class Tela {
         limpar_console();
     }
 
-    /*
+    /**
      * Descricao: essa funcao exibe a tela inicial, as informacoes 
      * do grupo e instrucoes do sistema
      */
@@ -68,7 +68,7 @@ public class Tela {
         exibir_fim_tela();
     }
 
-    /*
+    /**
      * Descricao: essa funcao exibe a tela fnal, tela de agradecimentos
      */
     public static void exibir_tela_agradecimentos () {
