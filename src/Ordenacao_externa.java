@@ -20,12 +20,6 @@ public class Ordenacao_externa {
         arr[j] = temp;
     }
 
-    private static void swap_int(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
     /**
      * Calcula o indice o elemento pai no heap
      * 
@@ -50,13 +44,13 @@ public class Ordenacao_externa {
      * @param chave vetor de inteiros que representam as chaves de verificacao
      * @param tam tamanho valido do vetor
      */
-    private static void construir_heap (Pokemon[] bloco, int[]chave, int tam) {
+    private static void construir_heap (Pokemon[] bloco, Integer[]chave, int tam) {
         int indice = calcular_indice_pai(tam);
         int i = tam;
 
         while (i > 0 && (chave[i] < chave[indice] || (chave[i] == chave[indice] && bloco[i].getId() < bloco[indice].getId()))) {
             swap(bloco, i, indice);
-            swap_int(chave, indice, i);
+            swap(chave, indice, i);
             
             i = calcular_indice_pai(i);
 
@@ -74,7 +68,7 @@ public class Ordenacao_externa {
      * @param bloco um vetor de pokemons (vetor a ser ordenado)
      * @param chaves vetor interger com chaves de verificacao
      */
-    private static void fazer_heapmin (Pokemon[] bloco, int[] chaves) {
+    private static void fazer_heapmin (Pokemon[] bloco, Integer[] chaves) {
         //Construcao do heap
         for (int tam = 1; tam < bloco.length; tam++) {
             construir_heap(bloco, chaves, tam);
@@ -123,7 +117,7 @@ public class Ordenacao_externa {
         FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
         Pokemon[] bloco = new Pokemon [10];
-        int[] chaves = new int [10];
+        Integer[] chaves = new Integer [10];
         byte[] poke_vet_byte;
         Pokemon pokemon = new Pokemon();
         int i;
