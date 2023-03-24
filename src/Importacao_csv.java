@@ -54,6 +54,7 @@ public class Importacao_csv {
         linha = new String(scanner.nextLine());
 
         //Escreve os metadados no arquivo
+        arq_db.setLength(0);
         arq_db.seek(0);
         arq_db.writeInt(id_metadados);
 

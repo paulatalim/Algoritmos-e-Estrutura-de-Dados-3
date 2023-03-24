@@ -9,7 +9,12 @@ public class CRUD {
     }
 
     /*** OUTROS METODOS ***/
-    //CREATE
+    /**
+     * Funcao para criar registro no arquivo
+     * 
+     * @param pokemon novo registro a ser inserido
+     * @throws Exception
+     */
     public void criar (Pokemon pokemon) throws Exception {
         arq.seek(0);
         int id = arq.readInt();
@@ -20,12 +25,18 @@ public class CRUD {
         arq.seek(arq.length());//Apontando pro ultimo espaço do arquivo
         arq.writeByte(' ');//Lapde
 
-        byte[]poke_poke_vet_antigo_info = pokemon.toByteArray();//Criou poke_vet_antigoor de byte com as informaçoes do pokemon
-        arq.writeInt(poke_poke_vet_antigo_info.length);//Escreveu o tamanho no arquivo
-        arq.write(poke_poke_vet_antigo_info);//Escreve as informaçoes pro arquivo
+        byte[]poke_vet = pokemon.toByteArray();//Criou poke_vet_antigor de byte com as informaçoes do pokemon
+        arq.writeInt(poke_vet.length);//Escreveu o tamanho no arquivo
+        arq.write(poke_vet);//Escreve as informaçoes pro arquivo
     }
 
-    //READ
+    /**
+     * Funcao para ler registro do arquivo
+     * 
+     * @param id do registro requerido
+     * @return o registro se encontrar ou null caso nao encontrar o registro
+     * @throws Exception
+     */
     public Pokemon ler (int id) throws Exception {
         Pokemon pokemon = new Pokemon();
         byte[] poke_vet_antigo;
@@ -80,7 +91,14 @@ public class CRUD {
             }
         }
     }
-    //UPDATE
+    
+    /**
+     * Funcao para atualizar registro
+     * 
+     * @param poke registro com informacoes atualizadas
+     * @return se foi possivel atualizar ou nao
+     * @throws Exception
+     */
     public boolean atualizar(Pokemon poke) throws Exception {
 
         Pokemon pokemon = new Pokemon();
@@ -129,7 +147,13 @@ public class CRUD {
        return false;
     }
     
-    //DELETE
+    /**
+     *  Funcao para excluir registro
+     * 
+     * @param id do registro
+     * @return se excluiu ou nao o registro
+     * @throws Exception
+     */
     public boolean excluir(int id) throws Exception{
         Pokemon pokemon = new Pokemon();
         byte[]poke_vet_antigo;

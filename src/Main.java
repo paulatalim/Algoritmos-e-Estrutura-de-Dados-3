@@ -3,18 +3,36 @@ import java.util.Scanner;
 
 public class Main {
 
+    /**
+     * Entrada de dados de string
+     * 
+     * @param campo nome do dado a ser digitado
+     * @return o dado string lido
+     */
     public static String entrada_string (String campo) {
         Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
         return scanner.nextLine();
     }
 
+    /**
+     * Entrada de dados int
+     * 
+     * @param campo nome do dado a ser digitado
+     * @return o dado int lido
+     */
     public static int entrada_int (String campo) {
         Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
         return scanner.nextInt();
     }
 
+    /**
+     * Entrada de dados float
+     * 
+     * @param campo nome do dado a ser digitado
+     * @return o dado float lido
+     */
     public static float entrada_float (String campo) {
         Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
