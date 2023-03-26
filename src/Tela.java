@@ -81,7 +81,7 @@ public class Tela {
         System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
                             + "\t\t\t\t\t" + "*** Poke-obrigado e ate logo ***" + "\n\n");
             
-        System.out.println (  "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
+        System.out.print (  "\t\t\t\t\t" + "       \\:.             .:/ " + "\n"
                             + "\t\t\t\t\t" + "        \\``._________.''/ "  + "\n"
                             + "\t\t\t\t\t" + "         \\             / "   + "\n"
                             + "\t\t\t\t\t" + " .--.--, / .':.   .':. \\"    + "\n"
@@ -93,7 +93,7 @@ public class Tela {
                             + "\t\t\t\t\t" + "      `==|:=         =:|"     + "\n"
                             + "\t\t\t\t\t" + "         `.          .'"      + "\n"
                             + "\t\t\t\t\t" + "           :-._____.-:"       + "\n"
-                            + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n");
+                            + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n\t");
     }
 
     public static void print(String str){
