@@ -1,7 +1,6 @@
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.text.SimpleDateFormat;
-import java.text.DecimalFormat;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -150,8 +149,6 @@ public class Pokemon extends Object implements Cloneable {
     }
 
     public String toString () {
-        DecimalFormat df_peso = new DecimalFormat("###0.0");
-        DecimalFormat df_altura = new DecimalFormat("###0.00");
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
 
@@ -160,12 +157,12 @@ public class Pokemon extends Object implements Cloneable {
                     + "\t" + "Numero na Pokedex: " + num_pokedex + "\n"
                     + "\t" + "Geracao: " + geracao + "\n"
                     + "\t" + "Especie: " + especie + "\n"
-                    + "\t" + "Altura: " + df_altura.format(altura) + " m" + "\n"
+                    + "\t" + "Altura: " + String.format("%.2f", altura) + " m" + "\n"
                     + "\t" + "Peso: ";
         
         //Verifica se o pokemon possui peso
         if (peso != -1) {
-            str += df_peso.format(peso) + " kg";
+            str += String.format("%.2f", peso) + " kg";
         } else {
             //Peso desconhecido
             str += "???";

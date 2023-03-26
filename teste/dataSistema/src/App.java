@@ -96,12 +96,14 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        int[] vet = new int[] { 5,   2};
-        int[] ve1 = new int[] { 2,   2};
+        int op = 18%4;
+        System.out.println(op);
+        // int[] vet = new int[] { 5,   2};
+        // int[] ve1 = new int[] { 2,   2};
 
-        heapsort(vet, ve1);
+        // heapsort(vet, ve1);
 
-        exibirVetor(vet);
+        // exibirVetor(vet);
         /*
         //marca a data de hj
         Date hoje = new Date();
