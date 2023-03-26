@@ -22,9 +22,14 @@ public class Tela {
      * Descricao: essa funcao exibe no fim da tela
      */
     public static void exibir_fim_tela () throws Exception {
-        System.out.print("\n\n\t" + "Pressione 'enter' para continuar");
-        System.in.read();
-        System.in.read(new byte[System.in.available()]);
+        System.out.print("\n\n\t");
+
+        //Pausa execusao do programa no windows, no linux e no MacOS
+        if (System.getProperty("os.name").contains("Windows"))
+            new ProcessBuilder("cmd", "/c", "pause").inheritIO().start().waitFor();
+        else
+		    Runtime.getRuntime().exec("read -p 'Pressione qualquer tecla para continuar. . .'");
+        
         limpar_console();
     }
 
