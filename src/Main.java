@@ -24,7 +24,9 @@ public class Main {
     public static int entrada_int (String campo) {
         Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
-        return scanner.nextInt();
+        int num = scanner.nextInt();
+        Tela.limpar_buffer(scanner);
+        return num;
     }
 
     /**
@@ -36,7 +38,9 @@ public class Main {
     public static float entrada_float (String campo) {
         Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
-        return scanner.nextFloat();
+        float num = scanner.nextFloat();
+        Tela.limpar_buffer(scanner);
+        return num;
     }
 
     /**

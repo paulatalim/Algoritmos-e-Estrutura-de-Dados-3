@@ -6,7 +6,7 @@ public class Tela {
      * @param scanner a ter o buffer limpado
      */
     public static void limpar_buffer (Scanner scanner) {
-        if(scanner.hasNextLine()){
+        if (scanner.hasNextLine()) {
             scanner.nextLine();
         }
     }
