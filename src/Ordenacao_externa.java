@@ -114,7 +114,7 @@ public class Ordenacao_externa {
      */
     private static void distribuir_registros (RandomAccessFile arq) throws Exception {
         final int vet_tam = 2; // Constante inteira
-        FileOutputStream[] arq_out = new FileOutputStream [vet_tam];
+        FileOutputStream[] arq_temp = new FileOutputStream [vet_tam];
         DataOutputStream[] out = new DataOutputStream [vet_tam];
         Pokemon[] bloco = new Pokemon [10];
         Integer[] chaves = new Integer [10];
@@ -139,8 +139,8 @@ public class Ordenacao_externa {
 
         //Abre os objetos
         for (i = 0; i < vet_tam; i++) {
-            arq_out[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");
-            out[i] = new DataOutputStream (arq_out[i]);
+            arq_temp[i] = new FileOutputStream("src/arqTemp" + (i+1) + ".db");
+            out[i] = new DataOutputStream (arq_temp[i]);
         }
 
         //Preenche o vetor com os registros
@@ -237,7 +237,7 @@ public class Ordenacao_externa {
 
         //Fecha os arquivos temporarios
         for (i = 0; i < vet_tam; i ++) {
-            arq_out[i].close();
+            arq_temp[i].close();
             out[i].close();
         }
     }
