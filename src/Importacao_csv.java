@@ -40,16 +40,14 @@ public class Importacao_csv {
         String linha;
         int id_metadados = 1;
 
+        //Le arquivos csv
         File arq_csv = new File(caminho_arq_csv);
-        Scanner scanner = null;
+        Scanner scanner = new Scanner (arq_csv);
 
         //Exibe mensagem para o usuario
         Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
                             + "\t" + "Iniciando importacao ..." + "\n");
         
-        //Le arquivos csv
-        scanner = new Scanner (arq_csv);
-
         //Le o cabecalho da planilha
         linha = new String(scanner.nextLine());
 
@@ -78,7 +76,8 @@ public class Importacao_csv {
                                 atributos_csv[7], Integer.parseInt(atributos_csv[10]), 
                                 Integer.parseInt(atributos_csv[11]), Integer.parseInt(atributos_csv[12]), 
                                 Integer.parseInt(atributos_csv[13]), Integer.parseInt(atributos_csv[14]),
-                                Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), Boolean.parseBoolean(atributos_csv[4]));
+                                Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), 
+                                Boolean.parseBoolean(atributos_csv[4]));
 
             //Escreve o registro
             poke_info_byte = pokemon.toByteArray();
@@ -97,7 +96,7 @@ public class Importacao_csv {
         //Exibe mensagem para o usuario
         Tela.limpar_console();
         Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
-                            + "\t" + "Importacao concluida com sucesso !!!" + "\n");
+                            + "\t" + "Importacao concluida com sucesso !!!");
 
         scanner.close();
     }
