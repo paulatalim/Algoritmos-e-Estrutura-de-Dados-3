@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
 public class Tela {
+    /**
+     * Essa funcao limpa o buffer do teclado
+     * @param scanner a ter o buffer limpado
+     */
     public static void limpar_buffer (Scanner scanner) {
         if(scanner.hasNextLine()){
             scanner.nextLine();
@@ -22,7 +26,7 @@ public class Tela {
      * Descricao: essa funcao exibe no fim da tela
      */
     public static void exibir_fim_tela () throws Exception {
-        System.out.print("\n\n\t");
+        System.out.print("\n\n\t" + "Pressione 'enter' para continuar . . .");
         System.in.read();
         System.in.read(new byte[System.in.available()]);
         limpar_console();
@@ -90,14 +94,26 @@ public class Tela {
                             + "\t\t\t\t\t" + "          `''       `''"      + "\n\n\n\t");
     }
 
+    /**
+     * Essa funcao imprime uma mensagem no console
+     * @param str mensagem a ser imprimida
+     */
     public static void print(String str){
         System.out.print(str);
     }
 
+    /**
+     * Essa funcao imprime uma mensagem no console com tabulacao no inicio
+     * @param str mensagem a ser imprimida
+     */
     public static void printlt(String str){
         System.out.print("\t" + str);
     }
 
+    /**
+     * Essa funcao imprime uma mensagem no console com quebra de linha
+     * @param str mensagem a ser imprimida
+     */
     public static void println(String str){
         System.out.println(str);
     }
