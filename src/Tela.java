@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Tela {    
+public class Tela {
     public static void limpar_buffer (Scanner scanner) {
         if(scanner.hasNextLine()){
             scanner.nextLine();
@@ -15,7 +15,7 @@ public class Tela {
         if (System.getProperty("os.name").contains("Windows"))
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         else
-		    Runtime.getRuntime().exec("clear");
+            Runtime.getRuntime().exec("clear");
     }
 
     /**
@@ -23,14 +23,8 @@ public class Tela {
      */
     public static void exibir_fim_tela () throws Exception {
         System.out.print("\n\n\t");
-
-        //Pausa execusao do programa no windows, no linux e no MacOS
-        if (System.getProperty("os.name").contains("Windows")) {
-            new ProcessBuilder("cmd", "/c", "pause").inheritIO().start().waitFor();
-        } else {
-		    Runtime.getRuntime().exec("read -p 'Pressione qualquer tecla para continuar. . .'");
-        }
-        
+        System.in.read();
+        System.in.read(new byte[System.in.available()]);
         limpar_console();
     }
 
