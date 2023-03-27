@@ -226,13 +226,12 @@ public class Main {
         String caminho_arq_csv = "src/pokedex.csv";
         String caminho_arq_db = "src/pokedex.db";
 
-        RandomAccessFile arq;
-        Scanner scanner = new Scanner (System.in);
-
         int opcao, id;
-        Pokemon pokemon = new Pokemon();
-        CRUD crud;
         boolean opcao_invalida;
+        CRUD crud;
+        RandomAccessFile arq;
+        Pokemon pokemon = new Pokemon();
+        Scanner scanner = new Scanner (System.in);
         
         try {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
