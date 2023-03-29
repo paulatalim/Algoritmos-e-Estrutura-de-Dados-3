@@ -1,6 +1,13 @@
 package console;
 import java.util.Scanner;
 
+/**
+ * Classe funcional que organiza a saida no console
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Tela {
     /**
      * Essa funcao limpa o buffer do teclado

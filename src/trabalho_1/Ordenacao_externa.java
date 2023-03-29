@@ -10,6 +10,13 @@ import java.io.FileInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 
+/**
+ * Classe funcional para ordenar os registros no arquivo de acordo com seu id
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Ordenacao_externa {
     /**
      * Troca os elementos de um array nos índices i e j.

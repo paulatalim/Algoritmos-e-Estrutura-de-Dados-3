@@ -5,6 +5,13 @@ import manipulacao_arquivo.Pokemon;
 
 import java.util.Scanner;
 
+/**
+ * Classe funcional para entrada de dados dos registros
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class entrada_dados {
     static Scanner scanner = new Scanner(System.in);
     /**

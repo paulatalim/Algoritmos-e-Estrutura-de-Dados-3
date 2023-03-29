@@ -4,6 +4,13 @@ import manipulacao_arquivo.Pokemon;
 
 import java.io.RandomAccessFile;
 
+/**
+ * Classe que possui metodos CRUD para manipular arquivo .db
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class CRUD {
     private RandomAccessFile arq;
 

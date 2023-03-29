@@ -6,6 +6,13 @@ import java.io.File;
 
 import console.Tela;
 
+/**
+ * Classe funcional que importa as informacoes do arquivo csv para .db
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Importa_csv {
     /**
     * Essa funcao trata a string lida no arquivo csv, retirando as aspas

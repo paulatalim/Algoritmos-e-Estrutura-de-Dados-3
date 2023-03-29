@@ -1,7 +1,9 @@
 package aplicacao;
+
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 
+//Importacao das classes do programa
 import console.Tela;
 import manipulacao_arquivo.Importa_csv;
 import manipulacao_arquivo.Pokemon;
