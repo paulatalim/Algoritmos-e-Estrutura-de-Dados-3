@@ -6,7 +6,7 @@ import manipulacao_arquivo.Pokemon;
 import java.util.Scanner;
 
 public class entrada_dados {
-    
+    static Scanner scanner = new Scanner(System.in);
     /**
      * Entrada de dados de string
      * 
@@ -14,7 +14,6 @@ public class entrada_dados {
      * @return o dado string lido
      */
     public static String entrada_string (String campo) {
-        Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
         return scanner.nextLine();
     }
@@ -26,7 +25,6 @@ public class entrada_dados {
      * @return o dado int lido
      */
     public static int entrada_int (String campo) {
-        Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
         int num = scanner.nextInt();
         Tela.limpar_buffer(scanner);
@@ -40,7 +38,6 @@ public class entrada_dados {
      * @return o dado float lido
      */
     public static float entrada_float (String campo) {
-        Scanner scanner = new Scanner(System.in);
         Tela.printlt(campo + ": ");
         float num = scanner.nextFloat();
         Tela.limpar_buffer(scanner);
