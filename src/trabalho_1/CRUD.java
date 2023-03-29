@@ -1,13 +1,14 @@
 package trabalho_1;
-import java.io.RandomAccessFile;
 
 import manipulacao_arquivo.Pokemon;
+
+import java.io.RandomAccessFile;
 
 public class CRUD {
     private RandomAccessFile arq;
 
     /*** CONSTRUTOR ***/
-    CRUD (String caminho_arq) throws Exception {
+    public CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
     }
 

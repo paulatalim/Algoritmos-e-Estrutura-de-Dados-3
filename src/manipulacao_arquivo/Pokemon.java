@@ -29,7 +29,8 @@ public class Pokemon extends Object implements Cloneable {
     private Date data_de_registro;
 
     /*** CONSTRUTORES ***/
-    Pokemon () {
+
+    public Pokemon () {
         id = -1;
         num_pokedex = -1;
         nome = "null";
@@ -50,7 +51,7 @@ public class Pokemon extends Object implements Cloneable {
         data_de_registro = new Date();
     }
 
-    Pokemon (int id, int num_pokedex, String nome, int geracao,
+    public Pokemon (int id, int num_pokedex, String nome, int geracao,
             String especie, float altura, float peso, String tipo1,
             String tipo2, int hp, int ataque, int defesa, int ataque_especial,
             int defesa_especial, int velocidade, boolean eh_mistico, boolean eh_lendario) 
