@@ -88,7 +88,7 @@ public class Ordenacao_externa {
     }
     
     /**
-     *  Escreve um pokemon no arquivo desejado e le o proximo registro do arquivo
+     * Escreve um pokemon no arquivo desejado e le o proximo registro do arquivo
      * 
      * @param pokemon registro a ser escrito
      * @param in objeto para ler do arquivo
@@ -120,7 +120,8 @@ public class Ordenacao_externa {
     }
 
     /**
-     * Essa funcao distribui os registros em arquivos temporarios ordenados
+     * Distribui os registros em arquivos temporarios ordenados
+     * 
      * @param arq .db a ser ordenado
      * @throws Exception
      */
@@ -255,7 +256,8 @@ public class Ordenacao_externa {
     }
 
     /**
-     * Essa funcao intercala os blocos de registros
+     * Intercala os blocos de registros
+     * 
      * @param arq .db a ser ordenado
      * @param metadados do arquivo
      * @throws Exception
@@ -447,7 +449,8 @@ public class Ordenacao_externa {
     }
 
     /**
-     * Descricao: ordena os registros do arquivo com a ordenacao externa
+     * Ordena os registros do arquivo com a ordenacao externa
+     * 
      * @param arq arquivo arquivo a ser ordenado
      */
     public static void ordenar_registros (RandomAccessFile arq) throws Exception {
