@@ -20,7 +20,7 @@ public class CRUD {
 
     /*** OUTROS METODOS ***/
     /**
-     * Funcao para criar registro no arquivo
+     * Cria registro no arquivo
      * 
      * @param pokemon novo registro a ser inserido
      * @throws Exception
@@ -41,7 +41,7 @@ public class CRUD {
     }
 
     /**
-     * Funcao para ler registro do arquivo
+     * Le registro do arquivo
      * 
      * @param id do registro requerido
      * @return o registro se encontrar ou null caso nao encontrar o registro
@@ -103,7 +103,7 @@ public class CRUD {
     }
     
     /**
-     * Funcao para atualizar registro
+     * Atualiza registro do arquivo
      * 
      * @param poke registro com informacoes atualizadas
      * @return se foi possivel atualizar ou nao
@@ -158,7 +158,7 @@ public class CRUD {
     }
     
     /**
-     *  Funcao para excluir registro
+     * Excluir registro do arquivo
      * 
      * @param id do registro
      * @return se excluiu ou nao o registro
