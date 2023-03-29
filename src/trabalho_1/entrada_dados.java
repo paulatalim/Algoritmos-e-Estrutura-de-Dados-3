@@ -14,6 +14,7 @@ import java.util.Scanner;
  */
 public class entrada_dados {
     static Scanner scanner = new Scanner(System.in);
+
     /**
      * Entrada de dados de string
      * 
@@ -52,7 +53,7 @@ public class entrada_dados {
     }
 
     /**
-     *  Entrada de dados para atualizar pokemon
+     * Entrada de dados para atualizar pokemon
      * 
      * @param pokemon a ser atualizado
      * @return pokemon com informacoes atualizadas
