@@ -85,10 +85,11 @@ public class Pokemon extends Object implements Cloneable {
     }
 
     /*** OUTROS METODOS ***/
-    /*
-     * Descricao: essa funcao elabora um vetor de bytes com 
-     * seus atributos para a insercao no arquivo
-     * Retorno: vetor de bytes
+    /**
+     * Elabora um vetor de bytes com seus atributos para a insercao no arquivo
+     * 
+     * @return vetor de bytes
+     * @throws IOException
      */
     public byte[] toByteArray () throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -116,10 +117,11 @@ public class Pokemon extends Object implements Cloneable {
         return baos.toByteArray();
     }
 
-    /*
-     * Descricao: essa funcao, a partir de um vetor de 
-     * bytes, preenche os atributos da classe
-     * Parametro: vetor de bytes
+     /**
+     * A partir de um vetor de bytes, preenche os atributos da classe
+     *
+     * @param ba vetor de bytes a ser traduzido
+     * @throws IOException
      */
     public void fromByteArray (byte[] ba) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
