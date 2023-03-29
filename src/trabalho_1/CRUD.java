@@ -1,4 +1,7 @@
+package trabalho_1;
 import java.io.RandomAccessFile;
+
+import manipulacao_arquivo.Pokemon;
 
 public class CRUD {
     private RandomAccessFile arq;

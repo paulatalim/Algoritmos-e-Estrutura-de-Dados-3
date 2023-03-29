@@ -1,8 +1,12 @@
+package manipulacao_arquivo;
+
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 import java.io.File;
 
-public class Importacao_csv {
+import console.Tela;
+
+public class Importa_csv {
     /**
     * Essa funcao trata a string lida no arquivo csv, retirando as aspas
     * @param linha linha lida do arquivo

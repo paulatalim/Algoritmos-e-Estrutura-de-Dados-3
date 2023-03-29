@@ -1,4 +1,9 @@
+package trabalho_1;
 import java.io.RandomAccessFile;
+
+import Tela;
+import manipulacao_arquivo.Pokemon;
+
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;

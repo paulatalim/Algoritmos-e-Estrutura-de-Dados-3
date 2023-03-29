@@ -1,7 +1,22 @@
+package aplicacao;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 
+import console.Tela;
+import manipulacao_arquivo.Importa_csv;
+import manipulacao_arquivo.Pokemon;
+import trabalho_1.CRUD;
+import trabalho_1.Ordenacao_externa;
+
 public class Main {
+    /**
+     * 
+     * @version 1.0
+     * 
+     * @author Mariana Aram
+     * @author Paula Talim
+     * @author Yago Garzon
+     */
 
     /**
      * Entrada de dados de string
@@ -241,7 +256,7 @@ public class Main {
             Tela.exibir_tela_inicial_e_info ();
             
             //Importa arquivo .csv automatico
-            Importacao_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
+            Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
             Tela.exibir_fim_tela();
             
             //Repete o programa
