@@ -8,6 +8,13 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Classe que armazena os atributos dos registros armazenados no arquivo .db
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Pokemon extends Object implements Cloneable {
     private int id;
     private int num_pokedex;

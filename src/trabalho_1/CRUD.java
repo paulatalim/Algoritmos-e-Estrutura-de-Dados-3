@@ -7,7 +7,6 @@ import java.io.RandomAccessFile;
 public class CRUD {
     private RandomAccessFile arq;
 
-    /*** CONSTRUTOR ***/
     public CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
     }

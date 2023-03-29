@@ -9,15 +9,14 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 
+/**
+ * Classe da aplicacao do programa
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Main {
-    /**
-     * 
-     * @version 1.0
-     * 
-     * @author Mariana Aram
-     * @author Paula Talim
-     * @author Yago Garzon
-     */
     public static void main(String[] args) {
         String caminho_arq_csv = "src/pokedex.csv";
         String caminho_arq_db = "src/pokedex.db";
