@@ -10,7 +10,8 @@ import java.util.Scanner;
  */
 public class Tela {
     /**
-     * Essa funcao limpa o buffer do teclado
+     * Limpa o buffer do teclado
+     * 
      * @param scanner a ter o buffer limpado
      */
     public static void limpar_buffer (Scanner scanner) {
@@ -20,7 +21,7 @@ public class Tela {
     }
 
     /**
-     * Descricao: essa funcao limpa a tela do console de windows, linux e MacOS
+     * Limpa a tela do console de windows, linux e MacOS
      */
     public static void limpar_console () throws Exception {
         //Limpa a tela no windows, no linux e no MacOS
@@ -31,7 +32,7 @@ public class Tela {
     }
 
     /**
-     * Descricao: essa funcao exibe no fim da tela
+     * Exibe mensagem no fim da tela
      */
     public static void exibir_fim_tela () throws Exception {
         System.out.print("\n\n\t" + "Pressione 'enter' para continuar . . .");
@@ -41,7 +42,7 @@ public class Tela {
     }
 
     /**
-     * Descricao: essa funcao exibe a tela inicial, as informacoes 
+     * Exibe a tela inicial, as informacoes 
      * do grupo e instrucoes do sistema
      */
     public static void exibir_tela_inicial_e_info () throws Exception {
@@ -81,7 +82,7 @@ public class Tela {
     }
 
     /**
-     * Descricao: essa funcao exibe a tela fnal, tela de agradecimentos
+     * Exibe a tela fnal, a tela de agradecimentos
      */
     public static void exibir_tela_agradecimentos () {
         System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
@@ -103,7 +104,8 @@ public class Tela {
     }
 
     /**
-     * Essa funcao imprime uma mensagem no console
+     * Imprime uma mensagem no console
+     * 
      * @param str mensagem a ser imprimida
      */
     public static void print(String str){
@@ -111,7 +113,8 @@ public class Tela {
     }
 
     /**
-     * Essa funcao imprime uma mensagem no console com tabulacao no inicio
+     * Imprime uma mensagem no console com tabulacao no inicio
+     * 
      * @param str mensagem a ser imprimida
      */
     public static void printlt(String str){
@@ -119,7 +122,8 @@ public class Tela {
     }
 
     /**
-     * Essa funcao imprime uma mensagem no console com quebra de linha
+     * Imprime uma mensagem no console com quebra de linha
+     * 
      * @param str mensagem a ser imprimida
      */
     public static void println(String str){

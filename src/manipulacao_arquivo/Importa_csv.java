@@ -15,10 +15,12 @@ import console.Tela;
  */
 public class Importa_csv {
     /**
-    * Essa funcao trata a string lida no arquivo csv, retirando as aspas
-    * @param linha linha lida do arquivo
-    * @return linha do arquivo tratada
-    */
+     * Trata a string lida no arquivo csv, retirando as 
+     * aspas e colocando "null" em atributos vazios
+     *
+     * @param linha linha lida do arquivo
+     * @return linha do arquivo tratada
+     */
     public static String tratar_string (String linha) throws Exception {
         StringBuilder sb = new StringBuilder(linha);
                 
@@ -40,7 +42,8 @@ public class Importa_csv {
     }
 
     /**
-     * Funcao para importar um arquivo csv e passa sua informacoes para o arquivo database
+     * Importar um arquivo csv e passa sua informacoes para o arquivo database
+     * 
      * @param arq_db arquivo database a ser preenchido
      * @param caminho_arq_csv url do arquivo csv a ser importado
      */
