@@ -72,36 +72,6 @@ public class CRUD {
         return null;
     }
 
-    public void listar_registros () throws Exception {
-        Pokemon pokemon = new Pokemon();
-        byte[] poke_vet_antigo;
-        int cont = 0;
-
-        arq.seek(0);
-        arq.readInt();
-
-        while (arq.getFilePointer() < arq.length()) {
-            if (arq.readByte() == ' ') {
-                poke_vet_antigo = new byte[arq.readInt()];
-                arq.read(poke_vet_antigo);
-                pokemon.fromByteArray(poke_vet_antigo);
-
-                System.out.print(pokemon.getId() + " - " + pokemon.getNome());
-                
-                if (cont < 2) {
-                    System.out.print("\t\t\t\t");
-                    cont++;
-                } else {
-                    System.out.println();
-                    cont = 0;
-                }
-            } else {
-                //Pula o registro
-                arq.seek(arq.readInt() + arq.getFilePointer());
-            }
-        }
-    }
-    
     /**
      * Atualiza registro do arquivo
      * 
