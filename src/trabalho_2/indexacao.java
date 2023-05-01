@@ -22,11 +22,10 @@ public class indexacao {
 
     public static void criar_novo_bucket(RandomAccessFile arq_buckets, RandomAccessFile arq_diretorio, int id_novo_bucket) throws Exception {
         arq_diretorio.seek(0);
-
         short profundidade = arq_diretorio.readShort();
-        arq_buckets.seek(arq_buckets.length());
 
         //Atualizacao de diretorio
+        arq_buckets.seek(arq_buckets.length());
         arq_diretorio.seek(pesquisa_diretorio(id_novo_bucket));
         arq_diretorio.writeLong(arq_buckets.getFilePointer());
         
@@ -54,15 +53,17 @@ public class indexacao {
         }
     }
 
-    public static void utilizar_novo_bucket (RandomAccessFile bucket, RandomAccessFile diretorio, int id_bucket_dividir) throws Exception{
+    public static void dividir_bucket (RandomAccessFile bucket, RandomAccessFile diretorio, int id_bucket_dividir) throws Exception{
         bucket.seek(pesquisa_diretorio(id_bucket_dividir));
 
         diretorio.seek(0);
 
+        //Leitura de profundidades
         short profundidade_diretorio = diretorio.readShort();
         short profundidade_bucket = bucket.readShort();
         profundidade_bucket ++;
 
+        //Verificacao de alteracao da profundidade do diretorio
         if (profundidade_diretorio == profundidade_bucket) {
             profundidade_diretorio ++;
 
@@ -70,9 +71,6 @@ public class indexacao {
             diretorio.writeShort(profundidade_diretorio);
             aumentar_profundidade_diretorio(bucket, diretorio, profundidade_diretorio);
         }
-
-        //Atualiza o diretorio
-        //diretorio.seek(pesquisa_diretorio(profundidade_bucket));
 
         //Atualiza profundidade e tamanho do bucket
         bucket.writeShort(profundidade_bucket);
@@ -89,25 +87,52 @@ public class indexacao {
 
         //redividindo registros
         for (int i = 0; i < 10; i++) {
+            int hash_anterior = funcao_hash(id_registro[i], profundidade_bucket-1);
             int hash = funcao_hash(id_registro[i], profundidade_bucket);
-            
-            bucket.seek(pesquisa_buckets(hash) + 2);
 
-            int tamanho = bucket.readInt();
+            //verifica se o novo bucket foi criado
+            if (pesquisa_diretorio(hash) == pesquisa_diretorio(hash_anterior) && hash != hash_anterior) {
+                criar_novo_bucket(bucket, diretorio, hash);
+            }
+            
+            bucket.seek(pesquisa_diretorio(hash) + 2);
+
+            short tamanho = bucket.readShort();
+            long point = bucket.getFilePointer();
 
             //Colocando registro
-            bucket.seek(tamanho*12);
+            bucket.seek(point + tamanho*12);
             bucket.writeInt(id_registro[i]);
             bucket.writeLong(endereco_registro[i]);
             
             //Atualiza o tamanho
             tamanho++;
-            bucket.seek(tamanho - 4);
+            bucket.seek(point - 4);
             bucket.writeInt(tamanho);
         }
     }
 
-    public static void teste () throws Exception {
+    public static void incluir_novo_registro (RandomAccessFile bucket, RandomAccessFile diretorio, int id_registro, long endereco_registro) throws Exception {
+        diretorio.seek(0);
+        int profundidade = diretorio.readShort();
+        int hash = funcao_hash(id_registro, profundidade);
+        bucket.seek(pesquisa_diretorio(hash));
+
+        bucket.readShort();
+
+        int tamanho = bucket.readShort();
+
+        if (tamanho == 10) {
+            dividir_bucket(bucket, diretorio, tamanho);
+        }
+
+        //Inclui o novo registro
+        bucket.seek(bucket.getFilePointer() + tamanho*12);
+        bucket.writeInt(id_registro);
+        bucket.writeLong(endereco_registro);
+    } 
+
+    public static void inicializar_indexacao () throws Exception {
         String diretorio_indices = "src/arquivos_de_indices";
 
         //Criacao de pasta para os arquivos de indices
@@ -121,10 +146,13 @@ public class indexacao {
 
         short profundidade_diretorio = 1;
 
-        //Profundidade
+        //Registra a profundidade
         diretorio.writeShort(profundidade_diretorio);
 
-        diretorio.writeInt(0);
+        //Cria dois buckets iniciais
+        for (int i = 0; i < 2; i ++) {
+            criar_novo_bucket(buckets, diretorio, profundidade_diretorio);
+        }
 
         data_base.readInt();
 
@@ -132,6 +160,8 @@ public class indexacao {
         byte[] vet_byte_pokemon;
 
         while (data_base.getFilePointer() < data_base.length()) {
+            long endereco = data_base.getFilePointer();
+
             //Verifica se o arquivo foi excluido
             if (data_base.readByte() == ' ') {
                 //Le o arquivo
@@ -140,6 +170,9 @@ public class indexacao {
 
                 pokemon = new Pokemon();
                 pokemon.fromByteArray(vet_byte_pokemon);
+
+                //Inclui nos arquivos indexados
+                incluir_novo_registro(buckets, diretorio, pokemon.getId(), endereco);
 
             } else {
                 //Pula o registro

@@ -35,12 +35,12 @@ public class Main {
 
             
             
-//indexacao.teste();
             //Exibe o inicio do programa
             Tela.exibir_tela_inicial_e_info ();
             
             //Importa arquivo .csv automatico
             Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
+            indexacao.inicializar_indexacao();
             Tela.exibir_fim_tela();
             
             //Repete o programa
