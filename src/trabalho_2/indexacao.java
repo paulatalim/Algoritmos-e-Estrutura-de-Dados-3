@@ -20,6 +20,25 @@ public class indexacao {
         return 2 + (id_chave * 8);
     }
 
+    public static void criar_novo_bucket(RandomAccessFile arq_buckets, RandomAccessFile arq_diretorio, int id_novo_bucket) throws Exception {
+        arq_diretorio.seek(0);
+
+        short profundidade = arq_diretorio.readShort();
+        arq_buckets.seek(arq_buckets.length());
+
+        //Atualizacao de diretorio
+        arq_diretorio.seek(pesquisa_diretorio(id_novo_bucket));
+        arq_diretorio.writeLong(arq_buckets.getFilePointer());
+        
+        //Inicializando bucket
+        arq_buckets.writeShort(profundidade);
+        arq_buckets.writeShort(0);
+        for (int i = 0; i < 10; i++) {
+            arq_buckets.writeInt(0);
+            arq_buckets.writeLong(0);
+        }
+    }
+
     public static void aumentar_profundidade_diretorio (RandomAccessFile arq_buckets, RandomAccessFile arq_diretorio, short profundidade_diretorio) throws Exception {
         arq_diretorio.seek(arq_diretorio.length());
 

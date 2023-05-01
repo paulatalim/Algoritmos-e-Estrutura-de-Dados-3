@@ -1,3 +1,5 @@
+import java.io.RandomAccessFile;
+import java.util.Random;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -16,7 +18,11 @@ public class App {
             qnt_buckets_cria = 2;
         }
 
+        RandomAccessFile test = new RandomAccessFile("src/teste.db", "rw");
+        test.seek(test.length());
 
-        System.out.println(qnt_buckets_cria);
+        long teste = test.getFilePointer();
+
+        System.out.println(teste);
     }
 }
