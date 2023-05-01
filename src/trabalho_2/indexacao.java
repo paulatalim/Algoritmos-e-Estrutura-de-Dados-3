@@ -7,6 +7,11 @@ import manipulacao_arquivo.Pokemon;
 import java.io.File;
 
 public class indexacao {
+
+    public static int funcao_hash (int chave, int profundidade) {
+        return chave % (int) Math.pow(2, profundidade);
+    }
+
     public static void teste () throws Exception {
         String diretorio_indices = "src/arquivos_de_indices";
 
