@@ -2,9 +2,8 @@ package manipulacao_arquivo;
 
 import java.io.RandomAccessFile;
 import java.util.Scanner;
+import aplicacao.Tela;
 import java.io.File;
-
-import console.Tela;
 
 /**
  * Classe funcional que importa as informacoes do arquivo csv para .db

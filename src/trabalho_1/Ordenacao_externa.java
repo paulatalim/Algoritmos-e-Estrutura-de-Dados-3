@@ -1,9 +1,9 @@
 package trabalho_1;
 
-import console.Tela;
-import manipulacao_arquivo.Pokemon;
-
 import java.io.RandomAccessFile;
+
+import aplicacao.Tela;
+import manipulacao_arquivo.Pokemon;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;

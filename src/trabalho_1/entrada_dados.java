@@ -1,9 +1,9 @@
 package trabalho_1;
 
-import console.Tela;
-import manipulacao_arquivo.Pokemon;
-
 import java.util.Scanner;
+
+import manipulacao_arquivo.Pokemon;
+import aplicacao.Tela;
 
 /**
  * Classe funcional para entrada de dados dos registros
