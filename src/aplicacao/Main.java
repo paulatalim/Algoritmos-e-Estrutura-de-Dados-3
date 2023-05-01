@@ -32,7 +32,7 @@ public class Main {
         try {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
-            indexacao.teste();
+indexacao.teste();
             //Exibe o inicio do programa
             Tela.exibir_tela_inicial_e_info ();
             
