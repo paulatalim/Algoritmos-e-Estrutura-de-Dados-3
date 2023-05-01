@@ -20,7 +20,7 @@ public class Importa_csv {
      * @param linha linha lida do arquivo
      * @return linha do arquivo tratada
      */
-    public static String tratar_string (String linha) throws Exception {
+    private static String tratar_string (String linha) throws Exception {
         StringBuilder sb = new StringBuilder(linha);
                 
         //Deleta as aspas lidas da planilha

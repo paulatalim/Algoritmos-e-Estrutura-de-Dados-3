@@ -8,6 +8,7 @@ import manipulacao_arquivo.Pokemon;
 import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
+import trabalho_2.indexacao;
 
 /**
  * Classe da aplicacao do programa
@@ -31,7 +32,7 @@ public class Main {
         try {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
-
+            indexacao.teste();
             //Exibe o inicio do programa
             Tela.exibir_tela_inicial_e_info ();
             
