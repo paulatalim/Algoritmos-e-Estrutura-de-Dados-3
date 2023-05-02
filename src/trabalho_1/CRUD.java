@@ -18,7 +18,7 @@ public class CRUD {
 
     public CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
-        index = new Indexacao ();
+        index = new Indexacao (caminho_arq);
     }
 
     /*** OUTROS METODOS ***/

@@ -33,7 +33,7 @@ public class Main {
         try {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
-            index = new Indexacao();
+            index = new Indexacao(caminho_arq_db);
             
             
             //Exibe o inicio do programa
@@ -41,7 +41,7 @@ public class Main {
             
             //Importa arquivo .csv automatico
             Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
-            index.inicializar_indexacao(caminho_arq_db);
+            index.inicializar_indexacao();
             Tela.exibir_fim_tela();
             
             //Repete o programa

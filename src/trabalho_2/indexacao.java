@@ -9,8 +9,9 @@ import java.io.File;
 public class Indexacao {
     private RandomAccessFile diretorio;
     private RandomAccessFile buckets;
+    private RandomAccessFile data_base;
 
-    public Indexacao () throws Exception {
+    public Indexacao (String url_data_base) throws Exception {
         //Criacao de pasta para os arquivos de indices
         String folder = "src/arquivos_de_indices";
         File arq = new File(folder);
@@ -18,6 +19,7 @@ public class Indexacao {
 
         diretorio = new RandomAccessFile(folder + "/diretorio.db", "rw");
         buckets = new RandomAccessFile(folder + "/buckets.db", "rw");
+        data_base = new RandomAccessFile(url_data_base, "rw");
     }
 
     public static int funcao_hash (int chave, int profundidade) {
@@ -175,13 +177,14 @@ public class Indexacao {
     }
 
 
-    public void inicializar_indexacao (String caminho_data_base) throws Exception {
-        RandomAccessFile data_base = new RandomAccessFile(caminho_data_base, "rw");
+    public void inicializar_indexacao () throws Exception {
+        short profundidade_diretorio = 1;
+        Pokemon pokemon;
+        byte[] vet_byte_pokemon;
 
+        //Inicializando arquivos
         diretorio.setLength(0);
         buckets.setLength(0);
-
-        short profundidade_diretorio = 1;
 
         //Registra a profundidade
         diretorio.writeShort(profundidade_diretorio);
@@ -192,9 +195,6 @@ public class Indexacao {
         }
 
         data_base.readInt();
-
-        Pokemon pokemon;
-        byte[] vet_byte_pokemon;
 
         while (data_base.getFilePointer() < data_base.length()) {
             long endereco = data_base.getFilePointer();
