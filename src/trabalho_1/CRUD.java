@@ -4,6 +4,7 @@ import manipulacao_arquivo.Pokemon;
 import trabalho_2.Indexacao;
 
 import java.io.RandomAccessFile;
+import java.io.ObjectInputStream.GetField;
 
 /**
  * Classe que possui metodos CRUD para manipular arquivo .db
@@ -36,9 +37,13 @@ public class CRUD {
         arq.seek(0);//Acessou o inicio do arquivo
         arq.writeInt(id);//Reescreveu o inicio
         arq.seek(arq.length());//Apontando pro ultimo espaço do arquivo
-        arq.writeByte(' ');//Lapde
 
-        byte[]poke_vet = pokemon.toByteArray();//Criou poke_vet_antigor de byte com as informaçoes do pokemon
+        //Inclui arquivo na indexacao
+        index.incluir_novo_registro(id, arq.getFilePointer());
+
+        //Escreve o registro
+        arq.writeByte(' ');//Lapde
+        byte[] poke_vet = pokemon.toByteArray();//Criou poke_vet_antigor de byte com as informaçoes do pokemon
         arq.writeInt(poke_vet.length);//Escreveu o tamanho no arquivo
         arq.write(poke_vet);//Escreve as informaçoes pro arquivo
     }
@@ -77,51 +82,46 @@ public class CRUD {
      * @throws Exception
      */
     public boolean atualizar(Pokemon poke) throws Exception {
-
         Pokemon pokemon = new Pokemon();
         byte[] poke_vet_antigo;
         byte[] poke_vet_atualizado;
 
-        arq.seek(0);//Inicializa o ponteiro
-        arq.readInt();
+        long endereco = index.ler_registro(poke.getId());
 
-        while(arq.getFilePointer()<arq.length()){
-            long lapide = arq.getFilePointer();
+        if (endereco != -1) {
+            //Lendo registro antigo
+            arq.seek(endereco);
+            arq.readByte();
+            poke_vet_antigo = new byte[arq.readInt()];
+            arq.read(poke_vet_antigo);
+            pokemon.fromByteArray(poke_vet_antigo);
 
-            if (arq.readByte() == ' ') { //Se não possuir uma lapide
-                poke_vet_antigo = new byte[arq.readInt()];
-                arq.read(poke_vet_antigo);
-                pokemon.fromByteArray(poke_vet_antigo);
+            poke_vet_atualizado = poke.toByteArray();
 
-                if(poke.getId() == pokemon.getId()){
-                    poke_vet_atualizado = poke.toByteArray();
+            //Verifica o tamanho do novo registro
+            if(poke_vet_atualizado.length <= poke_vet_antigo.length){
+                arq.seek(endereco);
+                arq.writeByte(' ');
+                arq.writeInt(poke_vet_antigo.length);
+            } else {
+                arq.writeByte('*');
 
-                    arq.seek(lapide);
+                //Posiciona o ponteiro no final do arquivo
+                arq.seek(arq.length());
 
-                    //Verifica o tamanho do novo registro
-                    if(poke_vet_atualizado.length <= poke_vet_antigo.length){
-                        arq.writeByte(' ');
-                        arq.writeInt(poke_vet_antigo.length);
-                    } else {
-                        arq.writeByte('*');
+                //Atualiza arquivos index
+                index.atualizar_endereco(poke.getId(), arq.getFilePointer());
 
-                        //Posiciona o ponteiro no final do arquivo
-                        arq.seek(arq.length());
-                        arq.writeByte(' ');
-                        arq.writeInt(poke_vet_atualizado.length);
-                    }
-
-                    //Escreve o registro
-                    arq.write(poke_vet_atualizado);
-                    return true;
-                }
-            } else{
-                //Pula o registro
-                arq.seek(arq.readInt() + arq.getFilePointer());
+                arq.writeByte(' ');
+                arq.writeInt(poke_vet_atualizado.length);
             }
 
+            //Escreve o registro
+            arq.write(poke_vet_atualizado);
+            return true;
         }
-       return false;
+
+        return false;
     }
     
     /**

@@ -177,6 +177,23 @@ public class Indexacao {
     }
 
 
+    //Atualizar endereco
+    public void atualizar_endereco (int id, long novo_endereco) throws Exception {
+        diretorio.seek(0);
+        int hash = funcao_hash(id, diretorio.readShort());
+
+        buckets.seek(pesquisa_diretorio(hash));
+
+        short tamanho = buckets.readShort();
+
+        for (int i = 0; i < tamanho; i++) {
+            if (id == buckets.readInt()) {
+               buckets.writeLong(novo_endereco);
+            }
+            buckets.readLong();
+        }
+    }
+
     public void inicializar_indexacao () throws Exception {
         short profundidade_diretorio = 1;
         Pokemon pokemon;
