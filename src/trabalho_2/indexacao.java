@@ -7,6 +7,17 @@ import manipulacao_arquivo.Pokemon;
 import java.io.File;
 
 public class indexacao {
+    private RandomAccessFile diretorio;
+    private RandomAccessFile buckets;
+
+    indexacao (String pasta, String File) throws Exception {
+        //Criacao de pasta para os arquivos de indices
+        File arq = new File(pasta);
+        arq.mkdir();
+
+        diretorio = new RandomAccessFile(File + "/diretorio.db", "rw");
+        buckets = new RandomAccessFile(File + "/buckets.db", "rw");
+    }
 
     public static int funcao_hash (int chave, int profundidade) {
         return chave % (int) Math.pow(2, profundidade);
@@ -20,21 +31,21 @@ public class indexacao {
         return 2 + (id_chave * 8);
     }
 
-    public static void criar_novo_bucket(RandomAccessFile arq_buckets, RandomAccessFile arq_diretorio, int id_novo_bucket) throws Exception {
-        arq_diretorio.seek(0);
-        short profundidade = arq_diretorio.readShort();
+    public void criar_novo_bucket(int id_novo_bucket) throws Exception {
+        diretorio.seek(0);
+        short profundidade = diretorio.readShort();
 
         //Atualizacao de diretorio
-        arq_buckets.seek(arq_buckets.length());
-        arq_diretorio.seek(pesquisa_diretorio(id_novo_bucket));
-        arq_diretorio.writeLong(arq_buckets.getFilePointer());
+        buckets.seek(buckets.length());
+        diretorio.seek(pesquisa_diretorio(id_novo_bucket));
+        diretorio.writeLong(buckets.getFilePointer());
         
         //Inicializando bucket
-        arq_buckets.writeShort(profundidade);
-        arq_buckets.writeShort(0);
+        buckets.writeShort(profundidade);
+        buckets.writeShort(0);
         for (int i = 0; i < 10; i++) {
-            arq_buckets.writeInt(0);
-            arq_buckets.writeLong(0);
+            buckets.writeInt(0);
+            buckets.writeLong(0);
         }
     }
 
@@ -53,14 +64,14 @@ public class indexacao {
         }
     }
 
-    public static void dividir_bucket (RandomAccessFile bucket, RandomAccessFile diretorio, int id_bucket_dividir) throws Exception{
-        bucket.seek(pesquisa_diretorio(id_bucket_dividir));
+    public void dividir_bucket (int id_bucket_dividir) throws Exception{
+        buckets.seek(pesquisa_diretorio(id_bucket_dividir));
 
         diretorio.seek(0);
 
         //Leitura de profundidades
         short profundidade_diretorio = diretorio.readShort();
-        short profundidade_bucket = bucket.readShort();
+        short profundidade_bucket = buckets.readShort();
         profundidade_bucket ++;
 
         //Verificacao de alteracao da profundidade do diretorio
@@ -69,20 +80,25 @@ public class indexacao {
 
             diretorio.seek(0);
             diretorio.writeShort(profundidade_diretorio);
-            aumentar_profundidade_diretorio(bucket, diretorio, profundidade_diretorio);
+            aumentar_profundidade_diretorio(buckets, diretorio, profundidade_diretorio);
         }
 
         //Atualiza profundidade e tamanho do bucket
-        bucket.writeShort(profundidade_bucket);
-        bucket.writeInt(0);
+        buckets.writeShort(profundidade_bucket);
+        buckets.writeInt(0);
 
         int[] id_registro = new int[10];
         long[] endereco_registro = new long[10];
 
         //Le os reistros no bucket
         for (int i = 0; i < 10; i++) {
-            id_registro[i] = bucket.readInt();
-            endereco_registro[i] = bucket.readLong();
+            id_registro[i] = buckets.readInt();
+            endereco_registro[i] = buckets.readLong();
+
+            //Inicializa bucket
+            buckets.seek(buckets.getFilePointer() - 12);
+            buckets.writeInt(0);
+            buckets.writeLong(0);
         }
 
         //redividindo registros
@@ -92,57 +108,79 @@ public class indexacao {
 
             //verifica se o novo bucket foi criado
             if (pesquisa_diretorio(hash) == pesquisa_diretorio(hash_anterior) && hash != hash_anterior) {
-                criar_novo_bucket(bucket, diretorio, hash);
+                criar_novo_bucket(hash);
             }
             
-            bucket.seek(pesquisa_diretorio(hash) + 2);
+            buckets.seek(pesquisa_diretorio(hash) + 2);
 
-            short tamanho = bucket.readShort();
-            long point = bucket.getFilePointer();
+            short tamanho = buckets.readShort();
+            long point = buckets.getFilePointer();
 
             //Colocando registro
-            bucket.seek(point + tamanho*12);
-            bucket.writeInt(id_registro[i]);
-            bucket.writeLong(endereco_registro[i]);
+            buckets.seek(point + tamanho*12);
+            buckets.writeInt(id_registro[i]);
+            buckets.writeLong(endereco_registro[i]);
             
             //Atualiza o tamanho
             tamanho++;
-            bucket.seek(point - 4);
-            bucket.writeInt(tamanho);
+            buckets.seek(point - 4);
+            buckets.writeInt(tamanho);
         }
     }
 
-    public static void incluir_novo_registro (RandomAccessFile bucket, RandomAccessFile diretorio, int id_registro, long endereco_registro) throws Exception {
+    public void incluir_novo_registro (int id_registro, long endereco_registro) throws Exception {
         diretorio.seek(0);
         int profundidade = diretorio.readShort();
         int hash = funcao_hash(id_registro, profundidade);
-        bucket.seek(pesquisa_diretorio(hash));
+        buckets.seek(pesquisa_diretorio(hash));
 
-        bucket.readShort();
+        buckets.readShort();
 
-        int tamanho = bucket.readShort();
+        long point = buckets.getFilePointer();
+        int tamanho = buckets.readShort();
 
         if (tamanho == 10) {
-            dividir_bucket(bucket, diretorio, tamanho);
+            dividir_bucket(tamanho);
+        }
+        
+        //Inclui o novo registro
+        buckets.seek(buckets.getFilePointer() + tamanho*12);
+        buckets.writeInt(id_registro);
+        buckets.writeLong(endereco_registro);
+
+        //Atualizacao de tamanho
+        tamanho++;
+        buckets.seek(point);
+        buckets.writeShort(tamanho);
+    }
+
+    public long ler_registro (int id) throws Exception {
+        diretorio.seek(0);
+        int hash = funcao_hash(id, diretorio.readShort());
+
+        buckets.seek(pesquisa_diretorio(hash));
+        buckets.readShort();
+
+        short tamanho = buckets.readShort();
+
+        for (int i = 0; i < tamanho; i++) {
+            if (id == buckets.readInt()) {
+                return buckets.readLong();
+            }
+            buckets.readLong();
         }
 
-        //Inclui o novo registro
-        bucket.seek(bucket.getFilePointer() + tamanho*12);
-        bucket.writeInt(id_registro);
-        bucket.writeLong(endereco_registro);
-    } 
+        return -1;
+    }
 
-    public static void inicializar_indexacao () throws Exception {
+
+    public void inicializar_indexacao () throws Exception {
         String diretorio_indices = "src/arquivos_de_indices";
 
-        //Criacao de pasta para os arquivos de indices
-        File arq = new File(diretorio_indices);
-        arq.mkdir();
-
-        //Criacao de arquivos de indices
-        RandomAccessFile diretorio = new RandomAccessFile(diretorio_indices + "/diretorio.db", "rw");
-        RandomAccessFile buckets = new RandomAccessFile(diretorio_indices + "/buckets.db", "rw");
         RandomAccessFile data_base = new RandomAccessFile("src/pokedex.db", "rw");
+
+        diretorio.setLength(0);
+        buckets.setLength(0);
 
         short profundidade_diretorio = 1;
 
@@ -151,7 +189,7 @@ public class indexacao {
 
         //Cria dois buckets iniciais
         for (int i = 0; i < 2; i ++) {
-            criar_novo_bucket(buckets, diretorio, profundidade_diretorio);
+            criar_novo_bucket(i);
         }
 
         data_base.readInt();
@@ -172,7 +210,7 @@ public class indexacao {
                 pokemon.fromByteArray(vet_byte_pokemon);
 
                 //Inclui nos arquivos indexados
-                incluir_novo_registro(buckets, diretorio, pokemon.getId(), endereco);
+                incluir_novo_registro(pokemon.getId(), endereco);
 
             } else {
                 //Pula o registro

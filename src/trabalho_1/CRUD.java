@@ -1,6 +1,7 @@
 package trabalho_1;
 
 import manipulacao_arquivo.Pokemon;
+import trabalho_2.indexacao;
 
 import java.io.RandomAccessFile;
 
@@ -51,24 +52,15 @@ public class CRUD {
         Pokemon pokemon = new Pokemon();
         byte[] poke_vet_antigo;
 
-        arq.seek(0);//Inicializa o ponteiro
-        arq.readInt();
+        long endereco = indexacao.ler_registro(id);
 
-        while(arq.getFilePointer() < arq.length()){
-            
-            if(arq.readByte() == ' '){
-                poke_vet_antigo = new byte[arq.readInt()];
-                arq.read(poke_vet_antigo);
-                pokemon.fromByteArray(poke_vet_antigo);
-                
-                if(id == pokemon.getId()){
-                    return pokemon;
-                }
-            } else {
-                //Pula o registro
-                arq.seek(arq.readInt() + arq.getFilePointer());
-            }
+        if (endereco != -1) {
+            poke_vet_antigo = new byte[arq.readInt()];
+            arq.read(poke_vet_antigo);
+            pokemon.fromByteArray(poke_vet_antigo);
+            return pokemon;
         }
+
         return null;
     }
 
