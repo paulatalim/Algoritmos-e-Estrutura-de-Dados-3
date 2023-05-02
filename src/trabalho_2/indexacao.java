@@ -52,8 +52,8 @@ public class Indexacao {
         }
     }
 
-    public static void aumentar_profundidade_diretorio (RandomAccessFile arq_buckets, RandomAccessFile arq_diretorio, short profundidade_diretorio) throws Exception {
-        arq_diretorio.seek(arq_diretorio.length());
+    public void aumentar_profundidade_diretorio (short profundidade_diretorio) throws Exception {
+        diretorio.seek(diretorio.length());
 
         int qnt_buckets_cria;
 
@@ -62,7 +62,7 @@ public class Indexacao {
             qnt_buckets_cria = (int) Math.pow(2, profundidade_diretorio) / 2;
 
             for (int i = 0; i < qnt_buckets_cria; i++) {
-                arq_diretorio.writeLong(pesquisa_buckets(i));
+                diretorio.writeLong(pesquisa_buckets(i));
             }
         }
     }
@@ -83,7 +83,7 @@ public class Indexacao {
 
             diretorio.seek(0);
             diretorio.writeShort(profundidade_diretorio);
-            aumentar_profundidade_diretorio(buckets, diretorio, profundidade_diretorio);
+            aumentar_profundidade_diretorio(profundidade_diretorio);
         }
 
         //Atualiza profundidade e tamanho do bucket
@@ -131,10 +131,10 @@ public class Indexacao {
         }
     }
 
-    public void incluir_novo_registro (int id_registro, long endereco_registro) throws Exception {
+    public void incluir_novo_registro (int id, long endereco) throws Exception {
         diretorio.seek(0);
         int profundidade = diretorio.readShort();
-        int hash = funcao_hash(id_registro, profundidade);
+        int hash = funcao_hash(id, profundidade);
         buckets.seek(pesquisa_diretorio(hash));
 
         buckets.readShort();
@@ -148,8 +148,8 @@ public class Indexacao {
         
         //Inclui o novo registro
         buckets.seek(buckets.getFilePointer() + tamanho*12);
-        buckets.writeInt(id_registro);
-        buckets.writeLong(endereco_registro);
+        buckets.writeInt(id);
+        buckets.writeLong(endereco);
 
         //Atualizacao de tamanho
         tamanho++;

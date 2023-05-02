@@ -4,7 +4,6 @@ import manipulacao_arquivo.Pokemon;
 import trabalho_2.Indexacao;
 
 import java.io.RandomAccessFile;
-import java.io.ObjectInputStream.GetField;
 
 /**
  * Classe que possui metodos CRUD para manipular arquivo .db
