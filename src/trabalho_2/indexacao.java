@@ -22,19 +22,19 @@ public class Indexacao {
         data_base = new RandomAccessFile(url_data_base, "rw");
     }
 
-    public static int funcao_hash (int chave, int profundidade) {
+    private static int funcao_hash (int chave, int profundidade) {
         return chave % (int) Math.pow(2, profundidade);
     }
 
-    public static long pesquisa_buckets (int id_bucket) {
-        return id_bucket * 124;
-    }
+    // private static long pesquisa_buckets (int id_bucket) {
+    //     return id_bucket * 124;
+    // }
 
-    public static long pesquisa_diretorio (int id_chave) {
+    private static long pesquisa_diretorio (int id_chave) {
         return 2 + (id_chave * 8);
     }
 
-    public void criar_novo_bucket(int id_novo_bucket) throws Exception {
+    private void criar_novo_bucket(int id_novo_bucket) throws Exception {
         diretorio.seek(0);
         short profundidade = diretorio.readShort();
 
@@ -52,7 +52,7 @@ public class Indexacao {
         }
     }
 
-    public void aumentar_profundidade_diretorio (short profundidade_diretorio) throws Exception {
+    private void aumentar_profundidade_diretorio (short profundidade_diretorio) throws Exception {
         diretorio.seek(diretorio.length());
 
         int qnt_buckets_cria;
@@ -61,13 +61,16 @@ public class Indexacao {
         if (profundidade_diretorio != 1) {
             qnt_buckets_cria = (int) Math.pow(2, profundidade_diretorio) / 2;
 
+            int hash_antigo;
+
             for (int i = 0; i < qnt_buckets_cria; i++) {
-                diretorio.writeLong(pesquisa_buckets(i));
+                hash_antigo = funcao_hash(i, profundidade_diretorio - 1);
+                diretorio.writeLong(pesquisa_diretorio(hash_antigo));
             }
         }
     }
 
-    public void dividir_bucket (int id_bucket_dividir) throws Exception{
+    private void dividir_bucket (int id_bucket_dividir) throws Exception{
         buckets.seek(pesquisa_diretorio(id_bucket_dividir));
 
         diretorio.seek(0);
@@ -176,8 +179,6 @@ public class Indexacao {
         return -1;
     }
 
-
-    //Atualizar endereco
     public void atualizar_endereco (int id, long novo_endereco) throws Exception {
         diretorio.seek(0);
         int hash = funcao_hash(id, diretorio.readShort());
