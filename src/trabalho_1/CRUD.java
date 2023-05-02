@@ -1,7 +1,7 @@
 package trabalho_1;
 
 import manipulacao_arquivo.Pokemon;
-import trabalho_2.indexacao;
+import trabalho_2.Indexacao;
 
 import java.io.RandomAccessFile;
 
@@ -14,9 +14,11 @@ import java.io.RandomAccessFile;
  */
 public class CRUD {
     private RandomAccessFile arq;
+    private Indexacao index;
 
     public CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
+        index = new Indexacao ();
     }
 
     /*** OUTROS METODOS ***/
@@ -52,9 +54,12 @@ public class CRUD {
         Pokemon pokemon = new Pokemon();
         byte[] poke_vet_antigo;
 
-        long endereco = indexacao.ler_registro(id);
+        long endereco = index.ler_registro(id);
 
         if (endereco != -1) {
+            arq.seek(endereco);
+            arq.readByte();
+            
             poke_vet_antigo = new byte[arq.readInt()];
             arq.read(poke_vet_antigo);
             pokemon.fromByteArray(poke_vet_antigo);

@@ -6,17 +6,18 @@ import manipulacao_arquivo.Pokemon;
 
 import java.io.File;
 
-public class indexacao {
+public class Indexacao {
     private RandomAccessFile diretorio;
     private RandomAccessFile buckets;
 
-    indexacao (String pasta, String File) throws Exception {
+    public Indexacao () throws Exception {
         //Criacao de pasta para os arquivos de indices
-        File arq = new File(pasta);
+        String folder = "src/arquivos_de_indices";
+        File arq = new File(folder);
         arq.mkdir();
 
-        diretorio = new RandomAccessFile(File + "/diretorio.db", "rw");
-        buckets = new RandomAccessFile(File + "/buckets.db", "rw");
+        diretorio = new RandomAccessFile(folder + "/diretorio.db", "rw");
+        buckets = new RandomAccessFile(folder + "/buckets.db", "rw");
     }
 
     public static int funcao_hash (int chave, int profundidade) {
@@ -174,10 +175,8 @@ public class indexacao {
     }
 
 
-    public void inicializar_indexacao () throws Exception {
-        String diretorio_indices = "src/arquivos_de_indices";
-
-        RandomAccessFile data_base = new RandomAccessFile("src/pokedex.db", "rw");
+    public void inicializar_indexacao (String caminho_data_base) throws Exception {
+        RandomAccessFile data_base = new RandomAccessFile(caminho_data_base, "rw");
 
         diretorio.setLength(0);
         buckets.setLength(0);

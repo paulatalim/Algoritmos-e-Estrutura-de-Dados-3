@@ -8,7 +8,7 @@ import manipulacao_arquivo.Pokemon;
 import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
-import trabalho_2.indexacao;
+import trabalho_2.Indexacao;
 
 /**
  * Classe da aplicacao do programa
@@ -25,6 +25,7 @@ public class Main {
         int opcao, id;
         boolean opcao_invalida;
         CRUD crud;
+        Indexacao index;
         RandomAccessFile arq;
         Pokemon pokemon = new Pokemon();
         Scanner scanner = new Scanner (System.in);
@@ -32,7 +33,7 @@ public class Main {
         try {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
-
+            index = new Indexacao();
             
             
             //Exibe o inicio do programa
@@ -40,7 +41,7 @@ public class Main {
             
             //Importa arquivo .csv automatico
             Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
-            indexacao.inicializar_indexacao();
+            index.inicializar_indexacao(caminho_arq_db);
             Tela.exibir_fim_tela();
             
             //Repete o programa
@@ -60,7 +61,7 @@ public class Main {
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
                                         + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n"
                                         + "\t" + "0 - SAIR" + "\n");
-                                        System.out.println(indexacao.funcao_hash(9, 2));
+                                        System.out.println(Indexacao.funcao_hash(9, 2));
                     
                     if (opcao_invalida) {
                         Tela.println("\t" + "Opcao invalida. Tente novavemente." + "\n");
