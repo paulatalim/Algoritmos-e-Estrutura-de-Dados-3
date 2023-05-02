@@ -61,7 +61,6 @@ public class Main {
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
                                         + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n"
                                         + "\t" + "0 - SAIR" + "\n");
-                                        System.out.println(Indexacao.funcao_hash(9, 2));
                     
                     if (opcao_invalida) {
                         Tela.println("\t" + "Opcao invalida. Tente novavemente." + "\n");

@@ -26,10 +26,6 @@ public class Indexacao {
         return chave % (int) Math.pow(2, profundidade);
     }
 
-    // private static long pesquisa_buckets (int id_bucket) {
-    //     return id_bucket * 124;
-    // }
-
     private static long pesquisa_diretorio (int id_chave) {
         return 2 + (id_chave * 8);
     }
