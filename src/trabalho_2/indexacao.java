@@ -234,4 +234,46 @@ public class Indexacao {
             }
         }
     }
+
+    public boolean excluir_registro (int id) throws Exception {
+        diretorio.seek(0);
+        int hash = funcao_hash(id, diretorio.readShort());
+
+        buckets.seek(pesquisa_diretorio(hash));
+        buckets.readShort();
+
+        short tamanho = buckets.readShort();
+
+        for (int i = 0; i < tamanho; i++) {
+            //Encontra o id
+            if (id == buckets.readInt()) {
+
+                buckets.seek(buckets.getFilePointer() - 4);
+
+                //Remanejo no bucket
+                while (i < tamanho-1) {
+                    long id_atual = buckets.getFilePointer();
+                    buckets.seek(buckets.getFilePointer()+12);
+                    int id_prox = buckets.readInt();
+                    long endereco_prox = buckets.readLong();
+
+                    buckets.seek(id_atual);
+                    buckets.writeInt(id_prox);
+                    buckets.writeLong(endereco_prox);
+
+                    i++;
+                }
+
+                //reescrevendo bucket
+                //Atualiza o tamanho
+                tamanho--;
+                buckets.seek(pesquisa_diretorio(hash));
+                buckets.writeShort(tamanho);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

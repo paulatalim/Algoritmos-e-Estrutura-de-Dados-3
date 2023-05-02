@@ -130,30 +130,14 @@ public class CRUD {
      * @return se excluiu ou nao o registro
      * @throws Exception
      */
-    public boolean excluir(int id) throws Exception{
-        Pokemon pokemon = new Pokemon();
-        byte[]poke_vet_antigo;
-        
-        arq.seek(0);//Inicializa o ponteiro
-        arq.readInt();
+    public boolean excluir(int id) throws Exception{        
+        long endereco = index.ler_registro(id);
 
-        while(arq.getFilePointer()<arq.length()){
-
-            long ponteiro = arq.getFilePointer();
-            if(arq.readByte() == ' '){
-                poke_vet_antigo = new byte[arq.readInt()];
-                arq.read(poke_vet_antigo);
-                pokemon.fromByteArray(poke_vet_antigo);
-
-                if(id == pokemon.getId()){
-                    arq.seek(ponteiro);
-                    arq.writeByte('*');
-                    return true;
-                }
-            } else{
-                //Pula o registro
-                arq.seek(arq.readInt() + arq.getFilePointer());
-            }
+        if (endereco != -1) {
+            index.excluir_registro(id);
+            arq.seek(endereco);
+            arq.writeByte('*');
+            return true;
         }
 
         return false;
