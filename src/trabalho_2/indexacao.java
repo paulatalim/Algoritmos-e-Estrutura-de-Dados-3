@@ -1,11 +1,9 @@
 package trabalho_2;
 
 import java.io.RandomAccessFile;
-import java.security.PublicKey;
+import java.io.File;
 
 import manipulacao_arquivo.Pokemon;
-
-import java.io.File;
 
 public class Indexacao {
     private RandomAccessFile diretorio;
