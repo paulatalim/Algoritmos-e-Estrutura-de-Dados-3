@@ -1,6 +1,7 @@
 package trabalho_2;
 
 import java.io.RandomAccessFile;
+import java.security.PublicKey;
 
 import manipulacao_arquivo.Pokemon;
 
@@ -147,20 +148,14 @@ public class Indexacao {
 
     public void incluir_novo_registro (int id, long endereco) throws Exception {
         diretorio.seek(0);
-        int profundidade = diretorio.readShort();
-        int hash = funcao_hash(id, profundidade);
+        int hash = funcao_hash(id, diretorio.readShort());
 
-        if (hash == 23) {
-            System.out.println("ola");
-        }
-        long endereco1 = pesquisa_diretorio(hash);
         diretorio.seek(pesquisa_diretorio(hash));
         buckets.seek(diretorio.readLong());
-        endereco1 = buckets.getFilePointer();
         buckets.readShort();
 
         long point = buckets.getFilePointer();
-        int tamanho = buckets.readShort();
+        short tamanho = buckets.readShort();
 
         while (tamanho >= 10) {
             dividir_bucket(hash);
@@ -169,7 +164,9 @@ public class Indexacao {
             diretorio.seek(0);
             hash = funcao_hash(id, diretorio.readShort());
             diretorio.seek(pesquisa_diretorio(hash));
+
             buckets.seek(diretorio.readLong());
+            buckets.readShort();
             point = buckets.getFilePointer();
             tamanho = buckets.readShort();
         }
@@ -185,11 +182,17 @@ public class Indexacao {
         buckets.writeShort(tamanho);
     }
 
-    public long ler_registro (int id) throws Exception {
+    public long endereco_bucket (int id) throws Exception {
         diretorio.seek(0);
         int hash = funcao_hash(id, diretorio.readShort());
 
-        buckets.seek(pesquisa_diretorio(hash));
+        diretorio.seek(pesquisa_diretorio(hash));
+
+        return diretorio.readLong();
+    }
+
+    public long ler_registro (int id) throws Exception {
+        buckets.seek(endereco_bucket(id));
         buckets.readShort();
 
         short tamanho = buckets.readShort();
@@ -205,10 +208,7 @@ public class Indexacao {
     }
 
     public void atualizar_endereco (int id, long novo_endereco) throws Exception {
-        diretorio.seek(0);
-        int hash = funcao_hash(id, diretorio.readShort());
-
-        buckets.seek(pesquisa_diretorio(hash));
+        buckets.seek(endereco_bucket(id));
 
         short tamanho = buckets.readShort();
 
@@ -252,7 +252,7 @@ public class Indexacao {
                 pokemon = new Pokemon();
                 pokemon.fromByteArray(vet_byte_pokemon);
 
-                if (pokemon.getId() == 250) {
+                if (pokemon.getId() == 21) {
                     System.out.println("oi");
                 }
                 // System.out.println(pokemon.getId());
