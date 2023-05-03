@@ -61,14 +61,21 @@ public class Indexacao {
 
             for (int i = 0; i < qnt_buckets_cria; i++) {
                 hash_antigo = funcao_hash(i, profundidade_diretorio - 1);
-                diretorio.writeLong(pesquisa_diretorio(hash_antigo));
+                
+                diretorio.seek(pesquisa_diretorio(hash_antigo));
+                long endereco = diretorio.readLong();
+
+                diretorio.seek(diretorio.length());
+                diretorio.writeLong(endereco);
             }
         }
     }
 
-    private void dividir_bucket (int id_bucket_dividir) throws Exception{
-        buckets.seek(pesquisa_diretorio(id_bucket_dividir));
-
+    private void dividir_bucket (int id_bucket_dividir) throws Exception {
+        diretorio.seek(pesquisa_diretorio(id_bucket_dividir));
+        long endereco_bucket = diretorio.readLong();
+        buckets.seek(endereco_bucket);
+       
         diretorio.seek(0);
 
         //Leitura de profundidades
@@ -86,8 +93,9 @@ public class Indexacao {
         }
 
         //Atualiza profundidade e tamanho do bucket
+        buckets.seek(endereco_bucket);
         buckets.writeShort(profundidade_bucket);
-        buckets.writeInt(0);
+        buckets.writeShort(0);
 
         int[] id_registro = new int[10];
         long[] endereco_registro = new long[10];
@@ -108,12 +116,19 @@ public class Indexacao {
             int hash_anterior = funcao_hash(id_registro[i], profundidade_bucket-1);
             int hash = funcao_hash(id_registro[i], profundidade_bucket);
 
+            diretorio.seek(pesquisa_diretorio(hash_anterior));
+            long endereco_anterior = diretorio.readLong();
+
+            diretorio.seek(pesquisa_diretorio(hash));
+            long endereco_atual = diretorio.readLong();
+
             //verifica se o novo bucket foi criado
-            if (pesquisa_diretorio(hash) == pesquisa_diretorio(hash_anterior) && hash != hash_anterior) {
+            if (endereco_anterior == endereco_atual && hash != hash_anterior) {
                 criar_novo_bucket(hash);
             }
             
-            buckets.seek(pesquisa_diretorio(hash) + 2);
+            diretorio.seek(pesquisa_diretorio(hash));
+            buckets.seek(diretorio.readLong() + 2);
 
             short tamanho = buckets.readShort();
             long point = buckets.getFilePointer();
@@ -125,8 +140,8 @@ public class Indexacao {
             
             //Atualiza o tamanho
             tamanho++;
-            buckets.seek(point - 4);
-            buckets.writeInt(tamanho);
+            buckets.seek(point - 2);
+            buckets.writeShort(tamanho);
         }
     }
 
@@ -134,15 +149,29 @@ public class Indexacao {
         diretorio.seek(0);
         int profundidade = diretorio.readShort();
         int hash = funcao_hash(id, profundidade);
-        buckets.seek(pesquisa_diretorio(hash));
 
+        if (hash == 23) {
+            System.out.println("ola");
+        }
+        long endereco1 = pesquisa_diretorio(hash);
+        diretorio.seek(pesquisa_diretorio(hash));
+        buckets.seek(diretorio.readLong());
+        endereco1 = buckets.getFilePointer();
         buckets.readShort();
 
         long point = buckets.getFilePointer();
         int tamanho = buckets.readShort();
 
-        if (tamanho == 10) {
+        while (tamanho >= 10) {
             dividir_bucket(hash);
+
+            //Recalculando hash
+            diretorio.seek(0);
+            hash = funcao_hash(id, diretorio.readShort());
+            diretorio.seek(pesquisa_diretorio(hash));
+            buckets.seek(diretorio.readLong());
+            point = buckets.getFilePointer();
+            tamanho = buckets.readShort();
         }
         
         //Inclui o novo registro
@@ -222,6 +251,11 @@ public class Indexacao {
 
                 pokemon = new Pokemon();
                 pokemon.fromByteArray(vet_byte_pokemon);
+
+                if (pokemon.getId() == 250) {
+                    System.out.println("oi");
+                }
+                // System.out.println(pokemon.getId());
 
                 //Inclui nos arquivos indexados
                 incluir_novo_registro(pokemon.getId(), endereco);
