@@ -59,7 +59,7 @@ public class Main {
                                         + "\t" + "2 - LER pokemon" + "\n "
                                         + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
-                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n"
+                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" + "6 - mostra td"
                                         + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
@@ -71,7 +71,7 @@ public class Main {
                     Tela.limpar_console();
 
                     opcao_invalida = true;
-                } while (opcao < 0 || opcao > 5);
+                } while (opcao < 0 || opcao > 6);
     
                 switch (opcao) {
                     case 1:
@@ -151,8 +151,12 @@ public class Main {
 
                     case 5:
                         Ordenacao_externa.ordenar_registros(arq);
+                        index.inicializar_indexacao();
                         break;
                     
+                    case 6:
+                        crud.ler_td();
+                        break;
                     case 0:
                         Tela.exibir_tela_agradecimentos();
                         break;

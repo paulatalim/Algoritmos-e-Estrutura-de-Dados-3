@@ -77,7 +77,7 @@ public class Indexacao {
         profundidade_bucket ++;
 
         //Verificacao de alteracao da profundidade do diretorio
-        if (profundidade_diretorio == profundidade_bucket) {
+        if (profundidade_diretorio < profundidade_bucket) {
             profundidade_diretorio ++;
 
             diretorio.seek(0);
@@ -142,7 +142,7 @@ public class Indexacao {
         int tamanho = buckets.readShort();
 
         if (tamanho == 10) {
-            dividir_bucket(tamanho);
+            dividir_bucket(hash);
         }
         
         //Inclui o novo registro
@@ -208,6 +208,7 @@ public class Indexacao {
             criar_novo_bucket(i);
         }
 
+        data_base.seek(0);
         data_base.readInt();
 
         while (data_base.getFilePointer() < data_base.length()) {
@@ -230,47 +231,5 @@ public class Indexacao {
                 data_base.seek(data_base.readInt() + data_base.getFilePointer());
             }
         }
-    }
-
-    public boolean excluir_registro (int id) throws Exception {
-        diretorio.seek(0);
-        int hash = funcao_hash(id, diretorio.readShort());
-
-        buckets.seek(pesquisa_diretorio(hash));
-        buckets.readShort();
-
-        short tamanho = buckets.readShort();
-
-        for (int i = 0; i < tamanho; i++) {
-            //Encontra o id
-            if (id == buckets.readInt()) {
-
-                buckets.seek(buckets.getFilePointer() - 4);
-
-                //Remanejo no bucket
-                while (i < tamanho-1) {
-                    long id_atual = buckets.getFilePointer();
-                    buckets.seek(buckets.getFilePointer()+12);
-                    int id_prox = buckets.readInt();
-                    long endereco_prox = buckets.readLong();
-
-                    buckets.seek(id_atual);
-                    buckets.writeInt(id_prox);
-                    buckets.writeLong(endereco_prox);
-
-                    i++;
-                }
-
-                //reescrevendo bucket
-                //Atualiza o tamanho
-                tamanho--;
-                buckets.seek(pesquisa_diretorio(hash));
-                buckets.writeShort(tamanho);
-
-                return true;
-            }
-        }
-
-        return false;
     }
 }

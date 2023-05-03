@@ -62,12 +62,13 @@ public class CRUD {
 
         if (endereco != -1) {
             arq.seek(endereco);
-            arq.readByte();
-            
-            poke_vet_antigo = new byte[arq.readInt()];
-            arq.read(poke_vet_antigo);
-            pokemon.fromByteArray(poke_vet_antigo);
-            return pokemon;
+
+            if (arq.readByte() == ' ') {
+                poke_vet_antigo = new byte[arq.readInt()];
+                arq.read(poke_vet_antigo);
+                pokemon.fromByteArray(poke_vet_antigo);
+                return pokemon;
+            }
         }
 
         return null;
@@ -90,34 +91,37 @@ public class CRUD {
         if (endereco != -1) {
             //Lendo registro antigo
             arq.seek(endereco);
-            arq.readByte();
-            poke_vet_antigo = new byte[arq.readInt()];
-            arq.read(poke_vet_antigo);
-            pokemon.fromByteArray(poke_vet_antigo);
 
-            poke_vet_atualizado = poke.toByteArray();
+            if (arq.readByte() == ' ') {
+            
+                poke_vet_antigo = new byte[arq.readInt()];
+                arq.read(poke_vet_antigo);
+                pokemon.fromByteArray(poke_vet_antigo);
 
-            //Verifica o tamanho do novo registro
-            if(poke_vet_atualizado.length <= poke_vet_antigo.length){
-                arq.seek(endereco);
-                arq.writeByte(' ');
-                arq.writeInt(poke_vet_antigo.length);
-            } else {
-                arq.writeByte('*');
+                poke_vet_atualizado = poke.toByteArray();
 
-                //Posiciona o ponteiro no final do arquivo
-                arq.seek(arq.length());
+                //Verifica o tamanho do novo registro
+                if(poke_vet_atualizado.length <= poke_vet_antigo.length){
+                    arq.seek(endereco);
+                    arq.writeByte(' ');
+                    arq.writeInt(poke_vet_antigo.length);
+                } else {
+                    arq.writeByte('*');
 
-                //Atualiza arquivos index
-                index.atualizar_endereco(poke.getId(), arq.getFilePointer());
+                    //Posiciona o ponteiro no final do arquivo
+                    arq.seek(arq.length());
 
-                arq.writeByte(' ');
-                arq.writeInt(poke_vet_atualizado.length);
+                    //Atualiza arquivos index
+                    index.atualizar_endereco(poke.getId(), arq.getFilePointer());
+
+                    arq.writeByte(' ');
+                    arq.writeInt(poke_vet_atualizado.length);
+                }
+
+                //Escreve o registro
+                arq.write(poke_vet_atualizado);
+                return true;
             }
-
-            //Escreve o registro
-            arq.write(poke_vet_atualizado);
-            return true;
         }
 
         return false;
@@ -134,12 +138,23 @@ public class CRUD {
         long endereco = index.ler_registro(id);
 
         if (endereco != -1) {
-            index.excluir_registro(id);
             arq.seek(endereco);
             arq.writeByte('*');
             return true;
         }
 
         return false;
+    }
+
+    public void ler_td () throws Exception {
+        Pokemon poke;
+        arq.seek(0);
+        int tam = arq.readInt();
+        int i;
+        for (i = 1; i <= tam; i++) {
+            poke = ler(i);
+
+            System.out.println(poke.getId() + " - " + poke.getNome() + "\t\t\t");
+        }
     }
 }
