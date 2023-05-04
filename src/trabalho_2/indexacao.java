@@ -263,11 +263,20 @@ public class Indexacao {
         return -1;
     }
 
-    public void atualizar_endereco (int id, long novo_endereco) throws Exception {
+    /**
+     * Atualiza o endereco de um registro 
+     * nos arquivos indexados
+     * 
+     * @param id do registro a ser atualizado
+     * @param novo_endereco a ser substituido
+     * @throws Exception
+     */
+    public void atualizar_registro (int id, long novo_endereco) throws Exception {
         buckets.seek(endereco_bucket(id));
 
         short tamanho = buckets.readShort();
 
+        //Localiza o registro no bucket
         for (int i = 0; i < tamanho; i++) {
             if (id == buckets.readInt()) {
                buckets.writeLong(novo_endereco);
