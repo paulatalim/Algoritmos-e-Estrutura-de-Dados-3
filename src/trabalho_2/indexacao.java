@@ -48,6 +48,13 @@ public class Indexacao {
         return 2 + (chave * 8);
     }
 
+    /**
+     * Cria um novo bucket no arquivo com todos os elementos zerados 
+     * e profundidade igual a profundidade do diretorio e atualiza o diretorio
+     * 
+     * @param id_novo_bucket
+     * @throws Exception
+     */
     private void criar_novo_bucket(int id_novo_bucket) throws Exception {
         diretorio.seek(0);
         short profundidade = diretorio.readShort();
