@@ -247,12 +247,22 @@ public class Indexacao {
         buckets.writeShort(tamanho);
     }
 
-    public long ler_registro (int id) throws Exception {
+    /**
+     * Pesquisa nos arquivos indexado o registro
+     * 
+     * @param id do registro a ser pesquisado
+     * @return Endereco do registro na base de dados ou -1, 
+     * caso nao encontrar
+     * 
+     * @throws Exception
+     */
+    public long buscar_registro (int id) throws Exception {
         buckets.seek(endereco_bucket(id));
         buckets.readShort();
 
         short tamanho = buckets.readShort();
 
+        //Localiza registro no bucket
         for (int i = 0; i < tamanho; i++) {
             if (id == buckets.readInt()) {
                 return buckets.readLong();
