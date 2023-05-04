@@ -82,7 +82,7 @@ public class Tela {
     }
 
     /**
-     * Exibe a tela fnal, a tela de agradecimentos
+     * Exibe a tela final, a tela de agradecimentos
      */
     public static void exibir_tela_agradecimentos () {
         System.out.println (  "\n\t"       + "Deligando poke-sistema ..."       + "\n\n\n"
