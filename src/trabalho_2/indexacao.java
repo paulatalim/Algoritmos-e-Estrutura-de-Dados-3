@@ -73,26 +73,34 @@ public class Indexacao {
         }
     }
 
-    private void aumentar_profundidade_diretorio (short profundidade_diretorio) throws Exception {
-        diretorio.seek(diretorio.length());
+    private void aumentar_profundidade_diretorio () throws Exception {
+        int hash_antigo;
+        long endereco;
 
-        int qnt_buckets_cria;
+        //Leitura da profundidade do diretorio
+        diretorio.seek(0);
+        short profundidade = diretorio.readShort();
+        profundidade++;
+
+        //Atualizacao da profundidade no diretorio
+        diretorio.seek(0);
+        diretorio.writeShort(profundidade);
 
         //Calcula a quantidade de buckets a ser criado
-        if (profundidade_diretorio != 1) {
-            qnt_buckets_cria = (int) Math.pow(2, profundidade_diretorio) / 2;
+        int qnt_buckets = (int) Math.pow(2, profundidade) / 2;
 
-            int hash_antigo;
+        //Reposicionando o ponteiro
+        diretorio.seek(diretorio.length());
 
-            for (int i = 0; i < qnt_buckets_cria; i++) {
-                hash_antigo = calcular_hash(i, profundidade_diretorio - 1);
-                
-                diretorio.seek(endereco_chave_no_diretorio(hash_antigo));
-                long endereco = diretorio.readLong();
+        //Adiciona os novos enderecos
+        for (int i = 0; i < qnt_buckets; i++) {
+            hash_antigo = calcular_hash(i, profundidade - 1);
+            
+            diretorio.seek(endereco_chave_no_diretorio(hash_antigo));
+            endereco = diretorio.readLong();
 
-                diretorio.seek(diretorio.length());
-                diretorio.writeLong(endereco);
-            }
+            diretorio.seek(diretorio.length());
+            diretorio.writeLong(endereco);
         }
     }
 
@@ -110,11 +118,7 @@ public class Indexacao {
 
         //Verificacao de alteracao da profundidade do diretorio
         if (profundidade_diretorio < profundidade_bucket) {
-            profundidade_diretorio ++;
-
-            diretorio.seek(0);
-            diretorio.writeShort(profundidade_diretorio);
-            aumentar_profundidade_diretorio(profundidade_diretorio);
+            aumentar_profundidade_diretorio();
         }
 
         //Atualiza profundidade e tamanho do bucket
