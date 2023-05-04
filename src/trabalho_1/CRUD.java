@@ -38,7 +38,7 @@ public class CRUD {
         arq.seek(arq.length());//Apontando pro ultimo espaço do arquivo
 
         //Inclui arquivo na indexacao
-        index.incluir_novo_registro(id, arq.getFilePointer());
+        index.incluir_registro(id, arq.getFilePointer());
 
         //Escreve o registro
         arq.writeByte(' ');//Lapde
@@ -58,7 +58,7 @@ public class CRUD {
         Pokemon pokemon = new Pokemon();
         byte[] poke_vet_antigo;
 
-        long endereco = index.ler_registro(id);
+        long endereco = index.buscar_registro(id);
 
         if (endereco != -1) {
             arq.seek(endereco);
@@ -86,7 +86,7 @@ public class CRUD {
         byte[] poke_vet_antigo;
         byte[] poke_vet_atualizado;
 
-        long endereco = index.ler_registro(poke.getId());
+        long endereco = index.buscar_registro(poke.getId());
 
         if (endereco != -1) {
             //Lendo registro antigo
@@ -112,7 +112,7 @@ public class CRUD {
                     arq.seek(arq.length());
 
                     //Atualiza arquivos index
-                    index.atualizar_endereco(poke.getId(), arq.getFilePointer());
+                    index.atualizar_registro(poke.getId(), arq.getFilePointer());
 
                     arq.writeByte(' ');
                     arq.writeInt(poke_vet_atualizado.length);
@@ -135,7 +135,7 @@ public class CRUD {
      * @throws Exception
      */
     public boolean excluir(int id) throws Exception{        
-        long endereco = index.ler_registro(id);
+        long endereco = index.buscar_registro(id);
 
         if (endereco != -1) {
             arq.seek(endereco);
