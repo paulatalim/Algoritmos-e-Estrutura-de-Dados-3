@@ -10,6 +10,12 @@ public class Indexacao {
     private RandomAccessFile buckets;
     private RandomAccessFile data_base;
 
+    /**
+     * Construtor da classe
+     * 
+     * @param url_data_base , arquivo a ser indexado
+     * @throws Exception
+     */
     public Indexacao (String url_data_base) throws Exception {
         //Criacao de pasta para os arquivos de indices
         String folder = "src/arquivos_de_indices";
@@ -31,7 +37,6 @@ public class Indexacao {
     private static int calcular_hash (int chave, int profundidade) {
         return chave % (int) Math.pow(2, profundidade);
     }
-
 
     /**
      * Encontra no diretorio a localizacao do endereco da chave
