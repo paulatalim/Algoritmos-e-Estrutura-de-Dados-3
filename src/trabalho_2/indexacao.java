@@ -32,8 +32,15 @@ public class Indexacao {
         return chave % (int) Math.pow(2, profundidade);
     }
 
-    private static long pesquisa_diretorio (int id_chave) {
-        return 2 + (id_chave * 8);
+
+    /**
+     * Encontra no diretorio a localizacao do endereco da chave
+     * 
+     * @param chave a ser localizada
+     * @return endereco da localizacao no diretorio
+     */
+    private static long endereco_chave_no_diretorio (int chave) {
+        return 2 + (chave * 8);
     }
 
     private void criar_novo_bucket(int id_novo_bucket) throws Exception {
@@ -42,7 +49,7 @@ public class Indexacao {
 
         //Atualizacao de diretorio
         buckets.seek(buckets.length());
-        diretorio.seek(pesquisa_diretorio(id_novo_bucket));
+        diretorio.seek(endereco_chave_no_diretorio(id_novo_bucket));
         diretorio.writeLong(buckets.getFilePointer());
         
         //Inicializando bucket
@@ -68,7 +75,7 @@ public class Indexacao {
             for (int i = 0; i < qnt_buckets_cria; i++) {
                 hash_antigo = calcular_hash(i, profundidade_diretorio - 1);
                 
-                diretorio.seek(pesquisa_diretorio(hash_antigo));
+                diretorio.seek(endereco_chave_no_diretorio(hash_antigo));
                 long endereco = diretorio.readLong();
 
                 diretorio.seek(diretorio.length());
@@ -78,7 +85,7 @@ public class Indexacao {
     }
 
     private void dividir_bucket (int id_bucket_dividir) throws Exception {
-        diretorio.seek(pesquisa_diretorio(id_bucket_dividir));
+        diretorio.seek(endereco_chave_no_diretorio(id_bucket_dividir));
         long endereco_bucket = diretorio.readLong();
         buckets.seek(endereco_bucket);
        
@@ -122,10 +129,10 @@ public class Indexacao {
             int hash_anterior = calcular_hash(id_registro[i], profundidade_bucket-1);
             int hash = calcular_hash(id_registro[i], profundidade_bucket);
 
-            diretorio.seek(pesquisa_diretorio(hash_anterior));
+            diretorio.seek(endereco_chave_no_diretorio(hash_anterior));
             long endereco_anterior = diretorio.readLong();
 
-            diretorio.seek(pesquisa_diretorio(hash));
+            diretorio.seek(endereco_chave_no_diretorio(hash));
             long endereco_atual = diretorio.readLong();
 
             //verifica se o novo bucket foi criado
@@ -133,7 +140,7 @@ public class Indexacao {
                 criar_novo_bucket(hash);
             }
             
-            diretorio.seek(pesquisa_diretorio(hash));
+            diretorio.seek(endereco_chave_no_diretorio(hash));
             buckets.seek(diretorio.readLong() + 2);
 
             short tamanho = buckets.readShort();
@@ -155,7 +162,7 @@ public class Indexacao {
         diretorio.seek(0);
         int hash = calcular_hash(id, diretorio.readShort());
 
-        diretorio.seek(pesquisa_diretorio(hash));
+        diretorio.seek(endereco_chave_no_diretorio(hash));
 
         return diretorio.readLong();
     }
@@ -164,7 +171,7 @@ public class Indexacao {
         diretorio.seek(0);
         int hash = calcular_hash(id, diretorio.readShort());
 
-        diretorio.seek(pesquisa_diretorio(hash));
+        diretorio.seek(endereco_chave_no_diretorio(hash));
         buckets.seek(diretorio.readLong());
         buckets.readShort();
 
@@ -177,7 +184,7 @@ public class Indexacao {
             //Recalculando hash
             diretorio.seek(0);
             hash = calcular_hash(id, diretorio.readShort());
-            diretorio.seek(pesquisa_diretorio(hash));
+            diretorio.seek(endereco_chave_no_diretorio(hash));
 
             buckets.seek(diretorio.readLong());
             buckets.readShort();
