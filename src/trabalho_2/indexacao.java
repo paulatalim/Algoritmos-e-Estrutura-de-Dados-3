@@ -21,7 +21,14 @@ public class Indexacao {
         data_base = new RandomAccessFile(url_data_base, "rw");
     }
 
-    private static int funcao_hash (int chave, int profundidade) {
+    /**
+     * Calcula o hash do numero
+     * 
+     * @param chave numero a ser calculado o hash
+     * @param profundidade do diretorio
+     * @return resultado da funcao hash
+     */
+    private static int calcular_hash (int chave, int profundidade) {
         return chave % (int) Math.pow(2, profundidade);
     }
 
@@ -59,7 +66,7 @@ public class Indexacao {
             int hash_antigo;
 
             for (int i = 0; i < qnt_buckets_cria; i++) {
-                hash_antigo = funcao_hash(i, profundidade_diretorio - 1);
+                hash_antigo = calcular_hash(i, profundidade_diretorio - 1);
                 
                 diretorio.seek(pesquisa_diretorio(hash_antigo));
                 long endereco = diretorio.readLong();
@@ -112,8 +119,8 @@ public class Indexacao {
 
         //redividindo registros
         for (int i = 0; i < 10; i++) {
-            int hash_anterior = funcao_hash(id_registro[i], profundidade_bucket-1);
-            int hash = funcao_hash(id_registro[i], profundidade_bucket);
+            int hash_anterior = calcular_hash(id_registro[i], profundidade_bucket-1);
+            int hash = calcular_hash(id_registro[i], profundidade_bucket);
 
             diretorio.seek(pesquisa_diretorio(hash_anterior));
             long endereco_anterior = diretorio.readLong();
@@ -146,7 +153,7 @@ public class Indexacao {
 
     private long endereco_bucket (int id) throws Exception {
         diretorio.seek(0);
-        int hash = funcao_hash(id, diretorio.readShort());
+        int hash = calcular_hash(id, diretorio.readShort());
 
         diretorio.seek(pesquisa_diretorio(hash));
 
@@ -155,7 +162,7 @@ public class Indexacao {
 
     public void incluir_novo_registro (int id, long endereco) throws Exception {
         diretorio.seek(0);
-        int hash = funcao_hash(id, diretorio.readShort());
+        int hash = calcular_hash(id, diretorio.readShort());
 
         diretorio.seek(pesquisa_diretorio(hash));
         buckets.seek(diretorio.readLong());
@@ -169,7 +176,7 @@ public class Indexacao {
 
             //Recalculando hash
             diretorio.seek(0);
-            hash = funcao_hash(id, diretorio.readShort());
+            hash = calcular_hash(id, diretorio.readShort());
             diretorio.seek(pesquisa_diretorio(hash));
 
             buckets.seek(diretorio.readLong());
