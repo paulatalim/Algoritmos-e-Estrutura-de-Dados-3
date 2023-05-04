@@ -186,9 +186,17 @@ public class Indexacao {
         }
     }
 
-    private long endereco_bucket (int id) throws Exception {
+    /**
+     * Atraves da chave, encontra o possivel endereco do 
+     * bucket onde ele pode estar armazenado
+     * 
+     * @param chave a ser localizada
+     * @return endereco do bucket da chave
+     * @throws Exception
+     */
+    private long endereco_bucket (int chave) throws Exception {
         diretorio.seek(0);
-        int hash = calcular_hash(id, diretorio.readShort());
+        int hash = calcular_hash(chave, diretorio.readShort());
 
         diretorio.seek(endereco_chave_no_diretorio(hash));
 
