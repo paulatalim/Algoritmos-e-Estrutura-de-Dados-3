@@ -211,9 +211,9 @@ public class Indexacao {
      * @throws Exception
      */
     public void incluir_registro (int id, long endereco) throws Exception {
+        //Localiza o bucket a ser inserido o registro
         diretorio.seek(0);
         int hash = calcular_hash(id, diretorio.readShort());
-
         diretorio.seek(endereco_chave_no_diretorio(hash));
         buckets.seek(diretorio.readLong());
         buckets.readShort();
@@ -221,6 +221,7 @@ public class Indexacao {
         long point = buckets.getFilePointer();
         short tamanho = buckets.readShort();
 
+        //Caso a capacidade do bucket estoura
         while (tamanho >= 10) {
             dividir_bucket(hash);
 
