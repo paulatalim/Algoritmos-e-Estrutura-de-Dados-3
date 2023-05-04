@@ -144,6 +144,15 @@ public class Indexacao {
         }
     }
 
+    private long endereco_bucket (int id) throws Exception {
+        diretorio.seek(0);
+        int hash = funcao_hash(id, diretorio.readShort());
+
+        diretorio.seek(pesquisa_diretorio(hash));
+
+        return diretorio.readLong();
+    }
+
     public void incluir_novo_registro (int id, long endereco) throws Exception {
         diretorio.seek(0);
         int hash = funcao_hash(id, diretorio.readShort());
@@ -178,15 +187,6 @@ public class Indexacao {
         tamanho++;
         buckets.seek(point);
         buckets.writeShort(tamanho);
-    }
-
-    public long endereco_bucket (int id) throws Exception {
-        diretorio.seek(0);
-        int hash = funcao_hash(id, diretorio.readShort());
-
-        diretorio.seek(pesquisa_diretorio(hash));
-
-        return diretorio.readLong();
     }
 
     public long ler_registro (int id) throws Exception {

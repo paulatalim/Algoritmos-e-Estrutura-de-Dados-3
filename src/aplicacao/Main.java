@@ -59,7 +59,8 @@ public class Main {
                                         + "\t" + "2 - LER pokemon" + "\n "
                                         + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
-                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" + "6 - mostra td"
+                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
+                                        + "\t" + "6 - mostra td"
                                         + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
