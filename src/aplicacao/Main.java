@@ -41,7 +41,7 @@ public class Main {
             
             //Importa arquivo .csv automatico
             Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
-            index.inicializar_indexacao();
+            index.indexar_data_base();
             Tela.exibir_fim_tela();
             
             //Repete o programa
@@ -60,7 +60,7 @@ public class Main {
                                         + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
                                         + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
-                                        + "\t" + "6 - mostra td"
+                                        + "\t" + "6 - mostra td" + "\n"
                                         + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
@@ -152,7 +152,7 @@ public class Main {
 
                     case 5:
                         Ordenacao_externa.ordenar_registros(arq);
-                        index.inicializar_indexacao();
+                        index.indexar_data_base();
                         break;
                     
                     case 6:

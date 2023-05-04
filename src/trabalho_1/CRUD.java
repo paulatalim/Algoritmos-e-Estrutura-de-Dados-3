@@ -16,6 +16,12 @@ public class CRUD {
     private RandomAccessFile arq;
     private Indexacao index;
 
+    /**
+     * Construtor da classe
+     * 
+     * @param caminho_arq data base
+     * @throws Exception
+     */
     public CRUD (String caminho_arq) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
         index = new Indexacao (caminho_arq);
@@ -31,7 +37,7 @@ public class CRUD {
     public void criar (Pokemon pokemon) throws Exception {
         arq.seek(0);
         int id = arq.readInt();
-        pokemon.setId(++id);//Gerar um id aleatorio
+        pokemon.setId(++id);
 
         arq.seek(0);//Acessou o inicio do arquivo
         arq.writeInt(id);//Reescreveu o inicio
@@ -41,8 +47,8 @@ public class CRUD {
         index.incluir_registro(id, arq.getFilePointer());
 
         //Escreve o registro
-        arq.writeByte(' ');//Lapde
-        byte[] poke_vet = pokemon.toByteArray();//Criou poke_vet_antigor de byte com as informaçoes do pokemon
+        arq.writeByte(' ');
+        byte[] poke_vet = pokemon.toByteArray();//Criou poke_vet_antigor de byte com as informacoes do pokemon
         arq.writeInt(poke_vet.length);//Escreveu o tamanho no arquivo
         arq.write(poke_vet);//Escreve as informaçoes pro arquivo
     }
@@ -99,7 +105,7 @@ public class CRUD {
                 pokemon.fromByteArray(poke_vet_antigo);
 
                 poke_vet_atualizado = poke.toByteArray();
-                
+
                 arq.seek(endereco);
 
                 //Verifica o tamanho do novo registro
@@ -155,7 +161,8 @@ public class CRUD {
         for (i = 1; i <= tam; i++) {
             poke = ler(i);
 
-            System.out.println(poke.getId() + " - " + poke.getNome() + "\t\t\t");
+            if (poke != null)
+                System.out.println(poke.getId() + " - " + poke.getNome() + "\t\t\t");
         }
     }
 }

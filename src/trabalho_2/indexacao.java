@@ -26,6 +26,10 @@ public class Indexacao {
         buckets = new RandomAccessFile(folder + "/buckets.db", "rw");
         data_base = new RandomAccessFile(url_data_base, "rw");
     }
+    
+    public void setData_base(RandomAccessFile data_base) {
+        this.data_base = data_base;
+    }
 
     /**
      * Calcula o hash do numero
@@ -300,7 +304,7 @@ public class Indexacao {
      * Cria arquivos indexados para uma base de dados
      * @throws Exception
      */
-    public void inicializar_indexacao () throws Exception {
+    public void indexar_data_base () throws Exception {
         short profundidade_diretorio = 1;
         Pokemon pokemon;
         byte[] vet_byte_pokemon;
