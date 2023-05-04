@@ -110,8 +110,14 @@ public class Indexacao {
         }
     }
 
-    private void dividir_bucket (int id_bucket_dividir) throws Exception {
-        diretorio.seek(endereco_chave_no_diretorio(id_bucket_dividir));
+    /**
+     * Divide o bucket quanto sua capacidade estoura
+     * 
+     * @param id_bucket a ser dividido
+     * @throws Exception
+     */
+    private void dividir_bucket (int id_bucket) throws Exception {
+        diretorio.seek(endereco_chave_no_diretorio(id_bucket));
         long endereco_bucket = diretorio.readLong();
         buckets.seek(endereco_bucket);
        
@@ -135,7 +141,7 @@ public class Indexacao {
         int[] id_registro = new int[10];
         long[] endereco_registro = new long[10];
 
-        //Le os reistros no bucket
+        //Le os registros no bucket
         for (int i = 0; i < 10; i++) {
             id_registro[i] = buckets.readInt();
             endereco_registro[i] = buckets.readLong();
@@ -146,7 +152,7 @@ public class Indexacao {
             buckets.writeLong(0);
         }
 
-        //redividindo registros
+        //Redividindo os registros
         for (int i = 0; i < 10; i++) {
             int hash_anterior = calcular_hash(id_registro[i], profundidade_bucket-1);
             int hash = calcular_hash(id_registro[i], profundidade_bucket);
