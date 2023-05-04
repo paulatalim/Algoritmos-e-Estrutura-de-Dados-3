@@ -295,6 +295,10 @@ public class Indexacao {
         }
     }
 
+    /**
+     * Cria arquivos indexados para uma base de dados
+     * @throws Exception
+     */
     public void inicializar_indexacao () throws Exception {
         short profundidade_diretorio = 1;
         Pokemon pokemon;
@@ -326,11 +330,6 @@ public class Indexacao {
 
                 pokemon = new Pokemon();
                 pokemon.fromByteArray(vet_byte_pokemon);
-
-                if (pokemon.getId() == 21) {
-                    System.out.println("oi");
-                }
-                // System.out.println(pokemon.getId());
 
                 //Inclui nos arquivos indexados
                 incluir_registro(pokemon.getId(), endereco);
