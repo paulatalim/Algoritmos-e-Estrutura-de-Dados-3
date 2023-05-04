@@ -284,6 +284,7 @@ public class Indexacao {
     public void atualizar_registro (int id, long novo_endereco) throws Exception {
         buckets.seek(endereco_bucket(id));
 
+        buckets.readShort();
         short tamanho = buckets.readShort();
 
         //Localiza o registro no bucket

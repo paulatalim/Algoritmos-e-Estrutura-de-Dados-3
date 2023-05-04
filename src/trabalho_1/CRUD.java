@@ -99,10 +99,11 @@ public class CRUD {
                 pokemon.fromByteArray(poke_vet_antigo);
 
                 poke_vet_atualizado = poke.toByteArray();
+                
+                arq.seek(endereco);
 
                 //Verifica o tamanho do novo registro
                 if(poke_vet_atualizado.length <= poke_vet_antigo.length){
-                    arq.seek(endereco);
                     arq.writeByte(' ');
                     arq.writeInt(poke_vet_antigo.length);
                 } else {
