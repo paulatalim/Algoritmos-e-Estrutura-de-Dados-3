@@ -203,7 +203,14 @@ public class Indexacao {
         return diretorio.readLong();
     }
 
-    public void incluir_novo_registro (int id, long endereco) throws Exception {
+    /**
+     * Inclui um novo registro nos arquivos indexados
+     * 
+     * @param id do registro
+     * @param endereco da localizacao do registro na base de dados 
+     * @throws Exception
+     */
+    public void incluir_registro (int id, long endereco) throws Exception {
         diretorio.seek(0);
         int hash = calcular_hash(id, diretorio.readShort());
 
@@ -306,7 +313,7 @@ public class Indexacao {
                 // System.out.println(pokemon.getId());
 
                 //Inclui nos arquivos indexados
-                incluir_novo_registro(pokemon.getId(), endereco);
+                incluir_registro(pokemon.getId(), endereco);
 
             } else {
                 //Pula o registro
