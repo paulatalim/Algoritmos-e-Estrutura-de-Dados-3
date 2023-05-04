@@ -73,6 +73,12 @@ public class Indexacao {
         }
     }
 
+    /**
+     * Aumenta a profundidade do diretorio, colocando os 
+     * enderecos do buckets antigos nos novos id criado no diretorio
+     * 
+     * @throws Exception
+     */
     private void aumentar_profundidade_diretorio () throws Exception {
         int hash_antigo;
         long endereco;
