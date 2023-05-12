@@ -25,12 +25,12 @@ public class Indexacao {
      */
     public Indexacao (String url_data_base) throws Exception {
         //Criacao de pasta para os arquivos de indices
-        String folder = "src/arquivos_de_indices";
-        File arq = new File(folder);
-        arq.mkdir();
+        String name_folder = "src/arquivos_de_indices";
+        File folder = new File(name_folder);
+        folder.mkdir();
 
-        diretorio = new RandomAccessFile(folder + "/diretorio.db", "rw");
-        buckets = new RandomAccessFile(folder + "/buckets.db", "rw");
+        diretorio = new RandomAccessFile(name_folder + "/diretorio.db", "rw");
+        buckets = new RandomAccessFile(name_folder + "/buckets.db", "rw");
         data_base = new RandomAccessFile(url_data_base, "rw");
     }
     

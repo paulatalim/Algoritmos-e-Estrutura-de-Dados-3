@@ -3,14 +3,37 @@ package trabalho_2;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.File;
 
-public class compressao {
+public class Compressao {
+    private int version;
+    private String arq_data_base_name;
+    private String folder_url;
+    private FileInputStream arq_entrada;
+    private FileOutputStream arq_saida;
 
-    public static void comprimir(String inputFile, String outputFile) throws IOException {
+    public Compressao (String arq_data_base, String folder_name) {        
+        this.folder_url = "src/" + folder_name;
+        File folder = new File(this.folder_url);
+        folder.mkdir();
+
+        version = 1;
+        this.arq_data_base_name = arq_data_base;
+    }
+
+    /**
+     * Cria um arquivo comprimido para um arquivo data base
+     * @param inputFile arquivo a ser comprimido
+     * @throws IOException
+     */
+    public void comprimir (String inputFile) throws IOException {
 
         //Abre o arquivo de entrada e cria o arquivo de saida
-        FileInputStream entrada= new FileInputStream(inputFile); //Entrada 
-        FileOutputStream saida = new FileOutputStream(outputFile); //Saida
+        arq_entrada= new FileInputStream(inputFile); //Entrada 
+        arq_saida = new FileOutputStream(folder_url + "/" + arq_data_base_name + "Compressao" + version + ".db"); //Saida
+
+        //Atualizacao de versao
+        version++;
 
         //Cria o dicionario
         char[] dicionario = new char[10000];
@@ -31,18 +54,18 @@ public class compressao {
         }
         
         // Adiciona o espaço
-        dicionario[dicionario.length-1] = ' ';
+        dicionario[62] = ' ';
 
         //Preencher o resto do dicionario
         // Cria o codificador LZW
         LZWEncoder codificador = new LZWEncoder(dicionario);
 
         // Codifica os dados de entrada e grava a saída no arquivo
-        codificador.codificar(entrada, saida);
+        codificador.codificar(arq_entrada, arq_saida);
 
         // Fecha os arquivos
-        entrada.close();
-        saida.close();
+        arq_entrada.close();
+        arq_saida.close();
     }
 }
 

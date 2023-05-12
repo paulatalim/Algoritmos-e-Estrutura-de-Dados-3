@@ -1,7 +1,7 @@
 package trabalho_2;
 import java.io.*;
 
-public class decodificacao {
+public class Decodificacao {
     
     public static void decompress(String inputFile, String outputFile) throws IOException {
 

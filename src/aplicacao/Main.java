@@ -9,7 +9,7 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
-import trabalho_2.compressao;
+import trabalho_2.Compressao;
 
 /**
  * Classe da aplicacao do programa
@@ -27,6 +27,7 @@ public class Main {
         boolean opcao_invalida;
         CRUD crud;
         Indexacao index;
+        Compressao compressao;
         RandomAccessFile arq;
         Pokemon pokemon = new Pokemon();
         Scanner scanner = new Scanner (System.in);
@@ -35,6 +36,7 @@ public class Main {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
             index = new Indexacao(caminho_arq_db);
+            compressao = new Compressao("Pokedex", "arquivos_comprimidos");
             
             
             //Exibe o inicio do programa
@@ -159,9 +161,7 @@ public class Main {
                     
 
                     case 6:
-                        compressao.comprimir(caminho_arq_db,"comprimido.db");
-                        // LZWEncoder.codificador()
-                        //codificador.codificar(entrada, saida);
+                        compressao.comprimir(caminho_arq_db);
                         break;
 
                     case 7:
