@@ -5,6 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.File;
 
+/**
+ * Classe para compactar arquivos data base
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Compressao {
     private int version;
     private String arq_data_base_name;
@@ -12,11 +19,21 @@ public class Compressao {
     private FileInputStream arq_entrada;
     private FileOutputStream arq_saida;
 
-    public Compressao (String arq_data_base, String folder_name) {        
+    /**
+     * Construtor da classe
+     * 
+     * @param arq_data_base a ser compressada
+     * @param folder_name nome da pasta para salvar os arquivos compactados
+     */
+    public Compressao (String arq_data_base, String folder_name) {  
+        //Atribuicao a url da pasta      
         this.folder_url = "src/" + folder_name;
+
+        //Criacao de pasta para os arquivos comprimidos
         File folder = new File(this.folder_url);
         folder.mkdir();
 
+        //Inicializa a versao
         version = 1;
         this.arq_data_base_name = arq_data_base;
     }
