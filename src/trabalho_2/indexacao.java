@@ -5,6 +5,13 @@ import java.io.File;
 
 import manipulacao_arquivo.Pokemon;
 
+/**
+ * Classe que opera os arquivos indexados
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Indexacao {
     private RandomAccessFile diretorio;
     private RandomAccessFile buckets;

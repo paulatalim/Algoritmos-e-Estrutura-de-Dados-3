@@ -9,6 +9,7 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
+import trabalho_2.compressao;
 
 /**
  * Classe da aplicacao do programa
@@ -60,7 +61,8 @@ public class Main {
                                         + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
                                         + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
                                         + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
-                                        + "\t" + "6 - mostra td" + "\n"
+                                        + "\t" + "6 - COMPRIMIR o arquivo " + "\n"
+                                        + "\t" + "7 - DESCOMPRIMIR o arquivo" + "\n" 
                                         + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
@@ -72,7 +74,7 @@ public class Main {
                     Tela.limpar_console();
 
                     opcao_invalida = true;
-                } while (opcao < 0 || opcao > 6);
+                } while (opcao < 0 || opcao > 7);
     
                 switch (opcao) {
                     case 1:
@@ -155,9 +157,17 @@ public class Main {
                         index.indexar_data_base();
                         break;
                     
+
                     case 6:
-                        crud.ler_td();
+                        compressao.comprimir(caminho_arq_db,"comprimido.db");
+                        // LZWEncoder.codificador()
+                        //codificador.codificar(entrada, saida);
                         break;
+
+                    case 7:
+
+                        break;
+
                     case 0:
                         Tela.exibir_tela_agradecimentos();
                         break;
