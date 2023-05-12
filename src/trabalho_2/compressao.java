@@ -38,12 +38,19 @@ public class Compressao {
         this.arq_data_base_name = arq_data_base;
     }
 
+    private float calcular_eficacia_compressao (FileOutputStream arq_comprimido, FileInputStream arq_original) throws IOException {
+        return (1 - ((float) arq_comprimido.getChannel().size() / arq_original.getChannel().size())) * 100;
+    }
+
     /**
      * Cria um arquivo comprimido para um arquivo data base
      * @param inputFile arquivo a ser comprimido
      * @throws IOException
      */
     public void comprimir (String inputFile) throws IOException {
+
+        //Marca o tempo de inicio da execucao do algoritimo
+        long tempo_inicial = System.currentTimeMillis();
 
         //Abre o arquivo de entrada e cria o arquivo de saida
         arq_entrada= new FileInputStream(inputFile); //Entrada 
@@ -80,9 +87,21 @@ public class Compressao {
         // Codifica os dados de entrada e grava a saída no arquivo
         codificador.codificar(arq_entrada, arq_saida);
 
+        //Calcula o tempo de execucao do programa
+        long tempo_final = System.currentTimeMillis();
+        System.out.println("Tempo de execucao: " + (tempo_final - tempo_inicial) + " ms");
+
+        //Calculo da eficiencia da compressao
+        System.out.println("Eficiencia: " + calcular_eficacia_compressao(arq_saida, arq_entrada));
+
         // Fecha os arquivos
         arq_entrada.close();
         arq_saida.close();
+
+        
+
+        
+
     }
 }
 
