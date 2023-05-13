@@ -775,7 +775,7 @@ pokedex_number,name,generation,is_legendary,is_mythical,species,type_1,type_2,he
 666,Vivillon,6,0,0,Scale pokemon,Bug,Flying,1.2,17,80,52,50,90,50,89
 667,Litleo,6,0,0,Lion Cub pokemon,Fire,Normal,0.6,13.5,62,50,58,73,54,72
 668,Pyroar,6,0,0,Royal pokemon,Fire,Normal,1.5,81.5,86,68,72,109,66,106
-669,Flabébé,6,0,0,Single Bloom pokemon,Fairy,,0.1,0.1,44,38,39,61,79,42
+669,Flabebe,6,0,0,Single Bloom pokemon,Fairy,,0.1,0.1,44,38,39,61,79,42
 670,Floette,6,0,0,Single Bloom pokemon,Fairy,,0.2,0.9,54,45,47,75,98,52
 671,Florges,6,0,0,Garden pokemon,Fairy,,1.1,10,78,65,68,112,154,75
 672,Skiddo,6,0,0,Mount pokemon,Grass,,0.9,31,66,65,48,62,57,52
