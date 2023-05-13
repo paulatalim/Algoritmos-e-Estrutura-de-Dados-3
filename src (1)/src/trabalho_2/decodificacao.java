@@ -1,9 +1,9 @@
 package trabalho_2;
 import java.io.*;
 import java.util.HashMap;
-//import java.util.Map;
+import java.util.Map;
 
-public class Decodificacao {
+public class decodificacao {
     
     public static void descomprimir(String inputFile, String outputFile) throws IOException {
 

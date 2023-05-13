@@ -9,8 +9,9 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
-import trabalho_2.Compressao;
-import trabalho_2.Decodificacao;
+import trabalho_2.LZWEncoder;
+import trabalho_2.compressao;
+import trabalho_2.decodificacao;
 
 /**
  * Classe da aplicacao do programa
@@ -21,14 +22,13 @@ import trabalho_2.Decodificacao;
  */
 public class Main {
     public static void main(String[] args) {
-        String caminho_arq_csv = "src/pokedex.csv";
-        String caminho_arq_db = "src/pokedex.db";
+        String caminho_arq_csv = "C:/Users/maria/Documents/MARIANA/FACULDADE/3° PERIODO/AED 3/TRABALHO PRATICO PARTE 2/src/teste_compac.csv";
+        String caminho_arq_db = "C:/Users/maria/Documents/MARIANA/FACULDADE/3° PERIODO/AED 3/TRABALHO PRATICO PARTE 2/src/teste_compac.db";
 
         int opcao, id;
         boolean opcao_invalida;
         CRUD crud;
         Indexacao index;
-        Compressao compressao;
         RandomAccessFile arq;
         Pokemon pokemon = new Pokemon();
         Scanner scanner = new Scanner (System.in);
@@ -37,7 +37,6 @@ public class Main {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
             index = new Indexacao(caminho_arq_db);
-            compressao = new Compressao("Pokedex", "arquivos_comprimidos");
             
             
             //Exibe o inicio do programa
@@ -162,11 +161,14 @@ public class Main {
                     
 
                     case 6:
-                        compressao.comprimir(caminho_arq_db);
+                        compressao.comprimir(caminho_arq_db,"comprimido.db");
                         break;
 
                     case 7:
-                        Decodificacao.descomprimir("src/comprimido.db", "SAIDA.db");
+
+                        decodificacao.descomprimir("C:/Users/maria/Documents/MARIANA/FACULDADE/3° PERIODO/AED 3/TRABALHO PRATICO PARTE 2/src/comprimido.db", "SAIDA.db");
+                        //decodificacao.descomprimir(caminho_arq_csv, caminho_arq_db);
+                        //"comprimido.db"
                         break;
 
                     case 0:

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * Classe para compactar arquivos data base
@@ -80,9 +81,18 @@ public class Compressao {
         // Adiciona o espaço
         dicionario[62] = ' ';
 
+        // Cria o HashMap
+        HashMap<String, Integer> dicionario_hash = new HashMap<>();
+
+        // Loop pelo array "dicionario"
+        for (int i = 0; i < dicionario.length; i++) {
+            // Converte o caractere em uma String e adiciona a chave-valor correspondente ao HashMap
+            dicionario_hash.put(Character.toString(dicionario[i]), i);
+        }
         //Preencher o resto do dicionario
+
         // Cria o codificador LZW
-        LZWEncoder codificador = new LZWEncoder(dicionario);
+        LZWEncoder codificador = new LZWEncoder(dicionario_hash, arq_entrada, arq_saida);
 
         // Codifica os dados de entrada e grava a saída no arquivo
         codificador.codificar(arq_entrada, arq_saida);
@@ -97,11 +107,6 @@ public class Compressao {
         // Fecha os arquivos
         arq_entrada.close();
         arq_saida.close();
-
-        
-
-        
-
     }
 }
 

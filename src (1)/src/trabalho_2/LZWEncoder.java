@@ -2,18 +2,18 @@ package trabalho_2;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 
 public class LZWEncoder {
-    private Map<String, Integer> dicionario;
+    public Map<String, Integer> dicionario;
     private int proximoIndice;
 
-    public LZWEncoder(HashMap<String, Integer> hashMap2, FileInputStream entrada, FileOutputStream saida) throws FileNotFoundException {
+    public LZWEncoder(HashMap<String, Integer> hashMap2,FileInputStream entrada, FileOutputStream saida) throws FileNotFoundException {
         this.dicionario = new HashMap<>(hashMap2);// Copia o dicionário passado como argumento
 
         // Obtém o índice do último elemento do dicionário atual
@@ -69,5 +69,5 @@ public class LZWEncoder {
 
     public HashMap<String, Integer> dicionario() {
         return null;
-    } 
+    }
 }
