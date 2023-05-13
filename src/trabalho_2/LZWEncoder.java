@@ -1,7 +1,6 @@
 package trabalho_2;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,11 +9,15 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 
 public class LZWEncoder {
-    private Map<String, Integer> dicionario;
+    private HashMap<String, Integer> dicionario;
     private int proximoIndice;
 
-    public LZWEncoder(HashMap<String, Integer> hashMap2, FileInputStream entrada, FileOutputStream saida) throws FileNotFoundException {
-        this.dicionario = new HashMap<>(hashMap2);// Copia o dicionário passado como argumento
+    public LZWEncoder(FileInputStream entrada, FileOutputStream saida) throws FileNotFoundException {
+        //Cria objeto do dicionario
+        dicionario = new HashMap<>();
+
+        //Preenche o dicionario
+        preencher_dicionario_inicial();
 
         // Obtém o índice do último elemento do dicionário atual
         int ultimoIndice = 0;
@@ -25,6 +28,28 @@ public class LZWEncoder {
         }
 
         this.proximoIndice = ultimoIndice + 1; // Define o próximo índice disponível
+    }
+
+    private void preencher_dicionario_inicial () {
+        int i;
+
+        // Adiciona as letras maiusculas
+        for (i = 0; i < 26; i++) {
+            this.dicionario.put(Character.toString((char)('A' + i)), i);
+        }
+
+        // Adiciona as letras minúsculas
+        for (i = 26; i < 52; i++){
+            this.dicionario.put(Character.toString((char)('a' + i - 26)), i);
+        }
+
+        // Adiciona os números
+        for (i = 52; i < 62; i++) {
+            this.dicionario.put(Character.toString((char)('0' + i - 52)), i);
+        }
+        
+        // Adiciona o espaço
+        this.dicionario.put(Character.toString(' '), 62);
     }
 
     //Coloca o indice da compactação no arquivo de saida
@@ -67,7 +92,7 @@ public class LZWEncoder {
         return dicionario.get(s);
     }
 
-    public HashMap<String, Integer> dicionario() {
-        return null;
+    public HashMap<String, Integer> getDicionario() {
+        return dicionario;
     } 
 }

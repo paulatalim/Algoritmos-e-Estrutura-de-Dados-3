@@ -13,11 +13,12 @@ public class Decodificacao {
 
         //acessa o dicionario
         HashMap<String, Integer> dicionario_hash2 = new HashMap<>();
-        LZWEncoder conferir = new LZWEncoder(dicionario_hash2, inputStream, outputStream);
-        dicionario_hash2.putAll(conferir.dicionario());
+        LZWEncoder conferir = new LZWEncoder(inputStream, outputStream);
+        dicionario_hash2.putAll(conferir.getDicionario());
        
         // Cria o objeto DataInputStream para ler o arquivo de entrada
-        DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(inputStream));
+        //FileInputStream file = new FileInputStream(inputFile); 
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
 
         // Variáveis auxiliares
         int tamanhoDicionario = dicionario_hash2.size();
