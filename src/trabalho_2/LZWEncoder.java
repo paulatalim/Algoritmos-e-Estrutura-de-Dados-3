@@ -1,18 +1,21 @@
 package trabalho_2;
 
 import java.util.HashMap;
-import java.io.FileNotFoundException;
+// import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
 public class LZWEncoder {
     private HashMap<String, Integer> dicionario;
     private int proximoIndice;
 
-    public LZWEncoder(FileInputStream entrada, FileOutputStream saida) throws FileNotFoundException {
+    public LZWEncoder() {
         //Cria objeto do dicionario
         dicionario = new HashMap<>();
 
@@ -32,7 +35,7 @@ public class LZWEncoder {
 
     private void preencher_dicionario_inicial () {
         int i;
-
+    
         // Adiciona as letras maiusculas
         for (i = 0; i < 26; i++) {
             this.dicionario.put(Character.toString((char)('A' + i)), i);
@@ -52,20 +55,21 @@ public class LZWEncoder {
         this.dicionario.put(Character.toString(' '), 62);
     }
 
+    //private void inserir (<T> variavel) {}
     //Coloca o indice da compactação no arquivo de saida
     public void codificar(FileInputStream entrada, FileOutputStream saida) throws IOException {
         // Cria um buffer de leitura para o arquivo de entrada
-        BufferedInputStream bufferEntrada = new BufferedInputStream(entrada);
+        DataInputStream bufferEntrada = new DataInputStream(entrada);
 
         // Cria um buffer de escrita para o arquivo de saída
-        BufferedOutputStream bufferSaida = new BufferedOutputStream(saida);
+        DataOutputStream bufferSaida = new DataOutputStream(saida);        
 
         // Inicializa a string atual com o primeiro caractere do arquivo de entrada
-        String atual = Character.toString((char) bufferEntrada.read());
+        String atual = Character.toString((char) bufferEntrada.readInt());
 
         // Enquanto houver dados de entrada
         int proximoCaractere;
-        while ((proximoCaractere = bufferEntrada.read()) != -1) {
+        while ((proximoCaractere = bufferEntrada.readInt()) != -1) {
             // Converte o próximo caractere para uma string
             String proximo = Character.toString((char) proximoCaractere);
 
@@ -76,7 +80,7 @@ public class LZWEncoder {
             // Senão, grava o índice da string atual no arquivo de saída, adiciona a string atual + próximo
             // caractere ao dicionário e atualiza a string atual para o próximo caractere
             else {
-                bufferSaida.write(criarCodigo(atual));
+                bufferSaida.writeInt(criarCodigo(atual));
                 dicionario.put(atual + proximo,proximoIndice++);
             }
         }

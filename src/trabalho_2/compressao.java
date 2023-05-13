@@ -60,29 +60,8 @@ public class Compressao {
         //Atualizacao de versao
         version++;
 
-        // //Cria o hash map
-        // HashMap<String, Integer> dicionario_hash = new HashMap<>();
-
-        // // Adiciona as letras maiusculas
-        // for (int i = 0; i < 26; i++) {
-        //     dicionario_hash.put(Character.toString((char)('A' + i)), i);
-        // }
-
-        // // Adiciona as letras minúsculas
-        // for(int i = 26; i < 52; i++){
-        //     dicionario_hash.put(Character.toString((char)('a' + i)), i);
-        // }
-
-        // // Adiciona os números
-        // for (int i = 52; i < 62; i++) {
-        //     dicionario_hash.put(Character.toString((char)('0' + i)), i);
-        // }
-        
-        // // Adiciona o espaço
-        // dicionario_hash.put(Character.toString(' '), 62);
-
         // Cria o codificador LZW
-        LZWEncoder codificador = new LZWEncoder(arq_entrada, arq_saida);
+        LZWEncoder codificador = new LZWEncoder();
 
         // Codifica os dados de entrada e grava a saída no arquivo
         codificador.codificar(arq_entrada, arq_saida);
