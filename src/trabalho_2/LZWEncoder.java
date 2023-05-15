@@ -22,38 +22,35 @@ public class LZWEncoder {
         //Preenche o dicionario
         preencher_dicionario_inicial();
 
-        // Obtém o índice do último elemento do dicionário atual
-        int ultimoIndice = 0;
-        for (int indice : this.dicionario.values()) {
-            if (indice > ultimoIndice) {
-                ultimoIndice = indice;
-            }
-        }
-
-        this.proximoIndice = ultimoIndice + 1; // Define o próximo índice disponível
+        this.proximoIndice = dicionario.size();
     }
 
     private void preencher_dicionario_inicial () {
-        int i;
+        // int i;
     
-        // Adiciona as letras maiusculas
-        for (i = 0; i < 26; i++) {
-            this.dicionario.put(Character.toString((char)('A' + i)), i);
-        }
+        // // Adiciona as letras maiusculas
+        // for (i = 0; i < 26; i++) {
+        //     this.dicionario.put(Character.toString((char)('A' + i)), i);
+        // }
 
-        // Adiciona as letras minúsculas
-        for (i = 26; i < 52; i++){
-            this.dicionario.put(Character.toString((char)('a' + i - 26)), i);
-        }
+        // // Adiciona as letras minúsculas
+        // for (i = 26; i < 52; i++){
+        //     this.dicionario.put(Character.toString((char)('a' + i - 26)), i);
+        // }
 
-        // Adiciona os números
-        for (i = 52; i < 62; i++) {
-            this.dicionario.put(Character.toString((char)('0' + i - 52)), i);
-        }
+        // // Adiciona os números
+        // for (i = 52; i < 62; i++) {
+        //     this.dicionario.put(Character.toString((char)('0' + i - 52)), i);
+        // }
         
-        // Adiciona o espaço
-        this.dicionario.put(" ", 62);
+        // // Adiciona o espaço
+        // this.dicionario.put(" ", 62);
+
+        for (int i = 0; i < 256; i++) {
+            this.dicionario.put(Character.toString((char) (byte) i), i);
+        }
     }
+
 
     // private String ler_proxima_mensagem (int chave, DataInputStream bufferEntrada) throws IOException {
     //     if (chave == 1 
@@ -96,29 +93,34 @@ public class LZWEncoder {
         // Inicializa a string atual com o primeiro caractere do arquivo de entrada
         String atual = Character.toString((char) bufferEntrada.readByte());
 
+        int cont = 0;
+
         // Enquanto houver dados de entrada
         while (entrada.available() > 0) {
+            if (proximoIndice == 290) {
+                System.out.println("he");
+            }
+            cont++;
+            System.out.println(cont);
             // Converte o próximo caractere para uma string
+
+
             String proximo = Character.toString((char) bufferEntrada.readByte());
 
             // Se a string atual + o próximo caractere estiverem no dicionário, atualiza a string atual
             if (dicionario.containsKey(atual + proximo)) {
                 atual += proximo;
-            } else if (!dicionario.containsKey(atual)) {
-                //Caso o caracter atual nao existir no docionario
-                dicionario.put(atual, proximoIndice++);
-                bufferSaida.write(criarCodigo(atual));
-                atual = proximo;
             } else {
                 //Registra no arquivo o atual e o atualiza
-                bufferSaida.write(criarCodigo(atual));
+                int cod = criarCodigo(atual);
+                bufferSaida.writeInt(criarCodigo(atual));
                 dicionario.put(atual + proximo, proximoIndice++);
                 atual = proximo;
             }
         }
     
         // Grava o código final da string atual no arquivo de saída
-        bufferSaida.write(criarCodigo(atual));
+        bufferSaida.writeInt(criarCodigo(atual));
     
         // Descarrega o buffer de escrita e fecha o arquivo de saída
         bufferSaida.flush();

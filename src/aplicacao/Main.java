@@ -166,7 +166,7 @@ public class Main {
                         break;
 
                     case 7:
-                        Decodificacao.descomprimir("src/arquivos_comprimidos/PokedexCompressao1.db", caminho_arq_db);
+                        Decodificacao.descomprimir("src/arquivos_comprimidos/PokedexCompressao3.db", caminho_arq_db);
                         break;
 
                     case 0:
