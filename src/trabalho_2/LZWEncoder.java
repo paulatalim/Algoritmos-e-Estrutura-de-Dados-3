@@ -4,8 +4,8 @@ import java.util.HashMap;
 // import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-// import java.io.BufferedInputStream;
-// import java.io.BufferedOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 
 import java.io.DataInputStream;
@@ -53,45 +53,38 @@ public class LZWEncoder {
         
         // Adiciona o espaço
         this.dicionario.put(" ", 62);
-
-        // Adiciona caracteres especiais contidos na base de dados
-        this.dicionario.put(".", 63);
-        this.dicionario.put("-", 64);
-        this.dicionario.put("'", 65);
-        this.dicionario.put("é", 66);
-        this.dicionario.put("%", 67);
-        this.dicionario.put(":", 67);
     }
 
-    private String ler_proxima_mensagem (int chave, DataInputStream bufferEntrada) throws IOException {
-        if (chave == 1 
-            || chave == 2 
-            || chave == 3 
-            || chave == 5 
-            || chave >= 10 && chave <= 15) 
-        {
-            //Caso ser inteiro
-            return Integer.toString(bufferEntrada.readInt());
+    // private String ler_proxima_mensagem (int chave, DataInputStream bufferEntrada) throws IOException {
+    //     if (chave == 1 
+    //         || chave == 2 
+    //         || chave == 3 
+    //         || chave == 5 
+    //         || chave >= 10 && chave <= 15) 
+    //     {
+    //         //Caso ser inteiro
+    //         return Integer.toString(bufferEntrada.readInt());
         
-        } else if (chave == 4 || chave == 6 || chave == 9) {
-            //Caso ser string
-            return bufferEntrada.readUTF();
-        } else if (chave == 7 || chave == 8) {
-            //Caso ser float
-            return Float.toString(bufferEntrada.readFloat());
+    //     } else if (chave == 4 || chave == 6 || chave == 9) {
+    //         //Caso ser string
+    //         return bufferEntrada.readUTF();
+    //     } else if (chave == 7 || chave == 8) {
+    //         //Caso ser float
+    //         return Float.toString(bufferEntrada.readFloat());
         
-        } else if (chave == 16 || chave == 17) {
-            //Caso ser booleano
-            return Boolean.toString(bufferEntrada.readBoolean());
-        } else if (chave == 0) {
-            //Caso ser byte
-            return Byte.toString(bufferEntrada.readByte());
-        }
+    //     } else if (chave == 16 || chave == 17) {
+    //         //Caso ser booleano
+    //         return Boolean.toString(bufferEntrada.readBoolean());
+    //     } else if (chave == 0) {
+    //         //Caso ser byte
+    //         return Byte.toString(bufferEntrada.readByte());
+    //     }
 
-        //Caso ser long
-        return Long.toString(bufferEntrada.readLong());
-    }
+    //     //Caso ser long
+    //     return Long.toString(bufferEntrada.readLong());
+    // }
 
+    //Coloca o indice da compactação no arquivo de saida
     //Coloca o indice da compactação no arquivo de saida
     public void codificar(FileInputStream entrada, FileOutputStream saida) throws IOException {
         // Cria um buffer de leitura para o arquivo de entrada
@@ -100,66 +93,32 @@ public class LZWEncoder {
         // Cria um buffer de escrita para o arquivo de saída
         DataOutputStream bufferSaida = new DataOutputStream(saida);
 
-
-        int chave = 0;
-
-
-        //Leitura do cabecalho
-        String mensagem = Integer.toString(bufferEntrada.readInt());
-        String proximo = null;
-
-
         // Inicializa a string atual com o primeiro caractere do arquivo de entrada
-        String atual = null;
+        String atual = Character.toString((char) bufferEntrada.readByte());
 
+        // Enquanto houver dados de entrada
         while (entrada.available() > 0) {
-            for (int i = 0; i < mensagem.length(); i ++) {
+            // Converte o próximo caractere para uma string
+            String proximo = Character.toString((char) bufferEntrada.readByte());
 
-                //Atribuicao da proxima letra da mensagem
-                if (atual == null) {
-                    atual = Character.toString(mensagem.charAt(i));
-                    proximo = Character.toString(mensagem.charAt(i+1));
-                    i++;
-                } else {
-                    proximo = Character.toString(mensagem.charAt(i));
-                }
-
-                // Se a string atual + o próximo caractere estiverem no dicionário, atualiza a string atual
-                if (dicionario.containsKey(atual + proximo)) {
-                    atual += proximo;
-                    proximo = null;
-                }
-                // Senão, grava o índice da string atual no arquivo de saída, adiciona a string atual + próximo
-                // caractere ao dicionário e atualiza a string atual para o próximo caractere
-                else {
-                    bufferSaida.writeInt(criarCodigo(atual));
-                    dicionario.put(atual + proximo, proximoIndice++);
-                    atual = proximo;
-                    proximo = null;
-                }
-            }
-
-            
-
-            //Le a proxima mensagem
-            mensagem = ler_proxima_mensagem(chave, bufferEntrada);
-            
-            if (chave == 3) {
-                System.out.println(mensagem);
-            }
-
-            //System.out.println(chave);
-            if (chave < 18) {
-                chave ++;
+            // Se a string atual + o próximo caractere estiverem no dicionário, atualiza a string atual
+            if (dicionario.containsKey(atual + proximo)) {
+                atual += proximo;
+            } else if (!dicionario.containsKey(atual)) {
+                //Caso o caracter atual nao existir no docionario
+                dicionario.put(atual, proximoIndice++);
+                bufferSaida.write(criarCodigo(atual));
+                atual = proximo;
             } else {
-                chave = 0;
+                //Registra no arquivo o atual e o atualiza
+                bufferSaida.write(criarCodigo(atual));
+                dicionario.put(atual + proximo, proximoIndice++);
+                atual = proximo;
             }
         }
-        
-        
     
         // Grava o código final da string atual no arquivo de saída
-        bufferSaida.writeInt(criarCodigo(atual));
+        bufferSaida.write(criarCodigo(atual));
     
         // Descarrega o buffer de escrita e fecha o arquivo de saída
         bufferSaida.flush();
