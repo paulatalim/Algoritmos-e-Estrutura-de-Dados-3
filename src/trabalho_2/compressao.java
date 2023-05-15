@@ -41,13 +41,20 @@ public class Compressao {
         this.data_base_src = data_base_src;
     }
 
+    /**
+     * Calcula a eficacia do algoritmo
+     * 
+     * @param arq_comprimido arquivo a ser comparado
+     * @param arq_original arquivo a ser comparado
+     * @return a eficia do algoritimo em porcentagem
+     * @throws IOException
+     */
     private float calcular_eficacia_compressao (FileOutputStream arq_comprimido, FileInputStream arq_original) throws IOException {
         return (1 - ((float) arq_comprimido.getChannel().size() / arq_original.getChannel().size())) * 100;
     }
 
     /**
      * Cria um arquivo comprimido para um arquivo data base
-     * @param inputFile arquivo a ser comprimido
      * @throws IOException
      */
     public void comprimir () throws IOException {
@@ -80,6 +87,17 @@ public class Compressao {
         arq_saida.close();
     }
 
+    /**
+     * Descompacta um arquivo
+     * 
+     * @param num_version numero da versao do 
+     * arquivo a descompactar
+     * 
+     * @return true (caso a descompactacao ocorrer
+     * com sucesso) false (caso nao encontrar o arquivo para descompactar)
+     * 
+     * @throws IOException
+     */
     public Boolean descomprimir (int num_version) throws IOException {
         //Caso a versao da compressao nao existir
         if (num_version >= version) {
@@ -97,6 +115,7 @@ public class Compressao {
         //Fecha os arquivos
         fis.close();
         fos.close();
+
         return true;
     }
 }
