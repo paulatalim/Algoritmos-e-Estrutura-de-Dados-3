@@ -1,6 +1,9 @@
 package trabalho_2;
 
 import java.io.IOException;
+
+import aplicacao.Tela;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.File;
@@ -57,8 +60,10 @@ public class Compressao {
      * Cria um arquivo comprimido para um arquivo data base
      * @throws IOException
      */
-    public void comprimir () throws IOException {
+    public void comprimir () throws Exception {
 
+        Tela.print("\n\t\t\t\t\t\t" + "*** POKE-COMPACTA ***" + "\n\n\n"
+                                    + "\t"+ "Iniciando compactacao..." + "\n");
         //Marca o tempo de inicio da execucao do algoritimo
         long tempo_inicial = System.currentTimeMillis();
 
@@ -72,15 +77,24 @@ public class Compressao {
         // Cria o codificador LZW
         LZWEncoder codificador = new LZWEncoder();
 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t" + "*** POKE-COMPACTA ***" + "\n\n\n"
+                            + "\t" + "Compactando ..." + "\n");
+
         // Codifica os dados de entrada e grava a saída no arquivo
         codificador.codificar(arq_entrada, arq_saida);
 
+        Tela.limpar_console();
+        Tela.println (  "\n\t\t\t\t\t" + "*** POKE-COMPACTA ***" + "\n\n\n"
+                            + "\t" + "Compactacao concluida com sucesso !!!" + "\n\n"
+                            + "\t" + "RESULTADOS:");
+
         //Calcula o tempo de execucao do programa
         long tempo_final = System.currentTimeMillis();
-        System.out.println("Tempo de execucao: " + (tempo_final - tempo_inicial) + " ms");
+        Tela.printlt("Tempo de execucao: " + (tempo_final - tempo_inicial) + " ms" + "\n");
 
         //Calculo da eficiencia da compressao
-        System.out.println("Eficiencia: " + calcular_eficacia_compressao(arq_saida, arq_entrada));
+        Tela.printlt("Eficiencia: " + calcular_eficacia_compressao(arq_saida, arq_entrada) + "%" + "\n");
 
         // Fecha os arquivos
         arq_entrada.close();
@@ -99,8 +113,10 @@ public class Compressao {
      * @throws IOException
      */
     public Boolean descomprimir (int num_version) throws IOException {
+        File arq = new File(folder_url + "/" + data_base_name + "Compressao" + num_version + ".db");
+
         //Caso a versao da compressao nao existir
-        if (num_version >= version) {
+        if (!arq.exists()) {
             return false;
         }
 

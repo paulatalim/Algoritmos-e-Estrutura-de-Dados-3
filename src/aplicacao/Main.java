@@ -57,15 +57,15 @@ public class Main {
                 do {
                     //Exibe o menu das opcoes
                     Tela.println ("\n\t\t\t\t\t" + "*** POKE-MENU ***" + "\n\n\n"
-                                        + "\t" + "O que deseja fazer em sua Pokedex:" + "\n\n"
-                                        + "\t" + "1 - CRIAR pokemon" + "\n"
-                                        + "\t" + "2 - LER pokemon" + "\n "
-                                        + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
-                                        + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
-                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
-                                        + "\t" + "6 - COMPRIMIR o arquivo " + "\n"
-                                        + "\t" + "7 - DESCOMPRIMIR o arquivo" + "\n" 
-                                        + "\t" + "0 - SAIR" + "\n");
+                                + "\t" + "O que deseja fazer em sua Pokedex:" + "\n\n"
+                                + "\t" + "1 - CRIAR pokemon" + "\n"
+                                + "\t" + "2 - LER pokemon" + "\n "
+                                + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
+                                + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
+                                + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
+                                + "\t" + "6 - COMPRIMIR o arquivo " + "\n"
+                                + "\t" + "7 - DESCOMPRIMIR o arquivo" + "\n" 
+                                + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
                         Tela.println("\t" + "Opcao invalida. Tente novavemente." + "\n");
@@ -80,8 +80,8 @@ public class Main {
     
                 switch (opcao) {
                     case 1:
-                        Tela.print("\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
-                                        + "\t\t\t\t\t"  + "Insira as novas informacoes" + "\n");
+                        Tela.print ( "\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
+                                    + "\t\t\t\t\t"  + "Insira as novas informacoes" + "\n");
                         //Cria novo pokemon
                         pokemon = entrada_dados.info_poke_novo();
                         crud.criar(pokemon);
@@ -93,8 +93,8 @@ public class Main {
                         break;
     
                     case 2:
-                        Tela.print("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
-                                        + "\t" + "Insira o id do pokemon procurado: ");
+                        Tela.print ( "\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
+                                    + "\t" + "Insira o id do pokemon procurado: ");
 
                         id = scanner.nextInt();
                         Tela.limpar_console();
@@ -105,15 +105,15 @@ public class Main {
                         if (pokemon != null) {
                             Tela.print(pokemon.toString());
                         } else {
-                            Tela.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
-                                                + "\t" + "Pokemon nao encontrado");
+                            Tela.println ( "\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
+                                        + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 3:
                         //Exibe o titulo da pagina e entrada de id
                         Tela.print ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n"
-                                            + "\t" + "Insira o id do pokemon a ter um update: ");
+                                    + "\t" + "Insira o id do pokemon a ter um update: ");
                         id = scanner.nextInt();
                         Tela.limpar_console();
 
@@ -133,17 +133,18 @@ public class Main {
                                     Tela.println("\n\t" + "Pokemon atualizado com sucesso!");
                                 } else {
                                     Tela.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
-                                                        + "\t" + "Pokemon nao encontrado");
+                                                + "\t" + "Pokemon nao encontrado");
                                 }
                             }
                         } else {
-                            Tela.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
-                                                + "\t" + "Pokemon nao encontrado");
+                            Tela.println ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
+                                        + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 4:
-                        Tela.print("\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
+                        //Deletar registro
+                        Tela.print ( "\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
                                         + "\t"+ "Insira o id do pokemon a ser deletado: "); 
                         id = scanner.nextInt();
 
@@ -155,16 +156,19 @@ public class Main {
                         break;
 
                     case 5:
+                        //Ordenacao externa da base de dados
                         Ordenacao_externa.ordenar_registros(arq);
                         index.indexar_data_base();
                         break;
                     
 
                     case 6:
+                        //Compactacao da base de dados
                         compressao.comprimir();
                         break;
 
                     case 7:
+                        //Descompactacao da base de dados
                         Tela.print("\n\t\t\t\t\t\t" + "*** POKE-DESCOMPACTAR ***" + "\n\n\n"
                                     + "\t"+ "Insira a versao da pokedex que deseja descompactar: ");
 
@@ -173,9 +177,9 @@ public class Main {
 
                         //Descompacta o arquivo
                         if (compressao.descomprimir(id)) {
-                            Tela.println("Pokedex descompactada com sucesso");
+                            Tela.println("\n\t" + "Pokedex descompactada com sucesso!");
                         } else {
-                            Tela.println("Versao pokedex nao encontrada");
+                            Tela.println("\n\t" + "Versao pokedex nao encontrada");
                         }
                         
                         break;

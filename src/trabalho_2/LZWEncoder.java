@@ -28,10 +28,10 @@ public class LZWEncoder {
         }
     }
 
-    private int buscar_index (String value) {
+    private short buscar_index (String value) {
         for (int i = 0; i < dicionario.size(); i++) {
             if (dicionario.get(i).equals(value)) {
-                return i;
+                return (short) i;
             }
         }
         return -1;
@@ -63,14 +63,14 @@ public class LZWEncoder {
                 atual += proximo;
             } else {
                 //Registra no arquivo o atual e o atualiza
-                bufferSaida.writeInt(buscar_index(atual));
+                bufferSaida.writeShort(buscar_index(atual));
                 dicionario.put(proximoIndice++, atual + proximo);
                 atual = proximo;
             }
         }
     
         // Grava o código final da string atual no arquivo de saída
-        bufferSaida.writeInt(buscar_index(atual));
+        bufferSaida.writeShort(buscar_index(atual));
     
         // Descarrega o buffer de escrita e fecha o arquivo de saída
         bufferSaida.flush();
@@ -87,7 +87,7 @@ public class LZWEncoder {
         int novoIndice = dicionario.size();
 
         //Leitura do primeiro objeto comprimido
-        int lido = dis.readInt();
+        int lido = (int) dis.readShort();
         String caminho = dicionario.get(lido);
 
         // Escreve o primeiro caractere no arquivo de saída
@@ -97,7 +97,7 @@ public class LZWEncoder {
         while (dis.available() > 0) {
 
             //Leitura do proximo codigo de mensagem comprimido
-            lido = dis.readInt();
+            lido = dis.readShort();
 
             // Adiciona o novo caminho ao dicionário
             if (lido == novoIndice) {
