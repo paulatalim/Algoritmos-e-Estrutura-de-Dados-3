@@ -1,18 +1,15 @@
 package trabalho_2;
 
 import java.util.HashMap;
-// import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 public class LZWEncoder {
-    private HashMap<String, Integer> dicionario;
+    private HashMap<Integer, String> dicionario;
     private int proximoIndice;
 
     public LZWEncoder() {
@@ -26,62 +23,26 @@ public class LZWEncoder {
     }
 
     private void preencher_dicionario_inicial () {
-        // int i;
-    
-        // // Adiciona as letras maiusculas
-        // for (i = 0; i < 26; i++) {
-        //     this.dicionario.put(Character.toString((char)('A' + i)), i);
-        // }
-
-        // // Adiciona as letras minúsculas
-        // for (i = 26; i < 52; i++){
-        //     this.dicionario.put(Character.toString((char)('a' + i - 26)), i);
-        // }
-
-        // // Adiciona os números
-        // for (i = 52; i < 62; i++) {
-        //     this.dicionario.put(Character.toString((char)('0' + i - 52)), i);
-        // }
-        
-        // // Adiciona o espaço
-        // this.dicionario.put(" ", 62);
-
         for (int i = 0; i < 256; i++) {
-            this.dicionario.put(Character.toString((char) (byte) i), i);
+            this.dicionario.put(i, Character.toString((char) (byte) i));
         }
     }
 
+    private int buscar_index (String value) {
+        for (int i = 0; i < dicionario.size(); i++) {
+            if (dicionario.get(i).equals(value)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-    // private String ler_proxima_mensagem (int chave, DataInputStream bufferEntrada) throws IOException {
-    //     if (chave == 1 
-    //         || chave == 2 
-    //         || chave == 3 
-    //         || chave == 5 
-    //         || chave >= 10 && chave <= 15) 
-    //     {
-    //         //Caso ser inteiro
-    //         return Integer.toString(bufferEntrada.readInt());
-        
-    //     } else if (chave == 4 || chave == 6 || chave == 9) {
-    //         //Caso ser string
-    //         return bufferEntrada.readUTF();
-    //     } else if (chave == 7 || chave == 8) {
-    //         //Caso ser float
-    //         return Float.toString(bufferEntrada.readFloat());
-        
-    //     } else if (chave == 16 || chave == 17) {
-    //         //Caso ser booleano
-    //         return Boolean.toString(bufferEntrada.readBoolean());
-    //     } else if (chave == 0) {
-    //         //Caso ser byte
-    //         return Byte.toString(bufferEntrada.readByte());
-    //     }
+    private static void escrever_mensagem (String mensagem, DataOutputStream dos) throws IOException {
+        for (int i = 0; i < mensagem.length(); i++){
+            dos.writeByte((byte) mensagem.charAt(i));
+        }
+    }
 
-    //     //Caso ser long
-    //     return Long.toString(bufferEntrada.readLong());
-    // }
-
-    //Coloca o indice da compactação no arquivo de saida
     //Coloca o indice da compactação no arquivo de saida
     public void codificar(FileInputStream entrada, FileOutputStream saida) throws IOException {
         // Cria um buffer de leitura para o arquivo de entrada
@@ -93,44 +54,69 @@ public class LZWEncoder {
         // Inicializa a string atual com o primeiro caractere do arquivo de entrada
         String atual = Character.toString((char) bufferEntrada.readByte());
 
-        int cont = 0;
-
         // Enquanto houver dados de entrada
         while (entrada.available() > 0) {
-            if (proximoIndice == 290) {
-                System.out.println("he");
-            }
-            cont++;
-            System.out.println(cont);
-            // Converte o próximo caractere para uma string
-
-
             String proximo = Character.toString((char) bufferEntrada.readByte());
 
             // Se a string atual + o próximo caractere estiverem no dicionário, atualiza a string atual
-            if (dicionario.containsKey(atual + proximo)) {
+            if (buscar_index(atual + proximo) != -1) {
                 atual += proximo;
             } else {
                 //Registra no arquivo o atual e o atualiza
-                int cod = criarCodigo(atual);
-                bufferSaida.writeInt(criarCodigo(atual));
-                dicionario.put(atual + proximo, proximoIndice++);
+                bufferSaida.writeInt(buscar_index(atual));
+                dicionario.put(proximoIndice++, atual + proximo);
                 atual = proximo;
             }
         }
     
         // Grava o código final da string atual no arquivo de saída
-        bufferSaida.writeInt(criarCodigo(atual));
+        bufferSaida.writeInt(buscar_index(atual));
     
         // Descarrega o buffer de escrita e fecha o arquivo de saída
         bufferSaida.flush();
     }
-    
-    private int criarCodigo(String s) {
-        return dicionario.get(s);
-    }
 
-    public HashMap<String, Integer> getDicionario() {
+    public void decodificar (FileInputStream entrada, FileOutputStream saida) throws IOException {
+        // Cria o objeto DataInputStream para ler o arquivo de entrada
+        DataInputStream dis = new DataInputStream(entrada);
+        DataOutputStream dos = new DataOutputStream(saida);
+
+        String simbolo_antigo, proximo;
+       
+        // Variáveis auxiliares
+        int novoIndice = dicionario.size();
+
+        //Leitura do primeiro objeto comprimido
+        int lido = dis.readInt();
+        String caminho = dicionario.get(lido);
+
+        // Escreve o primeiro caractere no arquivo de saída
+        escrever_mensagem(caminho, dos);
+
+        // Loop principal de descompressão
+        while (dis.available() > 0) {
+
+            //Leitura do proximo codigo de mensagem comprimido
+            lido = dis.readInt();
+
+            // Adiciona o novo caminho ao dicionário
+            if (lido == novoIndice) {
+                simbolo_antigo = caminho + caminho.charAt(0);
+                dicionario.put(novoIndice++, simbolo_antigo);
+                proximo = dicionario.get(lido);
+            } else {
+                proximo = dicionario.get(lido);
+                simbolo_antigo = caminho + proximo.charAt(0);
+                dicionario.put(novoIndice++, simbolo_antigo);
+            }
+            
+            caminho = proximo;
+            
+            escrever_mensagem(proximo, dos);
+        }
+    }       
+
+    public HashMap<Integer, String> getDicionario() {
         return dicionario;
     } 
 }

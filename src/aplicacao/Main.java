@@ -10,7 +10,6 @@ import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
 import trabalho_2.Compressao;
-import trabalho_2.Decodificacao;
 
 /**
  * Classe da aplicacao do programa
@@ -37,7 +36,7 @@ public class Main {
             arq = new RandomAccessFile(caminho_arq_db, "rw");
             crud = new CRUD (caminho_arq_db);
             index = new Indexacao(caminho_arq_db);
-            compressao = new Compressao("Pokedex", "arquivos_comprimidos");
+            compressao = new Compressao(caminho_arq_db, "Pokedex", "arquivos_comprimidos");
             
             
             //Exibe o inicio do programa
@@ -162,11 +161,23 @@ public class Main {
                     
 
                     case 6:
-                        compressao.comprimir(caminho_arq_db);
+                        compressao.comprimir();
                         break;
 
                     case 7:
-                        Decodificacao.descomprimir("src/arquivos_comprimidos/PokedexCompressao3.db", caminho_arq_db);
+                        Tela.print("\n\t\t\t\t\t\t" + "*** POKE-DESCOMPACTAR ***" + "\n\n\n"
+                                    + "\t"+ "Insira a versao da pokedex que deseja descompactar: ");
+
+                        //Entrada da versao do arquivoa descompactar
+                        id = scanner.nextInt();
+
+                        //Descompacta o arquivo
+                        if (compressao.descomprimir(id)) {
+                            Tela.println("Pokedex descompactada com sucesso");
+                        } else {
+                            Tela.println("Versao pokedex nao encontrada");
+                        }
+                        
                         break;
 
                     case 0:

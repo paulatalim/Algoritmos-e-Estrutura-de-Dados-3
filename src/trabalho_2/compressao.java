@@ -14,18 +14,20 @@ import java.io.File;
  */
 public class Compressao {
     private int version;
-    private String arq_data_base_name;
+    private String data_base_name;
+    private String data_base_src;
     private String folder_url;
     private FileInputStream arq_entrada;
     private FileOutputStream arq_saida;
 
-    /**
-     * Construtor da classe
-     * 
-     * @param arq_data_base a ser compressada
-     * @param folder_name nome da pasta para salvar os arquivos compactados
-     */
-    public Compressao (String arq_data_base, String folder_name) {  
+     /**
+      * Construtor da classe
+      *
+      * @param data_base_src caminho da base de dados a ser manipulada
+      * @param data_base_name nome da base de dados a ser manipulada
+      * @param folder_name nome da pasta para salvar os arquivos compactados
+      */
+    public Compressao (String data_base_src, String data_base_name, String folder_name) {  
         //Atribuicao a url da pasta      
         this.folder_url = "src/" + folder_name;
 
@@ -35,7 +37,8 @@ public class Compressao {
 
         //Inicializa a versao
         version = 1;
-        this.arq_data_base_name = arq_data_base;
+        this.data_base_name = data_base_name;
+        this.data_base_src = data_base_src;
     }
 
     private float calcular_eficacia_compressao (FileOutputStream arq_comprimido, FileInputStream arq_original) throws IOException {
@@ -47,14 +50,14 @@ public class Compressao {
      * @param inputFile arquivo a ser comprimido
      * @throws IOException
      */
-    public void comprimir (String inputFile) throws IOException {
+    public void comprimir () throws IOException {
 
         //Marca o tempo de inicio da execucao do algoritimo
         long tempo_inicial = System.currentTimeMillis();
 
         //Abre o arquivo de entrada e cria o arquivo de saida
-        arq_entrada= new FileInputStream(inputFile); //Entrada 
-        arq_saida = new FileOutputStream(folder_url + "/" + arq_data_base_name + "Compressao" + version + ".db"); //Saida
+        arq_entrada= new FileInputStream(data_base_src); //Entrada 
+        arq_saida = new FileOutputStream(folder_url + "/" + data_base_name + "Compressao" + version + ".db"); //Saida
 
         //Atualizacao de versao
         version++;
@@ -75,6 +78,26 @@ public class Compressao {
         // Fecha os arquivos
         arq_entrada.close();
         arq_saida.close();
+    }
+
+    public Boolean descomprimir (int num_version) throws IOException {
+        //Caso a versao da compressao nao existir
+        if (num_version >= version) {
+            return false;
+        }
+
+        //Abre os arquivos
+        FileInputStream fis = new FileInputStream(folder_url + "/" + data_base_name + "Compressao" + num_version + ".db");
+        FileOutputStream fos = new FileOutputStream(data_base_src);
+
+        //Descompacta
+        LZWEncoder encoder = new LZWEncoder();
+        encoder.decodificar(fis, fos);
+
+        //Fecha os arquivos
+        fis.close();
+        fos.close();
+        return true;
     }
 }
 
