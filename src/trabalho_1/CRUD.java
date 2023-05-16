@@ -152,17 +152,4 @@ public class CRUD {
 
         return false;
     }
-
-    public void ler_td () throws Exception {
-        Pokemon poke;
-        arq.seek(0);
-        int tam = arq.readInt();
-        int i;
-        for (i = 1; i <= tam; i++) {
-            poke = ler(i);
-
-            if (poke != null)
-                System.out.println(poke.getId() + " - " + poke.getNome() + "\t\t\t");
-        }
-    }
 }
