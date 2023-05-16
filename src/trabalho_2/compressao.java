@@ -1,12 +1,11 @@
 package trabalho_2;
 
 import java.io.IOException;
-
-import aplicacao.Tela;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.File;
+
+import aplicacao.Tela;
 
 /**
  * Classe para compactar arquivos data base

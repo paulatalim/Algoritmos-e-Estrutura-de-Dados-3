@@ -1,7 +1,7 @@
 package trabalho_2;
 
-import java.io.RandomAccessFile;
 import java.io.File;
+import java.io.RandomAccessFile;
 
 import manipulacao_arquivo.Pokemon;
 

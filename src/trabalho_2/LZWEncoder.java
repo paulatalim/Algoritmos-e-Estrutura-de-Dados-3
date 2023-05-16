@@ -3,10 +3,9 @@ package trabalho_2;
 import java.util.HashMap;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class LZWEncoder {
     private HashMap<Integer, String> dicionario;
