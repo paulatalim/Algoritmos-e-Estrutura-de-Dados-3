@@ -34,12 +34,10 @@ public class Compressao {
         //Atribuicao a url da pasta      
         this.folder_url = "src/" + folder_name;
 
-        //Criacao de pasta para os arquivos comprimidos
-        File folder = new File(this.folder_url);
-        folder.mkdir();
-
         //Inicializa a versao
         version = 1;
+
+        // Atribuicao de valores dos outros aributos
         this.data_base_name = data_base_name;
         this.data_base_src = data_base_src;
     }
@@ -64,6 +62,11 @@ public class Compressao {
 
         Tela.print("\n\t\t\t\t\t\t" + "*** POKE-COMPACTA ***" + "\n\n\n"
                                     + "\t"+ "Iniciando compactacao..." + "\n");
+        
+        //Criacao de pasta para os arquivos comprimidos
+        File folder = new File(this.folder_url);
+        folder.mkdir();
+        
         //Marca o tempo de inicio da execucao do algoritimo
         long tempo_inicial = System.currentTimeMillis();
 
@@ -121,16 +124,16 @@ public class Compressao {
         }
 
         //Abre os arquivos
-        FileInputStream fis = new FileInputStream(folder_url + "/" + data_base_name + "Compressao" + num_version + ".db");
-        FileOutputStream fos = new FileOutputStream(data_base_src);
+        arq_entrada = new FileInputStream(folder_url + "/" + data_base_name + "Compressao" + num_version + ".db");
+        arq_saida = new FileOutputStream(data_base_src);
 
         //Descompacta
         LZWEncoder encoder = new LZWEncoder();
-        encoder.decodificar(fis, fos);
+        encoder.decodificar(arq_entrada, arq_saida);
 
         //Fecha os arquivos
-        fis.close();
-        fos.close();
+        arq_entrada.close();
+        arq_saida.close();
 
         return true;
     }

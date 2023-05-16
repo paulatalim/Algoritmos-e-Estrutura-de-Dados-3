@@ -181,7 +181,6 @@ public class Main {
                         } else {
                             Tela.println("\n\t" + "Versao pokedex nao encontrada");
                         }
-                        
                         break;
 
                     case 0:
