@@ -71,10 +71,17 @@ public class Criptografia {
     }
 
     public String decifrar (String mensagem, String chave) {
-        String msg1 = "";
+        //Caso a chave ser invalida
+        if (!validar_key(chave)) {
+            return null;
+        }
+
+        String mensagem_decifrada = "";
         int tamanho = 0;
 
+        //Decifra a mensagem
         for (int i = 0; i < mensagem.length(); i += tamanho) {
+            //Calcula o tamanho do caracter cifrado
             tamanho = Character.getNumericValue(mensagem.charAt(i++));
 
             if (tamanho < 8) {
@@ -82,26 +89,10 @@ public class Criptografia {
                 tamanho +=  Character.getNumericValue(mensagem.charAt(i++));
             }
 
-            BigDecimal le = new BigDecimal(mensagem.substring(i, i + tamanho)).pow(d.intValue()).remainder(n);
-
-            msg1 += (char) new BigDecimal(mensagem.substring(i, i + tamanho)).pow(d.intValue()).remainder(n).intValue();
+            //Decifra o proximo caracter
+            mensagem_decifrada += (char) new BigDecimal(mensagem.substring(i, i + tamanho)).pow(d.intValue()).remainder(n).intValue();
         }
        
-
-       return msg1;
-
-        // String resultado = "";
-
-        // if (!validar_key(chave)) {
-        //     System.out.println("Chave invalida");
-
-        // } else {
-        //     String msg_convertida = Long.toString(mensagem);
-
-        //     for (int i = 0; i < msg_convertida.length(); i++) {
-        //         resultado += Math.pow((double) msg_convertida.charAt(i), d) % n;
-        //     }
-        // }
-        // return resultado;
+        return mensagem_decifrada;
     }
 }
