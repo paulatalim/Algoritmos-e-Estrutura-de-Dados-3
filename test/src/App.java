@@ -6,9 +6,9 @@ public class App {
 
         BigDecimal e, n, d ,p, q, z;
 
-        p = new BigDecimal(15649);
-        q = new BigDecimal(20479);
-        d = new BigDecimal(335539);
+        p = new BigDecimal(86927);
+        q = new BigDecimal(74653);
+        d = new BigDecimal(43103);
 
         //Calculo do valor de n -> n = p * q
         n = p.multiply(q);
@@ -21,10 +21,12 @@ public class App {
 
         String resultado = "";
         String result;
+        BigDecimal cal;
 
         //Cifra cada letra da mensagem
         for (int i = 0; i < msg.length(); i++) {
-            result = new BigDecimal(msg.charAt(i)).pow(e.intValue()).remainder(n).toString();
+            cal = new BigDecimal(msg.charAt(i)).pow(e.intValue()).remainder(n);
+            result = cal.toString();
 
             //resultado = (letra ^ e) % n
             resultado += result.length() + result;
@@ -33,20 +35,31 @@ public class App {
         }
 
         System.out.println(resultado);
-        System.out.println(Long.parseLong(resultado));
 
-        // System.out.println(new BigDecimal('A').pow(e.intValue()).remainder(n).toString());
-        // System.out.println(new BigDecimal('a').pow(e.intValue()).remainder(n).toString());
-        // System.out.println(new BigDecimal('Z').pow(e.intValue()).remainder(n).toString());
+        /* Decifragem */
 
-        // System.out.println(Double.toHexString(Math.pow((double) 'A', e)));
-        // System.out.println(Math.pow((double) 'a', e));
-        // System.out.println(Math.pow((double) 'Z', e));
+        String msg1 = "";
+        int tamanho = 0;
 
-        // for (int i = 0; i < resultado.length(); i++) {
-        //     System.out.print((byte) resultado.charAt(i));
-        // }
+        for (int i = 0; i < resultado.length(); i += tamanho) {
+            tamanho = Character.getNumericValue(resultado.charAt(i++));
+
+            if (tamanho < 8) {
+                tamanho *= 10;
+                tamanho +=  Character.getNumericValue(resultado.charAt(i++));
+            }
+
+            // String letra = resultado.substring(i, i + tamanho);
+
+            // BigDecimal l = new BigDecimal(letra);
+
+            BigDecimal le = new BigDecimal(resultado.substring(i, i + tamanho)).pow(d.intValue()).remainder(n);
+
+            msg1 += (char) new BigDecimal(resultado.substring(i, i + tamanho)).pow(d.intValue()).remainder(n).intValue();
+        }
        
+
+        System.out.println(msg1);
 
         // for (int i = 0; i < resultado.length(); i++)
     }

@@ -25,9 +25,9 @@ public class Criptografia {
         // p = 86927;
         // q = 74653;
 
-        p = new BigDecimal(15649);
-        q = new BigDecimal(20479);
-        d = new BigDecimal(335539);
+        p = new BigDecimal(86927);
+        q = new BigDecimal(74653);
+        d = new BigDecimal(43103);
 
         //Calculo do valor de n -> n = p * q
         n = p.multiply(q);
@@ -70,19 +70,38 @@ public class Criptografia {
 
     }
 
-    // public String decifrar (long mensagem, String chave) {
-    //     // String resultado = "";
+    public String decifrar (String mensagem, String chave) {
+        String msg1 = "";
+        int tamanho = 0;
 
-    //     // if (!validar_key(chave)) {
-    //     //     System.out.println("Chave invalida");
+        for (int i = 0; i < mensagem.length(); i += tamanho) {
+            tamanho = Character.getNumericValue(mensagem.charAt(i++));
 
-    //     // } else {
-    //     //     String msg_convertida = Long.toString(mensagem);
+            if (tamanho < 8) {
+                tamanho *= 10;
+                tamanho +=  Character.getNumericValue(mensagem.charAt(i++));
+            }
 
-    //     //     for (int i = 0; i < msg_convertida.length(); i++) {
-    //     //         resultado += Math.pow((double) msg_convertida.charAt(i), d) % n;
-    //     //     }
-    //     // }
-    //     // return resultado;
-    // }
+            BigDecimal le = new BigDecimal(mensagem.substring(i, i + tamanho)).pow(d.intValue()).remainder(n);
+
+            msg1 += (char) new BigDecimal(mensagem.substring(i, i + tamanho)).pow(d.intValue()).remainder(n).intValue();
+        }
+       
+
+       return msg1;
+
+        // String resultado = "";
+
+        // if (!validar_key(chave)) {
+        //     System.out.println("Chave invalida");
+
+        // } else {
+        //     String msg_convertida = Long.toString(mensagem);
+
+        //     for (int i = 0; i < msg_convertida.length(); i++) {
+        //         resultado += Math.pow((double) msg_convertida.charAt(i), d) % n;
+        //     }
+        // }
+        // return resultado;
+    }
 }
