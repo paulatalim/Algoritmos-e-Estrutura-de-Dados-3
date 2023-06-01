@@ -9,6 +9,7 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
+import trabalho_3.Criptografia;
 import trabalho_2.Compressao;
 
 /**
@@ -25,26 +26,31 @@ public class Main {
 
         int opcao, id;
         boolean opcao_invalida;
+
         CRUD crud;
         Indexacao index;
         Compressao compressao;
         RandomAccessFile arq;
         Pokemon pokemon = new Pokemon();
         Scanner scanner = new Scanner (System.in);
-        
+
+        Criptografia criptografia;
+        //String chave = criptografia.getKey();
+
         try {
-            arq = new RandomAccessFile(caminho_arq_db, "rw");
-            crud = new CRUD (caminho_arq_db);
-            index = new Indexacao(caminho_arq_db);
-            compressao = new Compressao(caminho_arq_db, "Pokedex", "arquivos_comprimidos");
-            
-            
             //Exibe o inicio do programa
             Tela.exibir_tela_inicial_e_info ();
-            
+
+            //Cria os objetos
+            criptografia = new Criptografia();
+            arq = new RandomAccessFile(caminho_arq_db, "rw");
+            crud = new CRUD (caminho_arq_db, criptografia);
+            index = new Indexacao();
+            compressao = new Compressao(caminho_arq_db, "Pokedex", "arquivos_comprimidos");
+
             //Importa arquivo .csv automatico
-            Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
-            index.indexar_data_base();
+            Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv, index, criptografia);
+            //index.indexar_data_base();
             Tela.exibir_fim_tela();
             
             //Repete o programa
@@ -102,7 +108,7 @@ public class Main {
                         pokemon = crud.ler(id);
 
                         //Exibe o novo registro
-                        if (pokemon != null) {
+                        if (pokemon != null || pokemon.getNome() != null) {
                             Tela.print(pokemon.toString());
                         } else {
                             Tela.println ( "\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
@@ -120,8 +126,8 @@ public class Main {
                         //Le o pokemon a ser atualizado
                         pokemon = crud.ler(id); 
                         
-                        //Caso o id existir
-                        if (pokemon != null) {
+                        //Caso o id existir e a chave estiver correta
+                        if (pokemon != null || pokemon.getNome() != null) {
 
                             //Funções para atualizar o pokemon
                             pokemon = entrada_dados.info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
@@ -157,11 +163,10 @@ public class Main {
 
                     case 5:
                         //Ordenacao externa da base de dados
-                        Ordenacao_externa.ordenar_registros(arq);
-                        index.indexar_data_base();
+                        Ordenacao_externa.ordenar_registros(arq, index);
+                        //index.indexar_data_base();
                         break;
                     
-
                     case 6:
                         //Compactacao da base de dados
                         compressao.comprimir();

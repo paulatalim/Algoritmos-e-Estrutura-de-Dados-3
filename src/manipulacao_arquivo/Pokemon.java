@@ -8,6 +8,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import trabalho_3.Criptografia;
+
 /**
  * Classe que armazena os atributos dos registros armazenados no arquivo .db
  * 
@@ -91,10 +93,45 @@ public class Pokemon extends Object implements Cloneable {
      * @return vetor de bytes
      * @throws IOException
      */
+    public byte[] toByteArray (Criptografia criptografia) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        //Criptografia criptografia = new Criptografia ();
+        String nome_criptografado = criptografia.cifrar(nome);
+        
+        dos.writeInt(id);
+        dos.writeInt(num_pokedex);
+        dos.writeUTF(nome_criptografado);
+        dos.writeInt(geracao);
+        dos.writeUTF(especie);
+        dos.writeFloat(altura);
+        dos.writeFloat(peso);
+        dos.writeUTF(tipo1 + "-" + tipo2);
+        dos.writeInt(hp);
+        dos.writeInt(ataque);
+        dos.writeInt(defesa);
+        dos.writeInt(ataque_especial);
+        dos.writeInt(defesa_especial);
+        dos.writeInt(velocidade);
+        dos.writeBoolean(eh_mistico);
+        dos.writeBoolean(eh_lendario);
+        dos.writeLong(data_de_registro.getTime());
+
+		//Retorno do vetor de bytes para escrever no arquivo
+        return baos.toByteArray();
+    }
+
+    /**
+     * Elabora um vetor de bytes com seus atributos para a insercao no arquivo
+     * 
+     * @return vetor de bytes
+     * @throws IOException
+     */
     public byte[] toByteArray () throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-        
+
         dos.writeInt(id);
         dos.writeInt(num_pokedex);
         dos.writeUTF(nome);
@@ -118,6 +155,55 @@ public class Pokemon extends Object implements Cloneable {
     }
 
      /**
+     * A partir de um vetor de bytes, preenche os atributos da classe
+     *
+     * @param ba vetor de bytes a ser traduzido
+     * @throws IOException
+     */
+    public void fromByteArray (byte[] ba, String chave, Criptografia criptografia) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+        DataInputStream dis = new DataInputStream(bais);
+        //Criptografia criptografia = new Criptografia();
+        String nome_cifrado;
+        String[] types;
+        String type;
+
+        //Le o arquivo
+        id = dis.readInt();
+        num_pokedex = dis.readInt();
+        nome_cifrado = dis.readUTF();
+        
+        geracao= dis.readInt();
+        especie = dis.readUTF();
+        altura = dis.readFloat();
+        peso = dis.readFloat();
+        type = dis.readUTF();
+        
+        hp = dis.readInt();
+        ataque = dis.readInt();
+        defesa = dis.readInt();
+        ataque_especial = dis.readInt();
+        defesa_especial = dis.readInt();
+        velocidade = dis.readInt();
+        eh_mistico = dis.readBoolean();
+        eh_lendario = dis.readBoolean();
+
+        data_de_registro = new Date(dis.readLong());
+
+        //Atribui os valores do tipo
+        types = type.split("-");
+        tipo1 = types[0];
+
+        //Verifica se o pokemon possui tipo 2
+        if (types.length > 1) {
+            tipo2 = types[1];
+        }
+
+        //Decifra o nome
+        nome = criptografia.decifrar(nome_cifrado, chave);
+    }
+
+    /**
      * A partir de um vetor de bytes, preenche os atributos da classe
      *
      * @param ba vetor de bytes a ser traduzido
@@ -156,8 +242,9 @@ public class Pokemon extends Object implements Cloneable {
         tipo1 = types[0];
 
         //Verifica se o pokemon possui tipo 2
-        if (types.length > 1)
+        if (types.length > 1) {
             tipo2 = types[1];
+        }
     }
 
     public String toString () {

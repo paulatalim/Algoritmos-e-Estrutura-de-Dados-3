@@ -2,6 +2,7 @@ package trabalho_1;
 
 import manipulacao_arquivo.Pokemon;
 import trabalho_2.Indexacao;
+import trabalho_3.Criptografia;
 
 import java.io.RandomAccessFile;
 
@@ -15,6 +16,7 @@ import java.io.RandomAccessFile;
 public class CRUD {
     private RandomAccessFile arq;
     private Indexacao index;
+    private Criptografia criptografia;
 
     /**
      * Construtor da classe
@@ -22,12 +24,20 @@ public class CRUD {
      * @param caminho_arq data base
      * @throws Exception
      */
-    public CRUD (String caminho_arq) throws Exception {
+    public CRUD (String caminho_arq, Criptografia criptografia) throws Exception {
         arq = new RandomAccessFile(caminho_arq, "rw");
-        index = new Indexacao (caminho_arq);
+        index = new Indexacao();
+        this.criptografia = criptografia;
     }
 
     /*** OUTROS METODOS ***/
+
+    private String ler_chave () throws Exception {
+        arq.seek(0);
+        arq.readInt();
+        return arq.readUTF();
+    }
+
     /**
      * Cria registro no arquivo
      * 
@@ -37,6 +47,7 @@ public class CRUD {
     public void criar (Pokemon pokemon) throws Exception {
         arq.seek(0);
         int id = arq.readInt();
+        arq.readUTF();
         pokemon.setId(++id);
 
         arq.seek(0);//Acessou o inicio do arquivo
@@ -48,7 +59,7 @@ public class CRUD {
 
         //Escreve o registro
         arq.writeByte(' ');
-        byte[] poke_vet = pokemon.toByteArray();//Criou poke_vet_antigor de byte com as informacoes do pokemon
+        byte[] poke_vet = pokemon.toByteArray(criptografia);//Criou poke_vet_antigor de byte com as informacoes do pokemon
         arq.writeInt(poke_vet.length);//Escreveu o tamanho no arquivo
         arq.write(poke_vet);//Escreve as informaçoes pro arquivo
     }
@@ -72,7 +83,7 @@ public class CRUD {
             if (arq.readByte() == ' ') {
                 poke_vet_antigo = new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
-                pokemon.fromByteArray(poke_vet_antigo);
+                pokemon.fromByteArray(poke_vet_antigo, ler_chave(), criptografia);
                 return pokemon;
             }
         }
@@ -102,9 +113,9 @@ public class CRUD {
             
                 poke_vet_antigo = new byte[arq.readInt()];
                 arq.read(poke_vet_antigo);
-                pokemon.fromByteArray(poke_vet_antigo);
+                pokemon.fromByteArray(poke_vet_antigo, ler_chave(), criptografia);
 
-                poke_vet_atualizado = poke.toByteArray();
+                poke_vet_atualizado = poke.toByteArray(criptografia);
 
                 arq.seek(endereco);
 

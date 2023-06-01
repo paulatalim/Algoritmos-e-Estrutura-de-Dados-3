@@ -3,8 +3,6 @@ package trabalho_2;
 import java.io.File;
 import java.io.RandomAccessFile;
 
-import manipulacao_arquivo.Pokemon;
-
 /**
  * Classe que opera os arquivos indexados
  * 
@@ -15,7 +13,6 @@ import manipulacao_arquivo.Pokemon;
 public class Indexacao {
     private RandomAccessFile diretorio;
     private RandomAccessFile buckets;
-    private RandomAccessFile data_base;
 
     /**
      * Construtor da classe
@@ -23,7 +20,7 @@ public class Indexacao {
      * @param url_data_base , arquivo a ser indexado
      * @throws Exception
      */
-    public Indexacao (String url_data_base) throws Exception {
+    public Indexacao () throws Exception {
         //Criacao de pasta para os arquivos de indices
         String name_folder = "src/arquivos_de_indices";
         File folder = new File(name_folder);
@@ -31,11 +28,20 @@ public class Indexacao {
 
         diretorio = new RandomAccessFile(name_folder + "/diretorio.db", "rw");
         buckets = new RandomAccessFile(name_folder + "/buckets.db", "rw");
-        data_base = new RandomAccessFile(url_data_base, "rw");
     }
-    
-    public void setData_base(RandomAccessFile data_base) {
-        this.data_base = data_base;
+
+    public void inicializar () throws Exception {
+        //Inicializando arquivos
+        diretorio.setLength(0);
+        buckets.setLength(0);
+
+        //Registra a profundidade
+        diretorio.writeShort(1);
+
+        //Cria dois buckets iniciais
+        for (int i = 0; i < 2; i ++) {
+            criar_novo_bucket(i);
+        }
     }
 
     /**
@@ -311,45 +317,45 @@ public class Indexacao {
      * Cria arquivos indexados para uma base de dados
      * @throws Exception
      */
-    public void indexar_data_base () throws Exception {
-        short profundidade_diretorio = 1;
-        Pokemon pokemon;
-        byte[] vet_byte_pokemon;
+    // public void indexar_data_base () throws Exception {
+    //     short profundidade_diretorio = 1;
+    //     Pokemon pokemon;
+    //     byte[] vet_byte_pokemon;
 
-        //Inicializando arquivos
-        diretorio.setLength(0);
-        buckets.setLength(0);
+    //     //Inicializando arquivos
+    //     diretorio.setLength(0);
+    //     buckets.setLength(0);
 
-        //Registra a profundidade
-        diretorio.writeShort(profundidade_diretorio);
+    //     //Registra a profundidade
+    //     diretorio.writeShort(profundidade_diretorio);
 
-        //Cria dois buckets iniciais
-        for (int i = 0; i < 2; i ++) {
-            criar_novo_bucket(i);
-        }
+    //     //Cria dois buckets iniciais
+    //     for (int i = 0; i < 2; i ++) {
+    //         criar_novo_bucket(i);
+    //     }
 
-        data_base.seek(0);
-        data_base.readInt();
+    //     data_base.seek(0);
+    //     data_base.readInt();
 
-        while (data_base.getFilePointer() < data_base.length()) {
-            long endereco = data_base.getFilePointer();
+    //     while (data_base.getFilePointer() < data_base.length()) {
+    //         long endereco = data_base.getFilePointer();
 
-            //Verifica se o arquivo foi excluido
-            if (data_base.readByte() == ' ') {
-                //Le o arquivo
-                vet_byte_pokemon = new byte [data_base.readInt()];
-                data_base.read(vet_byte_pokemon);
+    //         //Verifica se o arquivo foi excluido
+    //         if (data_base.readByte() == ' ') {
+    //             //Le o arquivo
+    //             vet_byte_pokemon = new byte [data_base.readInt()];
+    //             data_base.read(vet_byte_pokemon);
 
-                pokemon = new Pokemon();
-                pokemon.fromByteArray(vet_byte_pokemon);
+    //             pokemon = new Pokemon();
+    //             pokemon.fromByteArray(vet_byte_pokemon);
 
-                //Inclui nos arquivos indexados
-                incluir_registro(pokemon.getId(), endereco);
+    //             //Inclui nos arquivos indexados
+    //             incluir_registro(pokemon.getId(), endereco);
 
-            } else {
-                //Pula o registro
-                data_base.seek(data_base.readInt() + data_base.getFilePointer());
-            }
-        }
-    }
+    //         } else {
+    //             //Pula o registro
+    //             data_base.seek(data_base.readInt() + data_base.getFilePointer());
+    //         }
+    //     }
+    // }
 }

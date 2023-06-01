@@ -46,10 +46,10 @@ public class LZWEncoder {
      * @param value elemento a ser pesquisado
      * @return indice do elemento ou -1 se nao encontrar
      */
-    private short buscar_index (String value) {
+    private int buscar_index (String value) {
         for (int i = 0; i < dicionario.size(); i++) {
             if (dicionario.get(i).equals(value)) {
-                return (short) i;
+                return i;
             }
         }
         return -1;
@@ -95,14 +95,14 @@ public class LZWEncoder {
                 simbolo_atual += simbolo_novo;
             } else {
                 //Registra no arquivo o simbolo_atual e o atualiza
-                dos.writeShort(buscar_index(simbolo_atual));
+                dos.writeInt(buscar_index(simbolo_atual));
                 dicionario.put(proximoIndice++, simbolo_atual + simbolo_novo);
                 simbolo_atual = simbolo_novo;
             }
         }
     
         // Grava o código final da string simbolo_atual no arquivo de saída
-        dos.writeShort(buscar_index(simbolo_atual));
+        dos.writeInt(buscar_index(simbolo_atual));
     
         // Descarrega o buffer de escrita e fecha o arquivo de saída
         dos.flush();
@@ -121,7 +121,7 @@ public class LZWEncoder {
         DataOutputStream dos = new DataOutputStream(saida);
 
         //Leitura do primeiro objeto comprimido
-        int indice_lido = (int) dis.readShort();
+        int indice_lido = dis.readInt();
         String simbolo = dicionario.get(indice_lido);
         String simbolo_novo;
 
@@ -132,7 +132,7 @@ public class LZWEncoder {
         while (dis.available() > 0) {
 
             //Leitura do proximo codigo de mensagem comprimido
-            indice_lido = dis.readShort();
+            indice_lido = dis.readInt();
 
             // Adiciona o novo simbolo ao dicionário
             if (indice_lido == proximoIndice) {

@@ -3,6 +3,9 @@ package manipulacao_arquivo;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 import aplicacao.Tela;
+import trabalho_2.Indexacao;
+import trabalho_3.Criptografia;
+
 import java.io.File;
 
 /**
@@ -45,8 +48,10 @@ public class Importa_csv {
      * 
      * @param arq_db arquivo database a ser preenchido
      * @param caminho_arq_csv url do arquivo csv a ser importado
+     * @param index objeto para indexar o arquivo
+     * @param criptografia objeto para criptografar o arquivo
      */
-    public static void passar_arq_csv_para_db (RandomAccessFile arq_db, String caminho_arq_csv) throws Exception {
+    public static void passar_arq_csv_para_db (RandomAccessFile arq_db, String caminho_arq_csv, Indexacao index, Criptografia criptografia) throws Exception {
         Pokemon pokemon;
         String[] atributos_csv;
         byte[] poke_info_byte;
@@ -57,10 +62,13 @@ public class Importa_csv {
         File arq_csv = new File(caminho_arq_csv);
         Scanner scanner = new Scanner (arq_csv);
 
+        // Prepara para indexacao
+        index.inicializar();
+
         //Exibe mensagem para o usuario
         Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
                             + "\t" + "Iniciando importacao ..." + "\n");
-        
+
         //Le o cabecalho da planilha
         linha = new String(scanner.nextLine());
 
@@ -68,6 +76,7 @@ public class Importa_csv {
         arq_db.setLength(0);
         arq_db.seek(0);
         arq_db.writeInt(id_metadados);
+        arq_db.writeUTF(criptografia.getKey());
 
         //Exibe mensagem para o usuario
         Tela.limpar_console();
@@ -92,8 +101,13 @@ public class Importa_csv {
                                 Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), 
                                 Boolean.parseBoolean(atributos_csv[4]));
 
+            // Indexacao o registro
+            index.incluir_registro(id_metadados, arq_db.getFilePointer());
+
+            System.out.println(id_metadados);
+
             //Escreve o registro
-            poke_info_byte = pokemon.toByteArray();
+            poke_info_byte = pokemon.toByteArray(criptografia);
             arq_db.writeByte(' ');
             arq_db.writeInt(poke_info_byte.length);
             arq_db.write(poke_info_byte);

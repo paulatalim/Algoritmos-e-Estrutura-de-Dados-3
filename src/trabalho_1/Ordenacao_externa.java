@@ -4,6 +4,8 @@ import java.io.RandomAccessFile;
 
 import aplicacao.Tela;
 import manipulacao_arquivo.Pokemon;
+import trabalho_2.Indexacao;
+
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
@@ -139,7 +141,9 @@ public class Ordenacao_externa {
         int chave_antiga = 0;
 
         //Reseta o ponteiro para depois dos metadados
-        arq.seek(4);
+        arq.seek(0);
+        arq.readInt();
+        arq.readUTF();
         
         //Inicializa o vetor 
         for (i = 0; i < chaves.length; i++) {
@@ -400,15 +404,19 @@ public class Ordenacao_externa {
      * @param metadados do arquivo a ser escrito
      * @throws Exception
      */
-    private static void reescrever_arq_db_ordenado (RandomAccessFile arq, int metadados) throws Exception {
+    private static void reescrever_arq_db_ordenado (RandomAccessFile arq, int metadados, String chave, Indexacao index) throws Exception {
         FileInputStream arq_in;
         DataInputStream in;
+        Pokemon pokemon;
         byte[] poke_vet_byte;
         int i;
 
+        index.inicializar();
+        
         //Limpa arquivo db
         arq.setLength(0);
         arq.writeInt(metadados);
+        arq.writeUTF(chave);
 
         //Verifica em qual arquivo q possui dados
         for (i = 1; i <= 4; i ++) {
@@ -417,10 +425,16 @@ public class Ordenacao_externa {
 
             //Transferencia de dados do arquivo temporario para o arquivo .db
             while (in.available() > 0) {
-                //escrever arq
+                //leitura do arquivo
                 poke_vet_byte = new byte [in.readInt()];
                 in.read(poke_vet_byte);
 
+                //Indexa o proximo registro
+                pokemon = new Pokemon();
+                pokemon.fromByteArray(poke_vet_byte);
+                index.incluir_registro(pokemon.getId(), arq.getFilePointer());
+
+                //Escreve registro no arquivo
                 arq.writeByte(' ');
                 arq.writeInt(poke_vet_byte.length);
                 arq.write(poke_vet_byte);
@@ -452,15 +466,17 @@ public class Ordenacao_externa {
      * Ordena os registros do arquivo com a ordenacao externa
      * 
      * @param arq arquivo arquivo a ser ordenado
+     * @param index objeto para reindexar o arquivo
      */
-    public static void ordenar_registros (RandomAccessFile arq) throws Exception {
+    public static void ordenar_registros (RandomAccessFile arq, Indexacao index) throws Exception {
         //Leitura de metadados
         arq.seek(0);
-        int metadados = arq.readInt();
+        int meta_id = arq.readInt();
+        String meta_chave = arq.readUTF();
 
         //Ordenacao
         distribuir_registros(arq);
         intercalar_registros(arq);
-        reescrever_arq_db_ordenado(arq, metadados);
+        reescrever_arq_db_ordenado(arq, meta_id, meta_chave, index);
     }    
 }
