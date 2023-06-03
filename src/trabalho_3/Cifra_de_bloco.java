@@ -21,7 +21,7 @@ public class Cifra_de_bloco {
 
     private void criar_chave () {
         Random rand = new Random();
-        byte[] key = new byte [tamanho_bloco];
+        key = new byte [tamanho_bloco];
 
         // Preenche o vetor key
         for (int i = 0; i < tamanho_bloco; i++) {
@@ -80,14 +80,13 @@ public class Cifra_de_bloco {
         String mensagem_cifrada = "";
 
         for (int i = 0; i < vet.length; i += tamanho_bloco) {
-
             // Reseta o vetor do bloco
-            if (vet.length - i > tamanho_bloco) {
+            if (vet.length - i >= tamanho_bloco) {
                 bloco = new byte[tamanho_bloco];
             } else {
-                bloco = new byte[vet.length - 1];
+                bloco = new byte[vet.length - i];
             }
-
+            
             //Preenche o bloco
             for (int j = 0; j < bloco.length && (i + j) < vet.length; j++) {
                 bloco[j] = vet[i + j];
@@ -117,6 +116,12 @@ public class Cifra_de_bloco {
         String mensagem_decifrada = "";
 
         for (int i = 0; i < vet.length; i += tamanho_bloco_cifrado) {
+            // Reseta o vetor do bloco
+            if (vet.length - i >= tamanho_bloco_cifrado) {
+                bloco = new byte[tamanho_bloco_cifrado];
+            } else {
+                bloco = new byte[vet.length - i];
+            }
 
             for (int j = 0; j < bloco.length; j++) {
                 bloco[j] = vet[i + j];

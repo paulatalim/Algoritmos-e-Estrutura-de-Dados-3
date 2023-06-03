@@ -9,8 +9,8 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
-import trabalho_3.Criptografia;
 import trabalho_2.Compressao;
+import trabalho_3.Criptografia;
 
 /**
  * Classe da aplicacao do programa
@@ -35,7 +35,6 @@ public class Main {
         Scanner scanner = new Scanner (System.in);
 
         Criptografia criptografia;
-        //String chave = criptografia.getKey();
 
         try {
             //Exibe o inicio do programa

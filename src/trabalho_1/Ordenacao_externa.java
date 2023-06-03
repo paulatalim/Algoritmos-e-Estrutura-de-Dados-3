@@ -1,11 +1,10 @@
 package trabalho_1;
 
-import java.io.RandomAccessFile;
-
 import aplicacao.Tela;
 import manipulacao_arquivo.Pokemon;
 import trabalho_2.Indexacao;
 
+import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
