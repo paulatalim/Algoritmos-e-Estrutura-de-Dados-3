@@ -96,8 +96,6 @@ public class Pokemon extends Object implements Cloneable {
     public byte[] toByteArray (Criptografia criptografia) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-
-        //Criptografia criptografia = new Criptografia ();
         String nome_criptografado = criptografia.cifrar(nome);
         
         dos.writeInt(id);
@@ -163,7 +161,6 @@ public class Pokemon extends Object implements Cloneable {
     public void fromByteArray (byte[] ba, String chave, Criptografia criptografia) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
-        //Criptografia criptografia = new Criptografia();
         String nome_cifrado;
         String[] types;
         String type;
