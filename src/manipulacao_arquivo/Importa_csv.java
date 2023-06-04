@@ -66,6 +66,7 @@ public class Importa_csv {
         index.inicializar();
 
         //Exibe mensagem para o usuario
+        Tela.limpar_console();
         Tela.println (  "\n\t\t\t\t\t" + "*** IMPORTANDO ARQUIVO .CSV PARA .DB ***" + "\n\n\n"
                             + "\t" + "Iniciando importacao ..." + "\n");
 
@@ -103,8 +104,6 @@ public class Importa_csv {
 
             // Indexacao o registro
             index.incluir_registro(id_metadados, arq_db.getFilePointer());
-
-            System.out.println(id_metadados);
 
             //Escreve o registro
             poke_info_byte = pokemon.toByteArray(criptografia);

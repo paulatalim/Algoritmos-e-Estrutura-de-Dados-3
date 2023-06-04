@@ -107,7 +107,7 @@ public class Main {
                         pokemon = crud.ler(id);
 
                         //Exibe o novo registro
-                        if (pokemon != null || pokemon.getNome() != null) {
+                        if (pokemon != null) {
                             Tela.print(pokemon.toString());
                         } else {
                             Tela.println ( "\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
@@ -126,7 +126,7 @@ public class Main {
                         pokemon = crud.ler(id); 
                         
                         //Caso o id existir e a chave estiver correta
-                        if (pokemon != null || pokemon.getNome() != null) {
+                        if (pokemon != null) {
 
                             //Funções para atualizar o pokemon
                             pokemon = entrada_dados.info_poke_atualizadas(pokemon); //Escolhe o atributo e atualiza
@@ -163,7 +163,6 @@ public class Main {
                     case 5:
                         //Ordenacao externa da base de dados
                         Ordenacao_externa.ordenar_registros(arq, index);
-                        //index.indexar_data_base();
                         break;
                     
                     case 6:

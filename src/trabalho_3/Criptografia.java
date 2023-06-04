@@ -9,7 +9,6 @@ public class Criptografia {
     private Cifra_de_bloco bloco;
 
     public Criptografia () throws Exception {
-        Tela.limpar_console();
         Tela.println (  "\n\t\t\t\t\t" + "*** CRIPTOGRAFIA ***" + "\n\n\n"
                             + "\t" + "Preparando ambiente para o algoritmo RSA ..." + "\n");
         rsa = new RSAcode();

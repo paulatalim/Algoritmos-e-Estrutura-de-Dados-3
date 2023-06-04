@@ -17,7 +17,6 @@ public class RSAcode {
         dicionario = new HashMap<Character, String>();
 
         for (char i = 'A'; i <= 'Z'; i++) {
-            System.out.println('o');
             dicionario.put(i, cifrar_letra(i));
         }
 
@@ -76,34 +75,14 @@ public class RSAcode {
 
             if (letra_cifrada == null) {
                 letra_cifrada = cifrar_letra(mensagem.charAt(i));
-                System.out.println(mensagem.charAt(i));
             }
             
-            //letra_cifrada = new BigDecimal(mensagem.charAt(i)).pow(e.intValue()).remainder(n).toString();
-
-            //resultado = (letra ^ e) % n
-
             mensagem_cifrada += letra_cifrada.length() + letra_cifrada;
         }
 
         return mensagem_cifrada;
 
     }
-
-    /**
-    //  * Pesquisa no dicionario o indice de um elemento
-    //  * 
-    //  * @param value elemento a ser pesquisado
-    //  * @return indice do elemento ou -1 se nao encontrar
-    //  */
-    // private char buscar_index (String value) {
-    //     for (int i = 0; i < dicionario.size(); i++) {
-    //         if (dicionario.get(i).equals(value)) {
-    //             return (short) i;
-    //         }
-    //     }
-    //     return '1';
-    // }
 
     public String decifrar (String mensagem, String chave) {
         //Caso a chave ser invalida

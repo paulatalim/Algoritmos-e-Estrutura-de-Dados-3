@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class Cifra_de_bloco {
@@ -28,6 +29,26 @@ public class Cifra_de_bloco {
             //Gera um byte aleatorio e armazena na chave
             key[i] = (byte) (rand.nextInt(255) - 127);
         }
+    }
+
+    private String byteToString (byte[] vet) {
+        String resultado = "";
+
+        for (int i = 0; i < vet.length; i++) {
+            resultado += Character.toString((char) vet[i]);
+        }
+
+        return resultado;
+    }
+
+    private byte[] stringToByteArray (String str) {
+        byte[] vet = new byte[str.length()];
+
+        for (int i = 0; i < str.length(); i++) {
+            vet[i] = (byte) str.charAt(i);
+        }
+
+        return vet;
     }
 
     private byte[] toByteArray (int[] vet) throws IOException {
@@ -65,20 +86,45 @@ public class Cifra_de_bloco {
 
         // Cifragem do bloco
         for (int i = 0; i < bloco.length; i ++) {
+            int result = (int)key[i] ^ (int)bloco[i];
+            if ((result ^ (int)key[i]) < 48 || (result ^ (int)key[i]) > 57) {
+                System.out.println("oi");
+            }
+
             bloco_cifrado[i] = (int)key[i] ^ (int)bloco[i];
         }
 
-        return toByteArray(bloco_cifrado);
+        byte[] result1 = toByteArray(bloco_cifrado);
+        byte[] result2 = decifrar_bloco(result1);
+
+        return result1;
+    }
+
+    private byte[] decifrar_bloco (byte[] bloco_cifrado) throws IOException {
+        int[] vet = fromByteArray(bloco_cifrado);
+        byte[] result = new byte[vet.length];
+
+        for (int i = 0; i < vet.length; i++) {
+            int confere1 = (int)key[i] ^ vet[i];
+            int condere2 = (int)key[i] ^ confere1;
+            if (confere1 < 48 || confere1 > 57) {
+                System.out.println("oi");
+            }
+            System.out.println(confere1 + " - " + condere2 + " - " + vet[i]);
+
+            result[i] = (byte) ((int)key[i] ^ vet[i]);
+        }
+
+        return result;
     }
 
     public String cifrar (String mensagem) throws IOException {
-        byte[] vet = mensagem.getBytes();
-
-        //Separacao dos blocos
-        byte[] bloco = new byte [tamanho_bloco];
-
+        // byte[] vet = mensagem.getBytes(StandardCharsets.UTF_8);
+        byte[] vet = stringToByteArray(mensagem);
+        byte[] bloco;
         String mensagem_cifrada = "";
 
+        // Cifra mensagem
         for (int i = 0; i < vet.length; i += tamanho_bloco) {
             // Reseta o vetor do bloco
             if (vet.length - i >= tamanho_bloco) {
@@ -93,29 +139,35 @@ public class Cifra_de_bloco {
             }
 
             //Cifra o bloco
-            mensagem_cifrada += new String (cifrar_bloco(bloco));
+            mensagem_cifrada += byteToString(cifrar_bloco(bloco));
+
+            // new String (cifrar_bloco(bloco), StandardCharsets.UTF_8);
+
+            // byte[] vet1 = mensagem_cifrada.getBytes(StandardCharsets.UTF_8);
+            // String test = new String(vet1, StandardCharsets.UTF_8);
+
+            // if (mensagem_cifrada.toString().compareTo(test.toString()) != 0) {
+            //     System.out.println(mensagem_cifrada);
+            //     System.out.println(test);
+            //     System.out.println("oi");
+            // }
+            
+            // if (!mensagem_cifrada.equals(test)) {
+            //     System.out.println("oi");
+            // }
+            // decifrar(mensagem_cifrada);
         }
 
         return mensagem_cifrada;
     }
 
-    private byte[] decifrar_bloco (byte[] bloco_cifrado) throws IOException {
-        int[] vet = fromByteArray(bloco_cifrado);
-        byte[] result = new byte[vet.length];
-
-        for (int i = 0; i < vet.length; i++) {
-            result[i] = (byte) ((int)key[i] ^ vet[i]);
-        }
-
-        return result;
-    }
-
     public String decifrar (String mensagem) throws IOException {
-        byte[] vet = mensagem.getBytes();
-        byte[] bloco = new byte [tamanho_bloco_cifrado];
+        // byte[] vet = mensagem.getBytes(StandardCharsets.UTF_8);
+        byte[] vet = stringToByteArray(mensagem);
+        byte[] bloco;
         String mensagem_decifrada = "";
 
-        for (int i = 0; i < vet.length; i += tamanho_bloco_cifrado) {
+        for (int i = 0; i < vet.length ; i += tamanho_bloco_cifrado) {
             // Reseta o vetor do bloco
             if (vet.length - i >= tamanho_bloco_cifrado) {
                 bloco = new byte[tamanho_bloco_cifrado];
@@ -123,17 +175,20 @@ public class Cifra_de_bloco {
                 bloco = new byte[vet.length - i];
             }
 
-            for (int j = 0; j < bloco.length; j++) {
+            for (int j = 0; j < bloco.length && (i + j) < vet.length; j++) {
                 bloco[j] = vet[i + j];
             }
 
-            mensagem_decifrada += new String(decifrar_bloco(bloco));
+            if (i == 384) {
+                System.out.println("oi");
+            }
+
+            System.out.println(i);
+
+            mensagem_decifrada += byteToString(decifrar_bloco(bloco));
+            // mensagem_decifrada += new String(decifrar_bloco(bloco), StandardCharsets.UTF_8);
         }
 
         return mensagem_decifrada;
     }
-
-    
-
-    
 }
