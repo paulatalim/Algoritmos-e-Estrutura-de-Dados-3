@@ -3,6 +3,13 @@ package trabalho_3;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
+/**
+ * Classe com algoritmo de criptografia RSA
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class RSAcode {
     private BigDecimal e;
     private BigDecimal n;
@@ -13,9 +20,16 @@ public class RSAcode {
     private HashMap<Character, String> dicionario;
 
     RSAcode () {
-        criar_chaves();
         dicionario = new HashMap<Character, String>();
+        criar_chaves();
+        preencher_dicionario();
+    }
 
+    private String cifrar_letra (char letra) {
+        return new BigDecimal(letra).pow(e.intValue()).remainder(n).toString();
+    }
+
+    private void preencher_dicionario () {
         for (char i = 'A'; i <= 'Z'; i++) {
             dicionario.put(i, cifrar_letra(i));
         }
@@ -28,8 +42,7 @@ public class RSAcode {
         dicionario.put('-', cifrar_letra('-'));
     }
 
-    
-    public void criar_chaves() {
+    private void criar_chaves() {
         // Atribuicoes de numeros primos
         p = new BigDecimal(86927);
         q = new BigDecimal(74653);
@@ -49,10 +62,6 @@ public class RSAcode {
         return e.toString() + n.toString();
     }
 
-    public String getKey () {
-        return montar_chave_publica();
-    }
-
     private boolean validar_key (String key) {
         if (montar_chave_publica().equals(key)) {
             return true;
@@ -60,8 +69,8 @@ public class RSAcode {
         return false;
     }
 
-    public String cifrar_letra (char letra) {
-        return new BigDecimal(letra).pow(e.intValue()).remainder(n).toString();
+    public String getKey () {
+        return montar_chave_publica();
     }
 
     public String cifrar (String mensagem) {
