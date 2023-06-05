@@ -7,17 +7,30 @@ import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+/**
+ * Classe do algoritimo Cifra de Bloco para criptografar texto
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Cifra_de_bloco {
     private int tamanho_bloco;
     private int tamanho_bloco_cifrado;
     private byte[] key;
 
+    /**
+     * Construtor da classe
+     */
     Cifra_de_bloco () {
         tamanho_bloco = 8;
         tamanho_bloco_cifrado = tamanho_bloco * 4;
         criar_chave();
     }
 
+    /**
+     * Gera uma chave aleatoria de 64 bits
+     */
     private void criar_chave () {
         Random rand = new Random();
         key = new byte [tamanho_bloco];
@@ -29,26 +42,45 @@ public class Cifra_de_bloco {
         }
     }
 
-    private String byteToString (byte[] vet) {
+    /**
+     * Converte um vetor de bytes para uma string
+     * 
+     * @param array a ser convertido
+     * @return string com o vetor de bytes convetido
+     */
+    private String byteToString (byte[] array) {
         String resultado = "";
 
-        for (int i = 0; i < vet.length; i++) {
-            resultado += Character.toString((char) vet[i]);
+        for (int i = 0; i < array.length; i++) {
+            resultado += Character.toString((char) array[i]);
         }
 
         return resultado;
     }
 
+    /**
+     * Converte uma string para um vetor de bytes
+     * 
+     * @param str string a ser convetida
+     * @return vetor de bytes convertido
+     */
     private byte[] stringToByteArray (String str) {
-        byte[] vet = new byte[str.length()];
+        byte[] array = new byte[str.length()];
 
         for (int i = 0; i < str.length(); i++) {
-            vet[i] = (byte) str.charAt(i);
+            array[i] = (byte) str.charAt(i);
         }
 
-        return vet;
+        return array;
     }
 
+    /**
+     * Transforma um vetor de int em um vetor de byte
+     * 
+     * @param vet de inteiros a ser convertido
+     * @return vetor de bytes
+     * @throws IOException
+     */
     private byte[] toByteArray (int[] vet) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
@@ -61,6 +93,13 @@ public class Cifra_de_bloco {
         return baos.toByteArray();
     }
 
+    /**
+     * Converte um vetor de byte em um vetor de inteiros
+     * 
+     * @param vet byte a ser convertido
+     * @return vetor de inteiros convertido
+     * @throws IOException
+     */
     public int[] fromByteArray (byte[] vet) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(vet);
         DataInputStream dis = new DataInputStream(bais);
@@ -74,6 +113,13 @@ public class Cifra_de_bloco {
         return vet_lido;
     }
 
+    /**
+     * Cifra um bloco de 64 bits
+     * 
+     * @param bloco a ser cifrado
+     * @return bloco cifrado em um vetor de bytes
+     * @throws IOException
+     */
     private byte[] cifrar_bloco (byte[] bloco) throws IOException {
         int[] bloco_cifrado = new int[bloco.length];
 
@@ -85,6 +131,13 @@ public class Cifra_de_bloco {
         return toByteArray(bloco_cifrado);
     }
 
+    /**
+     * Decifra um bloco de 64 bits
+     * 
+     * @param bloco_cifrado a ser decifrado
+     * @return bloco decifrado em um vetor de bytes
+     * @throws IOException
+     */
     private byte[] decifrar_bloco (byte[] bloco_cifrado) throws IOException {
         int[] bloco_cifrado_convertido = fromByteArray(bloco_cifrado);
         byte[] bloco_decifrado = new byte[bloco_cifrado_convertido.length];
@@ -97,6 +150,13 @@ public class Cifra_de_bloco {
         return bloco_decifrado;
     }
 
+    /**
+     * Cifra uma string
+     * 
+     * @param mensagem a ser cifrada
+     * @return mensagem cifrada em uma string
+     * @throws IOException
+     */
     public String cifrar (String mensagem) throws IOException {
         byte[] vet = stringToByteArray(mensagem);
         byte[] bloco;
@@ -123,6 +183,13 @@ public class Cifra_de_bloco {
         return mensagem_cifrada;
     }
 
+    /**
+     * Decifra uma string
+     * 
+     * @param mensagem cifrada
+     * @return mensagem decifrada
+     * @throws IOException
+     */
     public String decifrar (String mensagem) throws IOException {
         byte[] vet = stringToByteArray(mensagem);
         byte[] bloco;

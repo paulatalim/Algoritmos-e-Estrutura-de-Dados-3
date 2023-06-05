@@ -23,12 +23,8 @@ public class Criptografia {
         return bloco.cifrar(rsa.cifrar(mensagem));
     }
 
-    private String decifrar_key (String chave) throws IOException {
-        return bloco.decifrar(chave);
-    }
-
     public String decifrar (String mensagem_cifrada, String chave) throws IOException {
-        return rsa.decifrar(bloco.decifrar(mensagem_cifrada), decifrar_key(chave));
+        return rsa.decifrar(bloco.decifrar(mensagem_cifrada), bloco.decifrar(chave));
     }
 
     public String getKey () throws IOException {
