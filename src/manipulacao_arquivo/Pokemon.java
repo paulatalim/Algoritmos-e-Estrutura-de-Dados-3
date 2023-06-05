@@ -90,6 +90,7 @@ public class Pokemon extends Object implements Cloneable {
     /**
      * Elabora um vetor de bytes com seus atributos para a insercao no arquivo
      * 
+     * @param criptografia objeto de criptografia para cifrar o nome do pokemon
      * @return vetor de bytes
      * @throws IOException
      */
@@ -122,6 +123,7 @@ public class Pokemon extends Object implements Cloneable {
 
     /**
      * Elabora um vetor de bytes com seus atributos para a insercao no arquivo
+     * Observacao: nao criptografa o nome  
      * 
      * @return vetor de bytes
      * @throws IOException
@@ -154,12 +156,14 @@ public class Pokemon extends Object implements Cloneable {
 
      /**
      * A partir de um vetor de bytes, preenche os atributos da classe
-     *
-     * @param ba vetor de bytes a ser traduzido
+     * 
+     * @param byteArray vetor de bytes a ser convertido
+     * @param chave de criptografia
+     * @param criptografia : objeto de criptografia para decifrar
      * @throws IOException
      */
-    public void fromByteArray (byte[] ba, String chave, Criptografia criptografia) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+    public void fromByteArray (byte[] byteArray, String chave, Criptografia criptografia) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(byteArray);
         DataInputStream dis = new DataInputStream(bais);
         String nome_cifrado;
         String[] types;
@@ -202,12 +206,13 @@ public class Pokemon extends Object implements Cloneable {
 
     /**
      * A partir de um vetor de bytes, preenche os atributos da classe
+     * Observacao: nao decifra o nome
      *
-     * @param ba vetor de bytes a ser traduzido
+     * @param byteArray vetor de bytes a ser traduzido
      * @throws IOException
      */
-    public void fromByteArray (byte[] ba) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+    public void fromByteArray (byte[] byteArray) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(byteArray);
         DataInputStream dis = new DataInputStream(bais);
         String[] types;
         String type;
