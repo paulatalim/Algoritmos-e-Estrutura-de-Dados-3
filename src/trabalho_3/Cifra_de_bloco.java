@@ -8,7 +8,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 /**
- * Classe do algoritimo Cifra de Bloco para criptografar texto
+ * Classe do algoritmo Cifra de Bloco para criptografar texto
  * 
  * @author Mariana Aram
  * @author Paula Talim
