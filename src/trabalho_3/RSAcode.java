@@ -23,12 +23,12 @@ public class RSAcode {
      * Construtor da clase
      */
     RSAcode () {
-        // Inicializa e preenche o dicionario
-        dicionario = new HashMap<Character, String>();
-        preencher_dicionario();
-
         //Criacao de chaves
         criar_chaves();
+
+        // Inicializa e preenche o dicionario
+        dicionario = new HashMap<Character, String>();
+        preencher_dicionario();        
     }
 
     /**

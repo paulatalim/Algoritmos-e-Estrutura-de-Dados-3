@@ -30,20 +30,6 @@ public class Indexacao {
         buckets = new RandomAccessFile(name_folder + "/buckets.db", "rw");
     }
 
-    public void inicializar () throws Exception {
-        //Inicializando arquivos
-        diretorio.setLength(0);
-        buckets.setLength(0);
-
-        //Registra a profundidade
-        diretorio.writeShort(1);
-
-        //Cria dois buckets iniciais
-        for (int i = 0; i < 2; i ++) {
-            criar_novo_bucket(i);
-        }
-    }
-
     /**
      * Calcula o hash do numero
      * 
@@ -218,6 +204,25 @@ public class Indexacao {
         diretorio.seek(endereco_chave_no_diretorio(hash));
 
         return diretorio.readLong();
+    }
+
+    /**
+     * Inicializa os documentos para indexacao
+     * 
+     * @throws Exception
+     */
+    public void inicializar () throws Exception {
+        //Inicializando arquivos
+        diretorio.setLength(0);
+        buckets.setLength(0);
+
+        //Registra a profundidade
+        diretorio.writeShort(1);
+
+        //Cria dois buckets iniciais
+        for (int i = 0; i < 2; i ++) {
+            criar_novo_bucket(i);
+        }
     }
 
     /**

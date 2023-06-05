@@ -39,6 +39,30 @@ public class Compressao {
         // Atribuicao de valores dos outros aributos
         this.data_base_name = data_base_name;
         this.data_base_src = data_base_src;
+
+        limpar_diretorio();
+    }
+
+    /**
+     * Caso exitir o diretorio, todos os arquivo que ele 
+     * possui sao deletados e em seguida o diretorio eh 
+     * deletado
+     */
+    private void limpar_diretorio () {        
+        File folder = new File(folder_url);
+
+        if (folder.exists()) {
+            // Lista os arquivos
+            File[] files = folder.listFiles();
+            
+            // Deleta os arquivos
+            for (File file : files) {
+                file.delete();
+            }
+
+            // Deleta o diretorio
+            folder.delete();
+        }
     }
 
     /**

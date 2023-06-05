@@ -72,11 +72,11 @@ public class Tela {
                             + "\t"           + "com o objetivo de manipulacao de arquivos de base dados. Como exemplo," + "\n"
                             + "\t"           + "nesse sistema sera utilizado uma base de dados sobre pokemons."         + "\n\n"
 
-                            + "\t"           + "A seguir, as informacoes do arquivo .csv serao importadas para preencher"    + "\n"
-                            + "\t"           + "a base de dados .db. Apos o processo de importacao, sera redirecionado "     + "\n"
-                            + "\t"           + "para o menu de opcoes de manipulacao da base de dados, onde podera executar" + "\n"
-                            + "\t"           + "as acoes desejadas."                                                         + "\n\n\n"
-                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                  + "\n");
+                            + "\t"           + "A seguir, sera inicializado o algoritmo de criptografia e as informacoes"  + "\n"
+                            + "\t"           + "do arquivo .csv serao importadas para preencher a base de dados .db. Apos" + "\n"
+                            + "\t"           + "a importacao, sera redirecionado para o menu de opcoes de manipulacao da"  + "\n"
+                            + "\t"           + "base de dados, onde podera executar as acoes desejadas."                   + "\n\n\n"
+                            + "\t\t\t\t\t"   +                            "Seja bem vindo!"                                + "\n");
         
         exibir_fim_tela();
     }

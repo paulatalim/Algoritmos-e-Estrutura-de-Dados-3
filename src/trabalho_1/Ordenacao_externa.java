@@ -262,7 +262,6 @@ public class Ordenacao_externa {
      * Intercala os blocos de registros
      * 
      * @param arq .db a ser ordenado
-     * @param metadados do arquivo
      * @throws Exception
      */
     private static void intercalar_registros (RandomAccessFile arq) throws Exception {
@@ -401,6 +400,8 @@ public class Ordenacao_externa {
      * 
      * @param arq .db a ser escrito
      * @param metadados do arquivo a ser escrito
+     * @param chave de criptografia
+     * @param index objeto para indexacao
      * @throws Exception
      */
     private static void reescrever_arq_db_ordenado (RandomAccessFile arq, int metadados, String chave, Indexacao index) throws Exception {

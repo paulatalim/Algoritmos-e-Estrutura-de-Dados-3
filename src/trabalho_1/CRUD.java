@@ -22,6 +22,7 @@ public class CRUD {
      * Construtor da classe
      * 
      * @param caminho_arq data base
+     * @param criptografia : objeto de criptografia
      * @throws Exception
      */
     public CRUD (String caminho_arq, Criptografia criptografia) throws Exception {
@@ -32,6 +33,12 @@ public class CRUD {
 
     /*** OUTROS METODOS ***/
 
+    /**
+     * Leitura da chave de criptografia na data base
+     * 
+     * @return chave de criptografia lida
+     * @throws Exception
+     */
     private String ler_chave () throws Exception {
         arq.seek(0);
         arq.readInt();
