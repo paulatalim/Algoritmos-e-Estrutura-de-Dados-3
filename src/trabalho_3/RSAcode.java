@@ -18,6 +18,7 @@ public class RSAcode {
     private BigDecimal q;
     private BigDecimal z;
     private HashMap<Character, String> dicionario;
+    private HashMap<String, Character> diclo;
 
     /**
      * Construtor da clase
@@ -28,7 +29,10 @@ public class RSAcode {
 
         // Inicializa e preenche o dicionario
         dicionario = new HashMap<Character, String>();
-        preencher_dicionario();        
+        preencher_dicionario(); 
+        
+        diclo = new HashMap<String, Character>();
+        preencher_dicionario_decifragem();
     }
 
     /**
@@ -39,6 +43,10 @@ public class RSAcode {
      */
     private String cifrar_letra (char letra) {
         return new BigDecimal(letra).pow(e.intValue()).remainder(n).toString();
+    }
+
+    private char decifrar_letra (String letra) {
+        return (char) new BigDecimal(letra).pow(d.intValue()).remainder(n).intValue();
     }
 
     /**
@@ -59,6 +67,13 @@ public class RSAcode {
         // Adiciona espaco e ifen
         dicionario.put(' ', cifrar_letra(' '));
         dicionario.put('-', cifrar_letra('-'));
+    }
+
+    private void preencher_dicionario_decifragem () {
+        for (char key : dicionario.keySet()) {
+            String letra = dicionario.get(key);
+            diclo.put(letra, decifrar_letra(letra));
+        }
     }
 
     /**
@@ -164,8 +179,16 @@ public class RSAcode {
                 tamanho +=  Character.getNumericValue(mensagem.charAt(i++));
             }
 
+            char letra_decifrada;
+
+            if (diclo.containsKey(mensagem.substring(i, i + tamanho))) {
+                letra_decifrada = diclo.get(mensagem.substring(i, i + tamanho));
+            } else {
+                letra_decifrada = decifrar_letra(mensagem.substring(i, i + tamanho));
+            }
+            
             //Decifra o proximo caracter
-            mensagem_decifrada += (char) new BigDecimal(mensagem.substring(i, i + tamanho)).pow(d.intValue()).remainder(n).intValue();
+            mensagem_decifrada += letra_decifrada;
         }
        
         return mensagem_decifrada;

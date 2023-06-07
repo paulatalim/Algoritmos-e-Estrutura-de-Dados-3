@@ -9,9 +9,10 @@ import trabalho_1.CRUD;
 import trabalho_1.Ordenacao_externa;
 import trabalho_1.entrada_dados;
 import trabalho_2.Indexacao;
-import trabalho_2.Compressao;
-import trabalho_3.Casamento_padroes;
-import trabalho_3.Criptografia;
+import trabalho_2.LZWEncoder;
+import trabalho_2.compressao;
+import trabalho_2.decodificacao;
+import trabalho_3.casamento;
 
 /**
  * Classe da aplicacao do programa
@@ -22,35 +23,32 @@ import trabalho_3.Criptografia;
  */
 public class Main {
     public static void main(String[] args) {
-        String caminho_arq_csv = "src/pokedex.csv";
-        String caminho_arq_db = "src/pokedex.db";
+        String caminho_arq_csv = "C:/Users/maria/Documents/MARIANA/FACULDADE/3° PERIODO/AED 3/TRABALHO PRATICO PARTE 2/src/teste_compac.csv";
+        String caminho_arq_db = "C:/Users/maria/Documents/MARIANA/FACULDADE/3° PERIODO/AED 3/TRABALHO PRATICO PARTE 2/src/teste_compac.db";
 
         int opcao, id;
         boolean opcao_invalida;
-
         CRUD crud;
         Indexacao index;
-        Compressao compressao;
         RandomAccessFile arq;
         Pokemon pokemon = new Pokemon();
         Scanner scanner = new Scanner (System.in);
 
-        Criptografia criptografia;
+        
 
+        
         try {
+            arq = new RandomAccessFile(caminho_arq_db, "rw");
+            crud = new CRUD (caminho_arq_db);
+            index = new Indexacao(caminho_arq_db);
+            
+            
             //Exibe o inicio do programa
             Tela.exibir_tela_inicial_e_info ();
-
-            //Cria os objetos
-            criptografia = new Criptografia();
-            arq = new RandomAccessFile(caminho_arq_db, "rw");
-            crud = new CRUD (caminho_arq_db, criptografia);
-            index = new Indexacao();
-            compressao = new Compressao(caminho_arq_db, "Pokedex", "arquivos_comprimidos");
-
+            
             //Importa arquivo .csv automatico
-            Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv, index, criptografia);
-            //index.indexar_data_base();
+            Importa_csv.passar_arq_csv_para_db(arq, caminho_arq_csv);
+            index.indexar_data_base();
             Tela.exibir_fim_tela();
             
             //Repete o programa
@@ -63,16 +61,16 @@ public class Main {
                 do {
                     //Exibe o menu das opcoes
                     Tela.println ("\n\t\t\t\t\t" + "*** POKE-MENU ***" + "\n\n\n"
-                                + "\t" + "O que deseja fazer em sua Pokedex:" + "\n\n"
-                                + "\t" + "1 - CRIAR pokemon" + "\n"
-                                + "\t" + "2 - LER pokemon" + "\n "
-                                + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
-                                + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
-                                + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
-                                + "\t" + "6 - COMPRIMIR o arquivo " + "\n"
-                                + "\t" + "7 - DESCOMPRIMIR o arquivo" + "\n" 
-                                + "\t" + "8 - BUSCAR no arquivo" + "\n" 
-                                + "\t" + "0 - SAIR" + "\n");
+                                        + "\t" + "O que deseja fazer em sua Pokedex:" + "\n\n"
+                                        + "\t" + "1 - CRIAR pokemon" + "\n"
+                                        + "\t" + "2 - LER pokemon" + "\n "
+                                        + "\t" + "3 - ATUALIZAR informacao de pokemon" + "\n"
+                                        + "\t" + "4 - DELETAR pokemon da pokedex" + "\n"
+                                        + "\t" + "5 - ORDENAR pokemons na pokedex" + "\n" 
+                                        + "\t" + "6 - COMPRIMIR o arquivo " + "\n"
+                                        + "\t" + "7 - DESCOMPRIMIR o arquivo" + "\n" 
+                                        + "\t" + "8 - BUSCAR no arquivo" + "\n" 
+                                        + "\t" + "0 - SAIR" + "\n");
                     
                     if (opcao_invalida) {
                         Tela.println("\t" + "Opcao invalida. Tente novavemente." + "\n");
@@ -87,8 +85,8 @@ public class Main {
     
                 switch (opcao) {
                     case 1:
-                        Tela.print ( "\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
-                                    + "\t\t\t\t\t"  + "Insira as novas informacoes" + "\n");
+                        Tela.print("\n\t\t\t\t\t" + "    *** POKE-CRIACAO ***" + "\n"
+                                        + "\t\t\t\t\t"  + "Insira as novas informacoes" + "\n");
                         //Cria novo pokemon
                         pokemon = entrada_dados.info_poke_novo();
                         crud.criar(pokemon);
@@ -100,8 +98,8 @@ public class Main {
                         break;
     
                     case 2:
-                        Tela.print ( "\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
-                                    + "\t" + "Insira o id do pokemon procurado: ");
+                        Tela.print("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n"
+                                        + "\t" + "Insira o id do pokemon procurado: ");
 
                         id = scanner.nextInt();
                         Tela.limpar_console();
@@ -112,22 +110,22 @@ public class Main {
                         if (pokemon != null) {
                             Tela.print(pokemon.toString());
                         } else {
-                            Tela.println ( "\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
-                                        + "\t" + "Pokemon nao encontrado");
+                            Tela.println("\n\t\t\t\t\t" + "*** POKE-WIKI ***" + "\n\n\n" 
+                                                + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 3:
                         //Exibe o titulo da pagina e entrada de id
                         Tela.print ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n"
-                                    + "\t" + "Insira o id do pokemon a ter um update: ");
+                                            + "\t" + "Insira o id do pokemon a ter um update: ");
                         id = scanner.nextInt();
                         Tela.limpar_console();
 
                         //Le o pokemon a ser atualizado
                         pokemon = crud.ler(id); 
                         
-                        //Caso o id existir e a chave estiver correta
+                        //Caso o id existir
                         if (pokemon != null) {
 
                             //Funções para atualizar o pokemon
@@ -140,18 +138,17 @@ public class Main {
                                     Tela.println("\n\t" + "Pokemon atualizado com sucesso!");
                                 } else {
                                     Tela.println ("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
-                                                + "\t" + "Pokemon nao encontrado");
+                                                        + "\t" + "Pokemon nao encontrado");
                                 }
                             }
                         } else {
-                            Tela.println ( "\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
-                                        + "\t" + "Pokemon nao encontrado");
+                            Tela.println("\n\t\t\t\t\t\t" + "*** POKE-UP ***" + "\n\n\n" 
+                                                + "\t" + "Pokemon nao encontrado");
                         }
                         break;
     
                     case 4:
-                        //Deletar registro
-                        Tela.print ( "\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
+                        Tela.print("\n\t\t\t\t\t\t" + "*** POKE-DELETE ***" + "\n\n\n"
                                         + "\t"+ "Insira o id do pokemon a ser deletado: "); 
                         id = scanner.nextInt();
 
@@ -163,36 +160,31 @@ public class Main {
                         break;
 
                     case 5:
-                        //Ordenacao externa da base de dados
-                        Ordenacao_externa.ordenar_registros(arq, index);
+                        Ordenacao_externa.ordenar_registros(arq);
+                        index.indexar_data_base();
                         break;
                     
+
                     case 6:
-                        //Compactacao da base de dados
-                        compressao.comprimir();
+                        compressao.comprimir(caminho_arq_db,"comprimido.db");
                         break;
 
                     case 7:
-                        //Descompactacao da base de dados
-                        Tela.print("\n\t\t\t\t\t\t" + "*** POKE-DESCOMPACTAR ***" + "\n\n\n"
-                                    + "\t"+ "Insira a versao da pokedex que deseja descompactar: ");
 
-                        //Entrada da versao do arquivoa descompactar
-                        id = scanner.nextInt();
-
-                        //Descompacta o arquivo
-                        if (compressao.descomprimir(id)) {
-                            Tela.println("\n\t" + "Pokedex descompactada com sucesso!");
-                        } else {
-                            Tela.println("\n\t" + "Versao pokedex nao encontrada");
-                        }
+                        decodificacao.descomprimir("C:/Users/maria/Documents/MARIANA/FACULDADE/3° PERIODO/AED 3/TRABALHO PRATICO PARTE 2/src/comprimido.db", "SAIDA.db");
+                        //decodificacao.descomprimir(caminho_arq_csv, caminho_arq_db);
+                        //"comprimido.db"
                         break;
+
                     case 8:
+
                         System.out.print("Digite a palavra para buscar por casamento de padrões: ");
                         String palavra_busca = scanner.next();
                     
-                        Casamento_padroes.busca(palavra_busca, arq ,crud);
+                        casamento.busca(palavra_busca, arq ,crud);
+
                         break;
+
 
                     case 0:
                         Tela.exibir_tela_agradecimentos();

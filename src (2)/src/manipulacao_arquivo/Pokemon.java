@@ -8,8 +8,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Date;
 
-import trabalho_3.Criptografia;
-
 /**
  * Classe que armazena os atributos dos registros armazenados no arquivo .db
  * 
@@ -90,48 +88,13 @@ public class Pokemon extends Object implements Cloneable {
     /**
      * Elabora um vetor de bytes com seus atributos para a insercao no arquivo
      * 
-     * @param criptografia objeto de criptografia para cifrar o nome do pokemon
-     * @return vetor de bytes
-     * @throws IOException
-     */
-    public byte[] toByteArray (Criptografia criptografia) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        String nome_criptografado = criptografia.cifrar(nome);
-        
-        dos.writeInt(id);
-        dos.writeInt(num_pokedex);
-        dos.writeUTF(nome_criptografado);
-        dos.writeInt(geracao);
-        dos.writeUTF(especie);
-        dos.writeFloat(altura);
-        dos.writeFloat(peso);
-        dos.writeUTF(tipo1 + "-" + tipo2);
-        dos.writeInt(hp);
-        dos.writeInt(ataque);
-        dos.writeInt(defesa);
-        dos.writeInt(ataque_especial);
-        dos.writeInt(defesa_especial);
-        dos.writeInt(velocidade);
-        dos.writeBoolean(eh_mistico);
-        dos.writeBoolean(eh_lendario);
-        dos.writeLong(data_de_registro.getTime());
-
-		//Retorno do vetor de bytes para escrever no arquivo
-        return baos.toByteArray();
-    }
-
-    /**
-     * Elabora um vetor de bytes com seus atributos para a insercao no arquivo
-     * Observacao: nao criptografa o nome  
-     * 
      * @return vetor de bytes
      * @throws IOException
      */
     public byte[] toByteArray () throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-
+        
         dos.writeInt(id);
         dos.writeInt(num_pokedex);
         dos.writeUTF(nome);
@@ -156,63 +119,12 @@ public class Pokemon extends Object implements Cloneable {
 
      /**
      * A partir de um vetor de bytes, preenche os atributos da classe
-     * 
-     * @param byteArray vetor de bytes a ser convertido
-     * @param chave de criptografia
-     * @param criptografia : objeto de criptografia para decifrar
-     * @throws IOException
-     */
-    public void fromByteArray (byte[] byteArray, String chave, Criptografia criptografia) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(byteArray);
-        DataInputStream dis = new DataInputStream(bais);
-        String nome_cifrado;
-        String[] types;
-        String type;
-
-        //Le o arquivo
-        id = dis.readInt();
-        num_pokedex = dis.readInt();
-        nome_cifrado = dis.readUTF();
-        
-        geracao= dis.readInt();
-        especie = dis.readUTF();
-        altura = dis.readFloat();
-        peso = dis.readFloat();
-        type = dis.readUTF();
-        
-        hp = dis.readInt();
-        ataque = dis.readInt();
-        defesa = dis.readInt();
-        ataque_especial = dis.readInt();
-        defesa_especial = dis.readInt();
-        velocidade = dis.readInt();
-        eh_mistico = dis.readBoolean();
-        eh_lendario = dis.readBoolean();
-
-        data_de_registro = new Date(dis.readLong());
-
-        //Atribui os valores do tipo
-        types = type.split("-");
-        tipo1 = types[0];
-
-        //Verifica se o pokemon possui tipo 2
-        if (types.length > 1) {
-            tipo2 = types[1];
-        }
-
-        //Decifra o nome
-        nome = criptografia.decifrar(nome_cifrado, chave);
-    }
-
-    /**
-     * A partir de um vetor de bytes, preenche os atributos da classe
-     * Observacao: nao decifra o nome
      *
-     * @param byteArray vetor de bytes a ser traduzido
+     * @param ba vetor de bytes a ser traduzido
      * @throws IOException
      */
-    public void fromByteArray (byte[] byteArray) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(byteArray);
+    public void fromByteArray (byte[] ba) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
         DataInputStream dis = new DataInputStream(bais);
         String[] types;
         String type;
@@ -244,9 +156,8 @@ public class Pokemon extends Object implements Cloneable {
         tipo1 = types[0];
 
         //Verifica se o pokemon possui tipo 2
-        if (types.length > 1) {
+        if (types.length > 1)
             tipo2 = types[1];
-        }
     }
 
     public String toString () {
@@ -293,47 +204,6 @@ public class Pokemon extends Object implements Cloneable {
         str += "\n\t" + "Criacao do registro".toUpperCase() + "\n"
             + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
             + "\t" + "Horario: " + formatar_horario.format(data_de_registro) + "\n";
-
-        return str;
-    }
-
-    public String[] palavras_por_partes (){
-
-        //System.out.println("aaaa");
-
-        String str[]= new String[18];
-
-        str[0] = Integer.toString(id);
-        str[1] = Integer.toString(num_pokedex);
-        str[2] = nome;
-        str[3] = Integer.toString(geracao);
-        str[4] = especie;
-        str[5] = Float.toString(altura);
-        str[6] = Float.toString(peso);
-        str[7] = tipo1;
-        str[8] = tipo2;
-        str[9] = Integer.toString(hp);
-        str[10] = Integer.toString(ataque);
-        str[11] = Integer.toString(defesa);
-        str[12] = Integer.toString(ataque_especial);
-        str[13] = Integer.toString(defesa_especial);
-        str[14] = Integer.toString(velocidade);
-        if (eh_mistico==true){
-            str[15]= "e mistico";
-        }
-        else{
-            str[15]= "nao e mistico";
-        }
-
-
-        if (eh_lendario==true){
-            str[16]= "e lendariio";
-        }
-        else{
-            str[16]= "nao e lendario";
-        }
-      
-        str[17] = Long.toString(data_de_registro.getTime());
 
         return str;
     }
@@ -504,5 +374,46 @@ public class Pokemon extends Object implements Cloneable {
 
     public void setDataDeRegistro(Date data_de_registro) {
         this.data_de_registro = data_de_registro;
+    }
+
+    public String[] palavras_por_partes (){
+
+        System.out.println("aaaa");
+
+        String str[]= new String[19];
+
+        str[0] = Integer.toString(id);
+        str[1] = Integer.toString(num_pokedex);
+        str[2] = nome;
+        str[3] = Integer.toString(geracao);
+        str[4] = especie;
+        str[5] = Float.toString(altura);
+        str[6] = Float.toString(peso);
+        str[7] = tipo1;
+        str[8] = tipo2;
+        str[9] = Integer.toString(hp);
+        str[10] = Integer.toString(ataque);
+        str[11] = Integer.toString(defesa);
+        str[12] = Integer.toString(ataque_especial);
+        str[13] = Integer.toString(defesa_especial);
+        str[14] = Integer.toString(velocidade);
+        if (eh_mistico==true){
+            str[15]= "e mistico";
+        }
+        else{
+            str[15]= "nao e mistico";
+        }
+
+
+        if (eh_lendario==true){
+            str[15]= "e lendariio";
+        }
+        else{
+            str[15]= "nao e lendario";
+        }
+      
+        str[17] = Long.toString(data_de_registro.getTime());
+     
+        return str;
     }
 }
