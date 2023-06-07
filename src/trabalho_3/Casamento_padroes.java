@@ -1,36 +1,30 @@
 package trabalho_3;
-import java.io.*;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 import manipulacao_arquivo.Pokemon;
 import trabalho_1.CRUD;
-import trabalho_2.Indexacao;
-import java.io.RandomAccessFile;
-import manipulacao_arquivo.Pokemon;
 
-
-
- /* 1- Mudar o crud (case 8)
-            case 8:
-            String palavra_busca;
-
-            System.out.print("Digite a palavra para o casamento de padrões: ");
-            String palavra_busca = scanner.next();
-                            
-            casamento.busca(palavra_busca, caminho_arq_csv);
-
-
-     
-    */
-
-
+/**
+ * Classe com algoritmo de casamento de 
+ * padroes para a busca no documento
+ * 
+ * @author Mariana Aram
+ * @author Paula Talim
+ * @author Yago Garzon
+ */
 public class Casamento_padroes {
     static int operacao;
 
-    public static int[] CriarTabelaPrefixo(String padrao) {
+    /**
+     * Cria uma tabela de prefixos
+     * 
+     * @param padrao a ser prefixado
+     * @return vetor de inteiros como uma tabela de prefixos
+     */
+    public static int[] criarTabelaPrefixo(String padrao) {
         int[] tabelaprefixo = new int[padrao.length()];
         int i = 0;
 
@@ -61,9 +55,16 @@ public class Casamento_padroes {
     }
     
 
+    /**
+     *  Algoritmo KMP para o casamento de padroes
+     * 
+     * @param texto onde sera realizado a busca
+     * @param padrao a ser pesquiado
+     * @return Lista de inteiros com as posicoes onde foi encontrado o padrao
+     */
     private static List<Integer> kmpBusca(String texto, String padrao) {
         List<Integer> matches = new ArrayList<>();
-        int[] tabelaprfixo = CriarTabelaPrefixo (padrao);
+        int[] tabelaprfixo = criarTabelaPrefixo (padrao);
         int i = 0, j = 0;
 
         // Criacao de lista, inicializacao de variaveis
@@ -136,7 +137,7 @@ public class Casamento_padroes {
         }
 
         // Exibe resultados
-        
+
     }
 }
     
