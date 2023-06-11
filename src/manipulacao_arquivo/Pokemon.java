@@ -39,6 +39,9 @@ public class Pokemon extends Object implements Cloneable {
 
     /*** CONSTRUTORES ***/
 
+    /**
+     * Construtor com atribuicao dos atributos com valores nulos
+     */
     public Pokemon () {
         id = -1;
         num_pokedex = -1;
@@ -60,6 +63,27 @@ public class Pokemon extends Object implements Cloneable {
         data_de_registro = new Date();
     }
 
+    /**
+     * Construtor com atribucao dos atributos com os parametros
+     * 
+     * @param id
+     * @param num_pokedex
+     * @param nome
+     * @param geracao
+     * @param especie
+     * @param altura
+     * @param peso
+     * @param tipo1
+     * @param tipo2
+     * @param hp
+     * @param ataque
+     * @param defesa
+     * @param ataque_especial
+     * @param defesa_especial
+     * @param velocidade
+     * @param eh_mistico
+     * @param eh_lendario
+     */
     public Pokemon (int id, int num_pokedex, String nome, int geracao,
             String especie, float altura, float peso, String tipo1,
             String tipo2, int hp, int ataque, int defesa, int ataque_especial,
@@ -249,6 +273,50 @@ public class Pokemon extends Object implements Cloneable {
         }
     }
 
+    /**
+     * Cria um vetor de String com cada atributo 
+     * em cada indice do vetor
+     * 
+     * @return vetor de String com os atributos
+     */
+    public String[] palavras_por_partes (){
+        String str[]= new String[18];
+
+        str[0] = Integer.toString(id);
+        str[1] = Integer.toString(num_pokedex);
+        str[2] = nome;
+        str[3] = Integer.toString(geracao);
+        str[4] = especie;
+        str[5] = Float.toString(altura);
+        str[6] = Float.toString(peso);
+        str[7] = tipo1;
+        str[8] = tipo2;
+        str[9] = Integer.toString(hp);
+        str[10] = Integer.toString(ataque);
+        str[11] = Integer.toString(defesa);
+        str[12] = Integer.toString(ataque_especial);
+        str[13] = Integer.toString(defesa_especial);
+        str[14] = Integer.toString(velocidade);
+        
+        if (eh_mistico==true){
+            str[15]= "e mistico";
+        }
+        else{
+            str[15]= "nao e mistico";
+        }
+
+        if (eh_lendario==true){
+            str[16]= "e lendariio";
+        }
+        else{
+            str[16]= "nao e lendario";
+        }
+      
+        str[17] = Long.toString(data_de_registro.getTime());
+
+        return str;
+    }
+
     public String toString () {
         SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formatar_horario = new SimpleDateFormat("hh:mm:ss");
@@ -293,47 +361,6 @@ public class Pokemon extends Object implements Cloneable {
         str += "\n\t" + "Criacao do registro".toUpperCase() + "\n"
             + "\t" + "Data: " + formatar_data.format(data_de_registro) + "\n"
             + "\t" + "Horario: " + formatar_horario.format(data_de_registro) + "\n";
-
-        return str;
-    }
-
-    public String[] palavras_por_partes (){
-
-        //System.out.println("aaaa");
-
-        String str[]= new String[18];
-
-        str[0] = Integer.toString(id);
-        str[1] = Integer.toString(num_pokedex);
-        str[2] = nome;
-        str[3] = Integer.toString(geracao);
-        str[4] = especie;
-        str[5] = Float.toString(altura);
-        str[6] = Float.toString(peso);
-        str[7] = tipo1;
-        str[8] = tipo2;
-        str[9] = Integer.toString(hp);
-        str[10] = Integer.toString(ataque);
-        str[11] = Integer.toString(defesa);
-        str[12] = Integer.toString(ataque_especial);
-        str[13] = Integer.toString(defesa_especial);
-        str[14] = Integer.toString(velocidade);
-        if (eh_mistico==true){
-            str[15]= "e mistico";
-        }
-        else{
-            str[15]= "nao e mistico";
-        }
-
-
-        if (eh_lendario==true){
-            str[16]= "e lendariio";
-        }
-        else{
-            str[16]= "nao e lendario";
-        }
-      
-        str[17] = Long.toString(data_de_registro.getTime());
 
         return str;
     }

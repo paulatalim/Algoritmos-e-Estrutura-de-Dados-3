@@ -177,8 +177,8 @@ public class Main {
                         break;
 
                     case 8:
-
-                        System.out.print("Digite a palavra para buscar por casamento de padrões: ");
+                        Tela.println("\n\t\t\t\t\t\t" + "*** CASAMENTO DOS POKE PADROES ***" + "\n\n\n" 
+                                    + "\t"+ "Digite o que deseja pesquisar: "); 
                         String palavra_busca = scanner.next();
                     
                         casamento.busca(palavra_busca, arq ,crud);

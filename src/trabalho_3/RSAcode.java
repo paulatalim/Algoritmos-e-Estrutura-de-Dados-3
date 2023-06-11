@@ -27,12 +27,9 @@ public class RSAcode {
         //Criacao de chaves
         criar_chaves();
 
-        // Inicializa e preenche o dicionario
-        dicionario = new HashMap<Character, String>();
-        preencher_dicionario(); 
-        
+        // Inicializa os dicionarios
+        dicionario = new HashMap<Character, String>();; 
         diclo = new HashMap<String, Character>();
-        preencher_dicionario_decifragem();
     }
 
     /**
@@ -45,35 +42,14 @@ public class RSAcode {
         return new BigDecimal(letra).pow(e.intValue()).remainder(n).toString();
     }
 
+    /**
+     * Decifra um caracter
+     * 
+     * @param letra cifrada
+     * @return letra decifrada
+     */
     private char decifrar_letra (String letra) {
         return (char) new BigDecimal(letra).pow(d.intValue()).remainder(n).intValue();
-    }
-
-    /**
-     * Preenche o dicionario com o espaco, o ifen e as letras maiusculas e 
-     * minusculas do alfabeto cifradas
-     */
-    private void preencher_dicionario () {
-        // Adiciona as letras maiusculas no dicionario
-        for (char i = 'A'; i <= 'Z'; i++) {
-            dicionario.put(i, cifrar_letra(i));
-        }
-
-        // Aidiciona as letras minusculas no dicionario
-        for (char i = 'a'; i <= 'z'; i++) {
-            dicionario.put(i, cifrar_letra(i));
-        }
-
-        // Adiciona espaco e ifen
-        dicionario.put(' ', cifrar_letra(' '));
-        dicionario.put('-', cifrar_letra('-'));
-    }
-
-    private void preencher_dicionario_decifragem () {
-        for (char key : dicionario.keySet()) {
-            String letra = dicionario.get(key);
-            diclo.put(letra, decifrar_letra(letra));
-        }
     }
 
     /**
@@ -105,7 +81,8 @@ public class RSAcode {
     }
 
     /**
-     * Valida a chave publica 
+     * Valida a chave publica
+     * 
      * @param key a ser verificada
      * @return true, se for valida, false, se for invalida
      */
@@ -137,13 +114,14 @@ public class RSAcode {
 
         // Cifra cada letra da mensagem
         for (int i = 0; i < mensagem.length(); i++) {
-            // Busca a letra no dicionario
-            letra_cifrada = dicionario.get(mensagem.charAt(i));
-
-            // Caso a letra nao existir no dicionario
-            if (letra_cifrada == null) {
-                //Cifra a letra
+            
+            if (dicionario.containsKey(mensagem.charAt(i))) {
+                // Busca a letra no dicionario
+                letra_cifrada = dicionario.get(mensagem.charAt(i));
+            } else {
+                //Cifra a letra e adiciona ao dicionario
                 letra_cifrada = cifrar_letra(mensagem.charAt(i));
+                dicionario.put(mensagem.charAt(i), letra_cifrada);
             }
             
             // Adicao de letra cifrada
@@ -168,26 +146,30 @@ public class RSAcode {
 
         String mensagem_decifrada = "";
         int tamanho = 0;
+        char letra_decifrada;
 
         //Decifra a mensagem
         for (int i = 0; i < mensagem.length(); i += tamanho) {
             //Calcula o tamanho do caracter cifrado
             tamanho = Character.getNumericValue(mensagem.charAt(i++));
 
+            // Valida o tamanho lido
             if (tamanho < 8) {
                 tamanho *= 10;
                 tamanho +=  Character.getNumericValue(mensagem.charAt(i++));
             }
 
-            char letra_decifrada;
-
+            // Verifica se o padrao esta no dicionario
             if (diclo.containsKey(mensagem.substring(i, i + tamanho))) {
+                // Busca a letra no dicionario
                 letra_decifrada = diclo.get(mensagem.substring(i, i + tamanho));
             } else {
+                // Decifra e inclui a letra no dicionario
                 letra_decifrada = decifrar_letra(mensagem.substring(i, i + tamanho));
+                diclo.put(mensagem.substring(i, i + tamanho), letra_decifrada);
             }
             
-            //Decifra o proximo caracter
+            // Adicao do caracter decifrado
             mensagem_decifrada += letra_decifrada;
         }
        

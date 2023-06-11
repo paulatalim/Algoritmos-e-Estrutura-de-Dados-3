@@ -188,9 +188,14 @@ public class Main {
                         }
                         break;
                     case 8:
-                        System.out.print("Digite a palavra para buscar por casamento de padrões: ");
+                        // Casamento de padroes na base de dados
+                        Tela.print ( "\n\t\t\t\t\t\t" + "*** CASAMENTO DOS POKE PADROES ***" + "\n\n\n" 
+                                    + "\t"+ "Insira o que deseja pesquisar: ");
+                        
+                        // Entrada do padrao a ser pesquisado
                         String palavra_busca = scanner.next();
                     
+                        // Busca do padrao na base de dados
                         Casamento_padroes.busca(palavra_busca, arq ,crud);
                         break;
 

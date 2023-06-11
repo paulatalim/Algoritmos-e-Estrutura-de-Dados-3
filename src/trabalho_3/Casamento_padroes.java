@@ -53,7 +53,6 @@ public class Casamento_padroes {
 
         return tabelaprefixo;
     }
-    
 
     /**
      *  Algoritmo KMP para o casamento de padroes
@@ -100,8 +99,17 @@ public class Casamento_padroes {
         return matches;
     }
    
-    
-    public static void busca(String palavra, RandomAccessFile arq, CRUD crud) throws Exception {
+    /**
+     * Busca um padrao em um arquivo data base ,
+     * identificando a posicao em que foi achado o padrao,
+     * exibe sua execusao de tempo e quantidade de operacoes
+     * 
+     * @param padrao a ser pesquisado
+     * @param arq data base onde o padrao sera pesquisado
+     * @param crud objeto de leitura do arquivo data  base
+     * @throws Exception
+     */
+    public static void busca(String padrao, RandomAccessFile arq, CRUD crud) throws Exception {
         operacao = 0;
         Pokemon poke;
         
@@ -123,11 +131,14 @@ public class Casamento_padroes {
             partes = poke.palavras_por_partes();
             operacao += 19; // Criacao e preenchimento do vetor string
 
+            System.out.println("oi");
+
             for (int i = 0; i < partes.length; i++){
-                List<Integer> matches = kmpBusca(partes[i], palavra);
+                List<Integer> matches = kmpBusca(partes[i], padrao);
                 if (!matches.isEmpty()) {
+                    System.out.println("ID do poke-registro: " + id);
                     System.out.println("Padrão encontrado nas posições: " + matches);
-                    System.out.println("ID do objeto: " + id);
+                    
                     operacao += 2;
                 }
 
