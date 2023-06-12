@@ -117,10 +117,10 @@ public class Compressao {
 
         //Calcula o tempo de execucao do programa
         long tempo_final = System.currentTimeMillis();
-        Tela.printlt("Tempo de execucao: " + (tempo_final - tempo_inicial) + " ms" + "\n");
+        Tela.println("Tempo de execucao: " + (tempo_final - tempo_inicial) + " ms" + "\n");
 
         //Calculo da eficiencia da compressao
-        Tela.printlt("Eficiencia: " + calcular_eficacia_compressao(arq_saida, arq_entrada) + "%" + "\n");
+        Tela.println("Eficiencia: " + calcular_eficacia_compressao(arq_saida, arq_entrada) + "%" + "\n");
 
         // Fecha os arquivos
         arq_entrada.close();

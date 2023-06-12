@@ -4,6 +4,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import aplicacao.Tela;
 import manipulacao_arquivo.Pokemon;
 import trabalho_1.CRUD;
 
@@ -112,10 +113,15 @@ public class Casamento_padroes {
     public static void busca(String padrao, RandomAccessFile arq, CRUD crud) throws Exception {
         operacao = 0;
         Pokemon poke;
+        Boolean padrao_existe = false;
         
         //Leitura do ultimo id
         arq.seek(0);
         int tamanho = arq.readInt();
+
+        Tela.limpar_console();
+        Tela.print ( "\n\t\t\t\t\t\t" + "*** CASAMENTO DOS POKE PADROES ***" + "\n\n\n" 
+                    + "\t" + "REGISTROS ENCONTRADOS" + "\n\n");
 
         operacao += 3;
 
@@ -131,14 +137,13 @@ public class Casamento_padroes {
             partes = poke.palavras_por_partes();
             operacao += 19; // Criacao e preenchimento do vetor string
 
-            System.out.println("oi");
-
             for (int i = 0; i < partes.length; i++){
                 List<Integer> matches = kmpBusca(partes[i], padrao);
                 if (!matches.isEmpty()) {
-                    System.out.println("ID do poke-registro: " + id);
-                    System.out.println("Padrão encontrado nas posições: " + matches);
+                    Tela.printlt("ID do poke-registro: " + id + "\n");
+                    Tela.printlt("Padrão encontrado nas posições: " + matches + "\n\n");
                     
+                    padrao_existe = true;
                     operacao += 2;
                 }
 
@@ -147,8 +152,15 @@ public class Casamento_padroes {
             }
         }
 
-        // Exibe resultados
+        // Caso nao achar nenhum padrao no arquivo
+        if (!padrao_existe) {
+            Tela.printlt("Padrao nao encontrado\n\n");
+        }
 
+        // Exibe resultados
+        Tela.println("\n\t" + "RESULTADOS:");
+        Tela.printlt("Operacoes executadas: " + "\n");
+        Tela.printlt("Tempo de execusao: " + "\n");
     }
 }
     
