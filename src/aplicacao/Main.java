@@ -194,6 +194,7 @@ public class Main {
                         
                         // Entrada do padrao a ser pesquisado
                         String palavra_busca = scanner.next();
+                        palavra_busca = palavra_busca.toLowerCase();
                     
                         // Busca do padrao na base de dados
                         Casamento_padroes.busca(palavra_busca, arq ,crud);

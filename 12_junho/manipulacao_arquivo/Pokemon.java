@@ -299,17 +299,17 @@ public class Pokemon extends Object implements Cloneable {
         str[14] = Integer.toString(velocidade);
         
         if (eh_mistico==true){
-            str[15]= "é mistico";
+            str[15]= "mistico";
         }
         else{
-            str[15]= "não é mistico";
+            str[15]= "";
         }
 
         if (eh_lendario==true){
-            str[16]= "é lendariio";
+            str[16]= "lendariio";
         }
         else{
-            str[16]= "não é lendario";
+            str[16]= "";
         }
       
         str[17] = Long.toString(data_de_registro.getTime());

@@ -99,8 +99,7 @@ public class Importa_csv {
                                 atributos_csv[7], Integer.parseInt(atributos_csv[10]), 
                                 Integer.parseInt(atributos_csv[11]), Integer.parseInt(atributos_csv[12]), 
                                 Integer.parseInt(atributos_csv[13]), Integer.parseInt(atributos_csv[14]),
-                                Integer.parseInt(atributos_csv[15]), Boolean.parseBoolean(atributos_csv[3]), 
-                                Boolean.parseBoolean(atributos_csv[4]));
+                                Integer.parseInt(atributos_csv[15]), atributos_csv[3], atributos_csv[4]);
 
             // Indexacao o registro
             index.incluir_registro(id_metadados, arq_db.getFilePointer());

@@ -87,7 +87,7 @@ public class Pokemon extends Object implements Cloneable {
     public Pokemon (int id, int num_pokedex, String nome, int geracao,
             String especie, float altura, float peso, String tipo1,
             String tipo2, int hp, int ataque, int defesa, int ataque_especial,
-            int defesa_especial, int velocidade, boolean eh_mistico, boolean eh_lendario) 
+            int defesa_especial, int velocidade, String eh_mistico, String eh_lendario) 
     {
         
         this.id = id;
@@ -105,8 +105,19 @@ public class Pokemon extends Object implements Cloneable {
         this.ataque_especial = ataque_especial;
         this.defesa_especial = defesa_especial;
         this.velocidade = velocidade;
-        this.eh_mistico = eh_mistico;
-        this.eh_lendario = eh_lendario;        
+
+        if (eh_mistico.equals("1")) {
+            this.eh_mistico = true;
+        } else {
+            this.eh_mistico = false;
+        }
+
+        if (eh_lendario.equals("1")) {
+            this.eh_lendario = true;
+        } else {
+            this.eh_lendario = false;
+        }
+              
         data_de_registro = new Date();
     }
 
@@ -284,13 +295,19 @@ public class Pokemon extends Object implements Cloneable {
 
         str[0] = Integer.toString(id);
         str[1] = Integer.toString(num_pokedex);
-        str[2] = nome;
+        str[2] = nome.toLowerCase();
         str[3] = Integer.toString(geracao);
-        str[4] = especie;
+        str[4] = especie.toLowerCase();
         str[5] = Float.toString(altura);
         str[6] = Float.toString(peso);
-        str[7] = tipo1;
-        str[8] = tipo2;
+        str[7] = tipo1.toLowerCase();
+
+        if (tipo2.equals("null")) {
+            str[8] = "";
+        } else {
+            str[8] = tipo2;
+        }
+        
         str[9] = Integer.toString(hp);
         str[10] = Integer.toString(ataque);
         str[11] = Integer.toString(defesa);
@@ -298,21 +315,22 @@ public class Pokemon extends Object implements Cloneable {
         str[13] = Integer.toString(defesa_especial);
         str[14] = Integer.toString(velocidade);
         
-        if (eh_mistico==true){
-            str[15]= "e mistico";
+        if (eh_mistico) {
+            str[15]= "mistico";
         }
-        else{
-            str[15]= "nao e mistico";
+        else {
+            str[15]= "";
         }
 
-        if (eh_lendario==true){
-            str[16]= "e lendariio";
+        if (eh_lendario){
+            str[16]= "lendario";
         }
         else{
-            str[16]= "nao e lendario";
+            str[16]= "";
         }
       
-        str[17] = Long.toString(data_de_registro.getTime());
+        SimpleDateFormat formatar_data = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        str[17] = formatar_data.format(data_de_registro);
 
         return str;
     }
