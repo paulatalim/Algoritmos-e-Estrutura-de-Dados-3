@@ -4,7 +4,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
-import aplicacao.Tela;
+import javafx.scene.layout.HBox;
 import manipulacao_arquivo.Pokemon;
 import trabalho_1.CRUD;
 
@@ -29,6 +29,9 @@ public class Casamento_padroes {
         int[] tabelaprefixo = new int[padrao.length()];
         int i = 0;
 
+        // Criacao de vetor, inicializacao de variavel e atribuicao do for
+        operacao += 3;
+
         for (int j = 1; j < padrao.length(); j++) {
             
             if (padrao.charAt(i) == padrao.charAt(j)) {
@@ -43,12 +46,11 @@ public class Casamento_padroes {
                 tabelaprefixo[j] = 0;
             }
 
-            // Operacoes do for
             operacao += 5;
         }
 
-        // Operacoes na funcao
-        operacao += 5;
+        //Retorno
+        operacao++;
 
         return tabelaprefixo;
     }
@@ -64,6 +66,9 @@ public class Casamento_padroes {
         List<Integer> matches = new ArrayList<>();
         int[] tabelaprfixo = criarTabelaPrefixo (padrao);
         int i = 0, j = 0;
+
+        // Criacao de lista, inicializacao de variaveis
+        operacao += 3;
 
         while (i < texto.length()) {
             if (texto.charAt(i) == padrao.charAt(j)) {
@@ -90,8 +95,7 @@ public class Casamento_padroes {
             operacao += 4; 
         }
 
-        // Operacoes da funcao
-        operacao += 6;
+        operacao += 2; //comparacao while e retorno
 
         return matches;
     }
@@ -109,62 +113,58 @@ public class Casamento_padroes {
     public static void busca(String padrao, RandomAccessFile arq, CRUD crud) throws Exception {
         operacao = 0;
         Pokemon poke;
-        Boolean padrao_existe = false;
+        int cont=0;
 
-        long startTime;
-        long endTime;
+        long startTime; //Tempo de inicio
+        long endTime; //Tempo final
+        long tempo; //Duração em nano segundos
         
         //Leitura do ultimo id
         arq.seek(0);
         int tamanho = arq.readInt();
 
-        Tela.limpar_console();
-        Tela.print ( "\n\t\t\t\t\t\t" + "*** CASAMENTO DOS POKE PADROES ***" + "\n\n\n" 
-                    + "\t" + "REGISTROS ENCONTRADOS" + "\n\n");
+        operacao += 3;
+        startTime = System.nanoTime(); //Demarcação do tempo de inicio
 
-        //Demarcação do tempo de inicio
-        startTime = System.nanoTime();
-        operacao += 6;
-        
         // Percorre do primeiro ao ultimo id
         for (int id = 1; id < tamanho; id++) {
+            operacao += 2; // Comparacao e acrescimo do for
+
             poke = new Pokemon();
             poke = crud.ler(id);
+            operacao += 2; // Criacao do objeto e leitura no arquivo
 
             String partes[];
             partes = poke.palavras_por_partes();
+            operacao += 19; // Criacao e preenchimento do vetor string
 
             for (int i = 0; i < partes.length; i++){
                 List<Integer> matches = kmpBusca(partes[i], padrao);
                 if (!matches.isEmpty()) {
-                    Tela.printlt("ID do poke-registro: " + id + "\n");
-                    Tela.printlt("Padrão encontrado nas posições: " + matches + "\n\n");
+                    System.out.println("ID do poke-registro: " + id);
+                    System.out.println("Padrão encontrado nas posições: " + matches);
+                    cont++;
+                    System.out.println("\n");
                     
-                    padrao_existe = true;
-                    operacao += 3;
+                    operacao += 2;
                 }
 
                 // Acrescimo da operacao for, criacao de lista e comparacao
                 operacao += 4;
             }
 
-            //Operacoes realizadas dentro do for
-            operacao += 24; 
         }
+        endTime = System.nanoTime(); //Demarcação do tempo final
+        tempo = endTime - startTime; //Conta duração em nano segundos
 
-        //Demarcacao do tempo final
-        endTime = System.nanoTime();
-        operacao += 2; 
+        // Exibe resultados
+        float tempo_segundos = (float) tempo / 1_000_000_000; //Passando a duração para segundos
+        System.out.println("\n\t" + "**************************************************" + "\n\n\n" );
+        System.out.println("Em: " + tempo_segundos + " segundos");
+        System.out.println("Foram encontradas: " + cont + " ocorrências desse padrão");
 
-        // Caso nao achar nenhum padrao no arquivo
-        if (!padrao_existe) {
-            Tela.printlt("Padrao nao encontrado\n\n");
-        }
+        
 
-        //Exibe os resultados
-        Tela.println("\n\t" + "RESULTADOS:");
-        Tela.printlt("Operacoes executadas: " + operacao + "\n");
-        Tela.printlt("Tempo de execusao: " + (float) (endTime - startTime) / 1000000000 + " s" + "\n");
     }
 }
     
