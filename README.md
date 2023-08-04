@@ -8,6 +8,8 @@
 
 ## Print screen
 
+## Clonar projeto
+
 ## Execução do sistema
 
 A seguir estão algumas instruções para rodar o código corretamente:
@@ -16,7 +18,7 @@ A seguir estão algumas instruções para rodar o código corretamente:
 >
 > Utilize o VS Code para rodar esse código
 
-### Extensões
+### Extensões necessárias
 
 - Debugger for Java
 
