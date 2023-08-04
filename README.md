@@ -1,6 +1,14 @@
 # Trabalho Prático 3
 
-## Orientações
+## Sumário
+
+## Sobre
+
+## Funcionalidades
+
+## Print screen
+
+## Execução do sistema
 
 A seguir estão algumas instruções para rodar o código corretamente:
 
@@ -18,14 +26,18 @@ A seguir estão algumas instruções para rodar o código corretamente:
 - Acesse a pasta `Extensions > Java Debugger > console`
 - Selecione a opção `externalTerminal`
 
-## Base utilizada
+## Base de Dados utilizada
 
 A seguir esta o link da base de dados original utilizada nesse trabalho:
 
-- [base pokemon](https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420?select=pokedex_%28Update.04.20%29.csv)
+- [Base de Dados pokemon](https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420?select=pokedex_%28Update.04.20%29.csv)
 
 ## Créditos
+
+### Integrantes do grupo
 
 - Mariana Aram
 - Paula Talim
 - Yago Garzon
+
+### Professor Orientador
