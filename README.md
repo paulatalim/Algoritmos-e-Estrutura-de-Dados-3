@@ -30,7 +30,7 @@ A seguir esta o link da base de dados original utilizada nesse trabalho:
 
 ## Como executar o sistema
 
-1. Faça um clone desse repositorio na sua maquina, utilizando `git`
+1. Faça um clone desse repositorio na sua maquina, utilizando `git clone https://github.com/paulatalim/Algoritmos-e-Estrutura-de-Dados-3.git`
 2. Abra o código no VS Code
 3. Instale a extensão `Debugger for Java`
 4. Faça as seguintes configurações:
